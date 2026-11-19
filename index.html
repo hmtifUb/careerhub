@@ -642,9 +642,687 @@ body { overflow-x: hidden; }
 .hub-system-alert[hidden] { display:none!important; }
 .hub-system-retry { background:linear-gradient(120deg,#92152a,#c72b48); border:0; color:#fff;
   font-weight:700; border-radius:9px; padding:9px 14px; }
+
+/* === V5: Scroll Progress, Radial Sidebar, Stats Alignment, Roll Feed & Bakrie-Style Berita === */
+html { scroll-padding-top: 84px; }
+#hub-catalog, #traffic-heading, #hub-news-section, #hub-rating-section { scroll-margin-top: 84px; }
+/* 1. Top Scroll Progress Bar */
+.hub-scroll-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  z-index: 200;
+  background: linear-gradient(90deg, #a61932 0%, #d52b49 55%, #f0b72f 100%);
+  box-shadow: 0 0 12px rgba(213, 43, 73, .55);
+  pointer-events: none;
+  transition: width .08s linear;
+}
+
+/* Sticky subtle glass topbar + scroll percentage badge */
+.hub-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 45;
+  padding: 10px 14px;
+  margin: -10px -14px 20px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg-color) 84%, transparent);
+  backdrop-filter: blur(12px);
+}
+.hub-topbar-right { display: flex; align-items: center; gap: 10px; }
+.hub-scroll-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--muted-text);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+.hub-scroll-pill strong { color: #b71e3b; }
+[data-theme="dark"] .hub-scroll-pill strong { color: #f57792; }
+
+/* 2. Sidebar Radial Scroll Progress & Vertical Progress Rail */
+.hub-side-radial {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 4px 18px;
+  padding: 12px 13px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, rgba(166, 25, 50, .24), rgba(240, 183, 47, .09));
+  border: 1px solid rgba(255, 255, 255, .11);
+}
+.hub-radial-ring-box {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+}
+.hub-radial-ring-box svg {
+  width: 44px;
+  height: 44px;
+  transform: rotate(-90deg);
+}
+.hub-ring-bg { fill: none; stroke: rgba(255, 255, 255, .14); stroke-width: 3.5; }
+.hub-ring-fg {
+  fill: none;
+  stroke: url(#hubSideRingGrad);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset .12s linear;
+}
+.hub-ring-pct {
+  position: absolute;
+  font-size: .64rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.02em;
+}
+.hub-side-radial-info { min-width: 0; }
+.hub-side-radial-info small {
+  display: block;
+  font-size: .58rem;
+  letter-spacing: .14em;
+  font-weight: 800;
+  color: #f0b72f;
+}
+.hub-side-radial-info strong {
+  display: block;
+  font-size: .82rem;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hub-side-nav {
+  position: relative;
+  padding-left: 14px;
+}
+.hub-side-nav::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, .12);
+}
+.hub-nav-rail-fill {
+  position: absolute;
+  left: 5px;
+  top: 14px;
+  width: 2px;
+  height: 0%;
+  max-height: calc(100% - 28px);
+  border-radius: 99px;
+  background: linear-gradient(180deg, #f0b72f, #d52b49);
+  transition: height .15s linear;
+  pointer-events: none;
+}
+.hub-nav-link { position: relative; }
+.hub-nav-link::before {
+  content: '';
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #3b3136;
+  border: 2px solid #171719;
+  transform: translateY(-50%);
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.hub-nav-link.active::before {
+  background: #f0b72f;
+  transform: translateY(-50%) scale(1.28);
+  box-shadow: 0 0 0 4px rgba(240, 183, 47, .24);
+}
+
+/* 3. Floating Radial Quick-Nav Wheel + Scroll Progress Ring */
+.hub-radial-dock {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 115;
+  width: 56px;
+  height: 56px;
+}
+.hub-radial-trigger {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #7c1127, #c92646);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 12px 28px rgba(140, 20, 48, .38);
+  cursor: pointer;
+  transition: transform .24s cubic-bezier(.34, 1.56, .64, 1), box-shadow .2s ease;
+  z-index: 3;
+}
+.hub-radial-trigger:hover { transform: scale(1.06); box-shadow: 0 14px 32px rgba(140, 20, 48, .48); }
+.hub-radial-trigger svg {
+  position: absolute;
+  inset: -4px;
+  width: 64px;
+  height: 64px;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+.hub-dock-ring-bg { fill: none; stroke: rgba(166, 25, 50, .2); stroke-width: 3.5; }
+[data-theme="dark"] .hub-dock-ring-bg { stroke: rgba(255, 255, 255, .14); }
+.hub-dock-ring-fg {
+  fill: none;
+  stroke: #f0b72f;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset .12s linear;
+}
+.hub-radial-trigger-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  gap: 2px;
+}
+.hub-radial-trigger-inner i { font-size: 1rem; transition: transform .25s ease; }
+.hub-radial-trigger-inner span { font-size: .56rem; font-weight: 800; opacity: .92; }
+.hub-radial-dock.is-open .hub-radial-trigger-inner i { transform: rotate(45deg); }
+.hub-radial-orb {
+  position: absolute;
+  left: 7px;
+  top: 7px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .18);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(0, 0) scale(.45);
+  transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), opacity .22s ease, background .2s ease, color .2s ease;
+  z-index: 2;
+}
+.hub-radial-orb:hover {
+  background: linear-gradient(135deg, #a61932, #d52b49);
+  color: #fff;
+  border-color: transparent;
+}
+.hub-radial-dock.is-open .hub-radial-orb {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(1);
+}
+.hub-radial-orb-label {
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #171719;
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+}
+.hub-radial-orb:hover .hub-radial-orb-label,
+.hub-radial-orb:focus-visible .hub-radial-orb-label { opacity: 1; }
+
+/* 4. Stat Cards: Teks rapi di tengah kolom & Total Kunjungan rata kanan */
+.hub-stats-grid .stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 18px 16px;
+  min-height: 112px;
+}
+.hub-stats-grid .stat-card .stat-number {
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.hub-stats-grid .stat-card .small {
+  line-height: 1.25;
+}
+.hub-stats-grid .stat-card.stat-card-visits {
+  align-items: flex-end;
+  text-align: right;
+  padding: 18px 22px 18px 18px;
+}
+.hub-stats-grid .stat-card.stat-card-visits::before {
+  left: auto;
+  right: 0;
+  background: linear-gradient(180deg, #a61932, #f0b72f);
+}
+.stat-visits-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #a61932;
+  margin-bottom: 4px;
+}
+[data-theme="dark"] .stat-visits-badge { color: #f57792; }
+
+@media (max-width: 1240px) and (min-width: 651px) {
+  .hub-stats-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .hub-stats-grid .stat-card { grid-column: span 2; }
+  .hub-stats-grid .stat-card:nth-child(4),
+  .hub-stats-grid .stat-card:nth-child(5) { grid-column: span 3; }
+}
+@media (max-width: 650px) {
+  .hub-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .hub-stats-grid .stat-card { min-height: 102px; padding: 14px 12px; }
+  .hub-stats-grid .stat-card.stat-card-visits {
+    grid-column: 1 / -1;
+    min-height: 86px;
+    padding: 14px 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: right;
+  }
+  .hub-stats-grid .stat-card.stat-card-visits .stat-visits-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+  }
+  .hub-scroll-pill { display: none; }
+}
+
+/* Rapi center untuk kartu kategori, insight mini-card, dan struktur PPP */
+.hub-main .category-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.hub-board-insight .insight-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px 8px;
+}
+
+/* 5. Sistem Roll / Bergulir Bergantian (sejajar dengan kolom kanan) */
+.hub-roll-bar {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  border-radius: 15px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .04);
+}
+.hub-roll-progress-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: rgba(166, 25, 50, .09);
+}
+.hub-roll-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #a61932, #f0b72f);
+}
+.hub-roll-meta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  font-size: .78rem;
+  color: var(--muted-text);
+  font-weight: 600;
+}
+.hub-roll-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(166, 25, 50, .1);
+  color: #a61932;
+  font-size: .72rem;
+  font-weight: 800;
+}
+[data-theme="dark"] .hub-roll-badge { background: rgba(245, 119, 146, .16); color: #ff9ab0; }
+.hub-roll-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.hub-roll-btn {
+  height: 32px;
+  min-width: 32px;
+  padding: 0 10px;
+  border-radius: 9px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: .75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: .18s ease;
+}
+.hub-roll-btn:hover:not(:disabled) {
+  border-color: #b71e3b;
+  color: #b71e3b;
+}
+.hub-roll-btn.is-active {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: #fff;
+}
+.hub-roll-btn:disabled { opacity: .45; cursor: not-allowed; }
+.hub-roll-size {
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 9px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: .74rem;
+  font-weight: 700;
+}
+.hub-roll-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 15px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+}
+.hub-roll-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hub-roll-dot {
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 9px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--muted-text);
+  font-size: .74rem;
+  font-weight: 800;
+  transition: .18s ease;
+}
+.hub-roll-dot.active {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(166, 25, 50, .28);
+}
+
+@keyframes hubRollIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hub-roll-card {
+  animation: hubRollIn .34s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+/* 6. Panel Berita & Pengumuman Ala Portal Universitas Bakrie (Kolom Kanan) */
+.hub-board-insight {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.hub-news-panel {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .05);
+}
+.hub-news-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 15px 18px;
+  background: linear-gradient(118deg, #680d23 0%, #a61932 58%, #c92b47 100%);
+  color: #fff;
+}
+.hub-news-header-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+  font-size: .96rem;
+  letter-spacing: .01em;
+}
+.hub-news-pager {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.hub-news-pager-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, .32);
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: .75rem;
+  transition: .18s ease;
+}
+.hub-news-pager-btn:hover:not(:disabled) { background: #fff; color: #8e1430; }
+.hub-news-pager-btn:disabled { opacity: .4; cursor: not-allowed; }
+.hub-news-pager-label { font-size: .72rem; font-weight: 700; opacity: .92; }
+
+.hub-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px;
+}
+.hub-news-card {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+.hub-news-card:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.hub-news-card-title {
+  font-size: .92rem;
+  font-weight: 800;
+  line-height: 1.38;
+  text-transform: uppercase;
+  color: var(--text-color);
+  margin: 0 0 8px;
+}
+.hub-news-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: .7rem;
+  color: var(--muted-text);
+  margin-bottom: 10px;
+}
+.hub-news-poster-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-color);
+  display: block;
+}
+.hub-news-poster-banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  padding: 18px 16px 16px;
+  margin-bottom: 10px;
+  min-height: 138px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: radial-gradient(circle at 85% 20%, rgba(255, 207, 103, .22), transparent 45%),
+              linear-gradient(128deg, #7f0d22 0%, #b81d38 55%, #dc3545 100%);
+  color: #fff;
+}
+.hub-news-poster-banner::after {
+  content: '';
+  position: absolute;
+  right: -36px;
+  bottom: -44px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 16px solid rgba(255, 255, 255, .08);
+  pointer-events: none;
+}
+.hub-news-poster-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  opacity: .9;
+}
+.hub-news-poster-pill {
+  display: inline-block;
+  align-self: flex-start;
+  margin: 8px 0 6px;
+  padding: 2px 10px;
+  border-radius: 4px;
+  background: #fff;
+  color: #9e162e;
+  font-size: .66rem;
+  font-weight: 800;
+}
+.hub-news-poster-headline {
+  font-size: .88rem;
+  font-weight: 800;
+  line-height: 1.3;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+  position: relative;
+  z-index: 1;
+}
+.hub-news-poster-foot {
+  font-size: .64rem;
+  opacity: .84;
+  position: relative;
+  z-index: 1;
+}
+.hub-news-excerpt {
+  font-size: .78rem;
+  line-height: 1.58;
+  color: var(--muted-text);
+  margin: 0 0 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hub-news-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.hub-news-btn-attach {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: #f0b72f;
+  color: #2b1d12 !important;
+  text-decoration: none;
+  font-size: .74rem;
+  font-weight: 800;
+  transition: filter .18s ease, transform .18s ease;
+}
+.hub-news-btn-attach:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.hub-news-btn-more {
+  margin-left: auto;
+  padding: 7px 13px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: .74rem;
+  font-weight: 700;
+  transition: .18s ease;
+}
+.hub-news-btn-more:hover {
+  border-color: #a61932;
+  color: #a61932;
+}
+[data-theme="dark"] .hub-news-btn-more:hover { color: #ff9ab0; border-color: #ff9ab0; }
+
+/* News detail modal */
+.news-modal-body { white-space: pre-wrap; line-height: 1.7; font-size: .92rem; color: var(--text-color); }
   </style>
 </head>
 <body>
+  <!-- Top Scroll Progress Bar -->
+  <div class="hub-scroll-bar" id="hub-scroll-bar" aria-hidden="true"></div>
+
   <!-- ======================== HALAMAN / LAYOUT ======================== -->
 <div class="hub-app" id="hub-app">
   <aside class="hub-sidebar" id="hub-sidebar" aria-label="Navigasi HMTIF Career Hub">
@@ -657,14 +1335,39 @@ body { overflow-x: hidden; }
         <div><strong>HMTIF</strong><small>CAREER HUB</small></div>
       </div>
       <div class="hub-side-rule"></div>
+
+      <!-- Radial Scroll Progress Widget -->
+      <div class="hub-side-radial" aria-label="Progres baca halaman">
+        <div class="hub-radial-ring-box">
+          <svg viewBox="0 0 44 44" aria-hidden="true">
+            <defs>
+              <linearGradient id="hubSideRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f0b72f"/>
+                <stop offset="100%" stop-color="#e53958"/>
+              </linearGradient>
+            </defs>
+            <circle class="hub-ring-bg" cx="22" cy="22" r="18"></circle>
+            <circle class="hub-ring-fg" id="hub-side-ring-fg" cx="22" cy="22" r="18" stroke-dasharray="113.1" stroke-dashoffset="113.1"></circle>
+          </svg>
+          <span class="hub-ring-pct" id="hub-side-ring-pct">0%</span>
+        </div>
+        <div class="hub-side-radial-info">
+          <small>SCROLL PROGRESS</small>
+          <strong id="hub-side-active-label">Beranda</strong>
+        </div>
+      </div>
+
       <div class="hub-side-label">MENU UTAMA</div>
       <nav class="hub-side-nav">
+        <div class="hub-nav-rail-fill" id="hub-nav-rail-fill" aria-hidden="true"></div>
         <button class="hub-nav-link active" type="button" data-hub-nav="home" onclick="hubNavigate('home')"><i class="fa-solid fa-house"></i><span>Beranda</span></button>
         <button class="hub-nav-link" type="button" data-hub-nav="KARIER" onclick="hubNavigate('KARIER')"><i class="fa-solid fa-briefcase"></i><span>Karier</span></button>
         <button class="hub-nav-link" type="button" data-hub-nav="PENGEMBANGAN" onclick="hubNavigate('PENGEMBANGAN')"><i class="fa-solid fa-graduation-cap"></i><span>Pengembangan</span></button>
         <button class="hub-nav-link" type="button" data-hub-nav="OPPORTUNITIES" onclick="hubNavigate('OPPORTUNITIES')"><i class="fa-solid fa-trophy"></i><span>Opportunities</span></button>
         <button class="hub-nav-link" type="button" data-hub-nav="archive" onclick="hubNavigate('archive')"><i class="fa-solid fa-box-archive"></i><span>Arsip Peluang</span></button>
         <button class="hub-nav-link" type="button" data-hub-nav="insight" onclick="hubNavigate('insight')"><i class="fa-solid fa-chart-line"></i><span>Insight Komunitas</span></button>
+        <button class="hub-nav-link" type="button" data-hub-nav="news" onclick="hubNavigate('news')"><i class="fa-solid fa-bullhorn"></i><span>Berita &amp; Info</span></button>
+        <button class="hub-nav-link" type="button" data-hub-nav="rating" onclick="hubNavigate('rating')"><i class="fa-solid fa-star"></i><span>Penilaian</span></button>
       </nav>
       <div class="hub-side-note"><span>IDENTITAS HMTIF</span><strong>Grow your future.</strong><p>Ruang peluang, karya, dan kolaborasi mahasiswa Teknik Informatika.</p></div>
       <div class="hub-side-bottom">HMTIF UNIVERSITAS BAKRIE • 2026</div>
@@ -680,9 +1383,12 @@ body { overflow-x: hidden; }
           <img src="https://j.top4top.io/p_3881u76701.png" alt="Logo Universitas Bakrie" referrerpolicy="no-referrer">
           <img src="https://e.top4top.io/p_38813coj21.png" alt="Logo HMTIF" referrerpolicy="no-referrer">
         </div>
-        <div class="hub-breadcrumb">HMTIF <span>/</span> Career Hub <span>/</span> Beranda</div>
+        <div class="hub-breadcrumb">HMTIF <span>/</span> Career Hub <span>/</span> <span id="hub-breadcrumb-active" style="padding:0;color:var(--text-color);">Beranda</span></div>
       </div>
-      <button onclick="toggleTheme()" id="theme-toggle" class="hub-theme-toggle" aria-label="Ubah mode warna"><i class="fas fa-moon" id="theme-icon"></i></button>
+      <div class="hub-topbar-right">
+        <div class="hub-scroll-pill" aria-hidden="true"><i class="fa-solid fa-compass"></i> <strong id="topbar-progress-pct">0%</strong></div>
+        <button onclick="toggleTheme()" id="theme-toggle" class="hub-theme-toggle" aria-label="Ubah mode warna"><i class="fas fa-moon" id="theme-icon"></i></button>
+      </div>
     </div>
 
     <div id="hub-system-alert" role="alert" hidden class="hub-system-alert">
@@ -723,7 +1429,13 @@ body { overflow-x: hidden; }
         <div class="stat-card"><div class="stat-number" id="stat-lowongan">—</div><div class="small fw-semibold text-muted">Karier</div></div>
         <div class="stat-card"><div class="stat-number" id="stat-pelatihan">—</div><div class="small fw-semibold text-muted">Pengembangan</div></div>
         <div class="stat-card"><div class="stat-number" id="stat-lomba">—</div><div class="small fw-semibold text-muted">Opportunities</div></div>
-        <div class="stat-card"><div class="stat-number" id="stat-kunjungan">—</div><div class="small fw-semibold text-muted">Total Kunjungan</div></div>
+        <div class="stat-card stat-card-visits">
+          <span class="stat-visits-badge"><i class="fa-solid fa-chart-simple"></i> Live Traffic</span>
+          <div class="stat-visits-right">
+            <div class="stat-number" id="stat-kunjungan">—</div>
+            <div class="small fw-semibold text-muted">Total Kunjungan</div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -823,9 +1535,42 @@ body { overflow-x: hidden; }
       </div>
 
       <div class="hub-board-grid">
-        <div class="hub-board-listing">
+        <div class="hub-board-listing" id="hub-board-listing">
+          <div class="hub-roll-bar" id="hub-roll-bar" hidden>
+            <div class="hub-roll-progress-track" aria-hidden="true">
+              <div class="hub-roll-progress-fill" id="hub-roll-progress-fill"></div>
+            </div>
+            <div class="hub-roll-meta">
+              <span class="hub-roll-badge"><i class="fa-solid fa-arrows-rotate"></i> <span id="roll-page-badge">Roll 1 / 1</span></span>
+              <span id="roll-range-text">Menampilkan 0 peluang</span>
+            </div>
+            <div class="hub-roll-controls">
+              <button type="button" class="hub-roll-btn is-active" id="roll-auto-btn" onclick="toggleAutoRoll()" title="Jeda atau lanjutkan gulir otomatis">
+                <i class="fa-solid fa-pause" id="roll-auto-icon"></i><span id="roll-auto-label">Auto</span>
+              </button>
+              <select id="roll-size-select" class="hub-roll-size" aria-label="Jumlah data per roll" onchange="changeRollSize(this.value)">
+                <option value="4" selected>4 / roll</option>
+                <option value="6">6 / roll</option>
+                <option value="all">Semua</option>
+              </select>
+              <button type="button" class="hub-roll-btn" id="roll-prev-top" onclick="stepRoll(-1)" aria-label="Halaman sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+              <button type="button" class="hub-roll-btn" id="roll-next-top" onclick="stepRoll(1)" aria-label="Halaman berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
           <div class="row g-3" id="data-container"></div>
+
+          <div class="hub-roll-footer" id="hub-roll-footer" hidden>
+            <button type="button" class="hub-roll-btn" id="roll-prev-bottom" onclick="stepRoll(-1)">
+              <i class="fa-solid fa-chevron-left"></i> Sebelumnya
+            </button>
+            <div class="hub-roll-dots" id="hub-roll-dots" role="navigation" aria-label="Navigasi halaman peluang"></div>
+            <button type="button" class="hub-roll-btn" id="roll-next-bottom" onclick="stepRoll(1)">
+              Berikutnya <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
         </div>
+
         <div class="hub-board-insight">
           <section class="mt-0" style="border-color: var(--border-color) !important;" aria-labelledby="traffic-heading">
             <div class="insights-panel">
@@ -851,6 +1596,24 @@ body { overflow-x: hidden; }
               <p id="traffic-error" class="text-danger small mt-2 mb-0" role="status" hidden></p>
             </div>
           </section>
+
+          <!-- Panel Berita & Pengumuman Kampus (Ala Portal Universitas Bakrie) -->
+          <section id="hub-news-section" aria-labelledby="news-heading">
+            <div class="hub-news-panel">
+              <div class="hub-news-header">
+                <div class="hub-news-header-title" id="news-heading">
+                  <i class="fa-solid fa-bullhorn"></i>
+                  <span>Berita &amp; Pengumuman</span>
+                </div>
+                <div class="hub-news-pager" id="hub-news-pager" hidden>
+                  <button type="button" class="hub-news-pager-btn" id="news-prev-btn" onclick="stepNews(-1)" aria-label="Berita sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+                  <span class="hub-news-pager-label" id="news-page-label">1/1</span>
+                  <button type="button" class="hub-news-pager-btn" id="news-next-btn" onclick="stepNews(1)" aria-label="Berita berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+              </div>
+              <div class="hub-news-list" id="hub-news-list"></div>
+            </div>
+          </section>
         </div>
       </div>
 
@@ -863,7 +1626,7 @@ body { overflow-x: hidden; }
         <a href="https://whatsapp.com/channel/0029VbDskQcDDmFLvlye9R0R" target="_blank" rel="noopener noreferrer" class="hub-community-cta"><i class="fa-brands fa-whatsapp me-2"></i>Gabung saluran <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
       </div>
 
-      <div class="mt-5 pt-5 border-top" style="border-color: var(--border-color) !important;">
+      <div id="hub-rating-section" class="mt-5 pt-5 border-top" style="border-color: var(--border-color) !important;">
         <div class="row g-4">
           <div class="col-lg-6">
             <div class="card border-0 shadow-sm h-100 data-card" style="border-radius: 15px;">
@@ -979,9 +1742,35 @@ body { overflow-x: hidden; }
       </div>
     </footer>
 
-    <button onclick="scrollToTop()" id="back-to-top" class="btn text-white rounded-circle position-fixed bottom-0 end-0 m-4 z-3 shadow d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;" aria-label="Kembali ke atas">
-      <i class="fas fa-arrow-up"></i>
-    </button>
+    <!-- Floating Radial Quick-Nav Dock + Scroll Progress Ring -->
+    <div class="hub-radial-dock" id="hub-radial-dock" aria-label="Menu navigasi cepat radial">
+      <button type="button" class="hub-radial-orb" style="--tx:0px;--ty:-104px" onclick="radialJump('home')" aria-label="Kembali ke atas">
+        <i class="fa-solid fa-arrow-up"></i>
+        <span class="hub-radial-orb-label">Ke Atas</span>
+      </button>
+      <button type="button" class="hub-radial-orb" style="--tx:-52px;--ty:-90px" onclick="radialJump('catalog')" aria-label="Peluang">
+        <i class="fa-solid fa-briefcase"></i>
+        <span class="hub-radial-orb-label">Peluang</span>
+      </button>
+      <button type="button" class="hub-radial-orb" style="--tx:-90px;--ty:-52px" onclick="radialJump('news')" aria-label="Berita Kampus">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span class="hub-radial-orb-label">Berita</span>
+      </button>
+      <button type="button" class="hub-radial-orb" style="--tx:-104px;--ty:0px" onclick="radialJump('insight')" aria-label="Grafik Kunjungan">
+        <i class="fa-solid fa-chart-line"></i>
+        <span class="hub-radial-orb-label">Grafik</span>
+      </button>
+      <button type="button" class="hub-radial-trigger" id="hub-radial-trigger" onclick="toggleRadialDock()" aria-expanded="false" aria-label="Buka menu navigasi radial">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle class="hub-dock-ring-bg" cx="32" cy="32" r="28"></circle>
+          <circle class="hub-dock-ring-fg" id="hub-dock-ring-fg" cx="32" cy="32" r="28" stroke-dasharray="175.93" stroke-dashoffset="175.93"></circle>
+        </svg>
+        <span class="hub-radial-trigger-inner">
+          <i class="fa-solid fa-compass" id="hub-radial-icon"></i>
+          <span id="hub-dock-pct">0%</span>
+        </span>
+      </button>
+    </div>
   </main>
 </div>
 
@@ -996,6 +1785,23 @@ body { overflow-x: hidden; }
     </div>
     <div class="detail-body"><div id="detail-fields" class="detail-grid"></div></div>
     <div id="detail-actions" class="detail-actions"></div>
+  </div>
+</dialog>
+
+<dialog id="news-dialog" class="detail-dialog" aria-labelledby="news-modal-title">
+  <div class="detail-layout">
+    <div class="detail-head d-flex justify-content-between align-items-start gap-3">
+      <div>
+        <div id="news-modal-meta" class="detail-eyebrow"></div>
+        <h2 id="news-modal-title" class="detail-title h4"></h2>
+      </div>
+      <button type="button" id="news-modal-close" class="btn btn-outline-secondary rounded-circle flex-shrink-0" aria-label="Tutup berita" style="width: 38px; height: 38px;" onclick="closeNewsModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="detail-body">
+      <div id="news-modal-banner" class="mb-3"></div>
+      <div id="news-modal-body" class="news-modal-body"></div>
+    </div>
+    <div id="news-modal-actions" class="detail-actions"></div>
   </div>
 </dialog>
 
@@ -1125,6 +1931,7 @@ let currentRating = 0;
 let hasRated = hubStore.getItem('hasRated') === 'true';
 let currentItems = [];
 let allItems = [];
+let filteredItems = [];
 let currentSheet = 'KARIER';
 let currentSubtitle = 'Lowongan • Magang • Freelance';
 let requestId = 0;
@@ -1137,6 +1944,42 @@ let trafficResponse = null;
 let trafficRequestId = 0;
 let trafficPeriod = 7;
 const programCache = new Map();
+
+// State Roll / Bergulir Bergantian (sejajar dengan kolom kanan)
+let rollPage = 0;
+let rollSize = 4;
+let autoRollEnabled = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let autoRollHoverPaused = false;
+let autoRollElapsedMs = 0;
+let autoRollInterval = null;
+const AUTO_ROLL_DURATION_MS = 8500;
+
+// State Berita & Pengumuman (ala Web Universitas Bakrie)
+const DEFAULT_HUB_NEWS = [
+  {
+    judul: 'INFORMASI RESMI HMTIF CAREER HUB UNIVERSITAS BAKRIE',
+    kategori: 'Pengumuman',
+    tanggal: 'Terbaru',
+    ringkasan: 'Seluruh informasi lowongan kerja, magang, pelatihan, dan lomba mahasiswa Teknik Informatika kini diperbarui otomatis melalui cloud database yang lebih ringan.',
+    isi_lengkap: 'Halo Mahasiswa/i Teknik Informatika Universitas Bakrie!\n\nHMTIF Career Hub kini telah bermigrasi ke infrastruktur cloud database agar akses informasi karier, pelatihan, dan kompetisi jauh lebih cepat dan stabil.\n\nPastikan kamu memantau pembaruan setiap pekan dan bergabung di saluran WhatsApp resmi HMTIF Career Hub agar tidak tertinggal informasi deadline.',
+    gambar_url: '',
+    lampiran_url: 'https://whatsapp.com/channel/0029VbDskQcDDmFLvlye9R0R',
+    link_url: 'https://whatsapp.com/channel/0029VbDskQcDDmFLvlye9R0R'
+  },
+  {
+    judul: 'PANDUAN PENGIRIMAN INFO LOWONGAN, MAGANG & KOMPETISI',
+    kategori: 'Info HMTIF',
+    tanggal: 'PPP HMTIF',
+    ringkasan: 'Punya info magang, bootcamp, beasiswa, atau lomba IT? Kirimkan melalui formulir resmi agar segera diverifikasi dan dipublikasikan untuk seluruh mahasiswa.',
+    isi_lengkap: 'Kepada seluruh Mahasiswa/i, Alumni, dan Mitra HMTIF Universitas Bakrie,\n\nApabila kamu memiliki informasi lowongan kerja, kesempatan magang, pelatihan/webinar, maupun lomba & beasiswa yang bermanfaat bagi mahasiswa Teknik Informatika, silakan kirimkan melalui Google Form resmi Career Hub.\n\nTim Departemen PPP HMTIF akan memverifikasi dan langsung menayangkannya di portal ini.',
+    gambar_url: '',
+    lampiran_url: 'https://forms.gle/A8zraMzTBVWqeiKy6',
+    link_url: 'https://forms.gle/A8zraMzTBVWqeiKy6'
+  }
+];
+let newsItems = DEFAULT_HUB_NEWS.slice();
+let newsPage = 0;
+const NEWS_PER_PAGE = 2;
 
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, char => ({
@@ -1260,11 +2103,23 @@ document.addEventListener('DOMContentLoaded', () => {
   dialog.addEventListener('click', event => { if (event.target === dialog) closeDetail(); });
   dialog.addEventListener('close', () => { if (previousFocus && previousFocus.isConnected) previousFocus.focus(); });
 
+  const newsDialog = document.getElementById('news-dialog');
+  newsDialog.addEventListener('click', event => { if (event.target === newsDialog) closeNewsModal(); });
+
+  const listingEl = document.getElementById('hub-board-listing');
+  if (listingEl) {
+    listingEl.addEventListener('mouseenter', () => { autoRollHoverPaused = true; });
+    listingEl.addEventListener('mouseleave', () => { autoRollHoverPaused = false; });
+    listingEl.addEventListener('focusin', () => { autoRollHoverPaused = true; });
+    listingEl.addEventListener('focusout', () => { autoRollHoverPaused = false; });
+  }
+
   const initialSheet = ['KARIER', 'PENGEMBANGAN', 'OPPORTUNITIES'].includes(hubStore.getItem('careerHubCategory'))
     ? hubStore.getItem('careerHubCategory') : 'KARIER';
   syncHubViewControls();
   document.getElementById('sort-select').value = hubView === 'archive' ? 'deadline-desc' : 'deadline-asc';
   updatePersonalGreeting();
+  renderNews();
 
   if (!hubConfigReady()) {
     showHubSystemError('Konfigurasi Supabase belum diisi. Buka file config.js lalu masukkan SUPABASE_URL dan SUPABASE_ANON_KEY.');
@@ -1274,6 +2129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadData(initialSheet, hubCategorySubtitle(initialSheet));
     registerVisitAndLoadTraffic();
     loadRatingStats();
+    loadNews();
   }
 
   if (hubStore.getItem('theme') === 'dark') {
@@ -1298,13 +2154,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 992) document.getElementById('filter-panel').classList.remove('mobile-collapsed');
+    updateScrollProgressAndSpy();
   });
 
   document.querySelectorAll('.category-btn, .view-option').forEach(el => {
     el.addEventListener('click', () => setTimeout(() => syncShellNav(hubView === 'archive' ? 'archive' : currentSheet), 0));
   });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMobileSidebar(false); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      toggleMobileSidebar(false);
+      toggleRadialDock(false);
+    }
+  });
+  document.addEventListener('click', e => {
+    const dock = document.getElementById('hub-radial-dock');
+    if (dock && dock.classList.contains('is-open') && !dock.contains(e.target)) {
+      toggleRadialDock(false);
+    }
+  });
+
   syncShellNav(hubView === 'archive' ? 'archive' : 'home');
+  updateScrollProgressAndSpy();
+  syncAutoRollButton();
+  startAutoRollTicker();
 });
 
 function setupExtraFeedbackUI() {
@@ -1330,16 +2202,90 @@ function setupExtraFeedbackUI() {
   btn.disabled = true;
 }
 
-window.addEventListener('scroll', () => {
-  const btt = document.getElementById('back-to-top');
-  if (window.scrollY > 300) {
-    btt.style.opacity = '1';
-    btt.style.pointerEvents = 'auto';
-  } else {
-    btt.style.opacity = '0';
-    btt.style.pointerEvents = 'none';
+const SIDE_RING_CIRCUMFERENCE = 113.1;
+const DOCK_RING_CIRCUMFERENCE = 175.93;
+
+function updateScrollProgressAndSpy() {
+  const doc = document.documentElement;
+  const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+  const ratio = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+  const pct = Math.round(ratio * 100);
+
+  const topBar = document.getElementById('hub-scroll-bar');
+  if (topBar) topBar.style.width = pct + '%';
+
+  const topPct = document.getElementById('topbar-progress-pct');
+  if (topPct) topPct.textContent = pct + '%';
+
+  const sideRing = document.getElementById('hub-side-ring-fg');
+  if (sideRing) sideRing.style.strokeDashoffset = String(SIDE_RING_CIRCUMFERENCE * (1 - ratio));
+  const sidePct = document.getElementById('hub-side-ring-pct');
+  if (sidePct) sidePct.textContent = pct + '%';
+
+  const railFill = document.getElementById('hub-nav-rail-fill');
+  if (railFill) railFill.style.height = `calc(${pct}% - ${Math.round(ratio * 28)}px)`;
+
+  const dockRing = document.getElementById('hub-dock-ring-fg');
+  if (dockRing) dockRing.style.strokeDashoffset = String(DOCK_RING_CIRCUMFERENCE * (1 - ratio));
+  const dockPct = document.getElementById('hub-dock-pct');
+  if (dockPct) dockPct.textContent = pct + '%';
+
+  // Live Scroll-Spy untuk label aktif di sidebar & breadcrumb
+  const sections = [
+    { id: 'hub-rating-section', nav: 'rating', label: 'Penilaian' },
+    { id: 'hub-news-section', nav: 'news', label: 'Berita & Info' },
+    { id: 'traffic-heading', nav: 'insight', label: 'Insight Komunitas' },
+    { id: 'hub-catalog', nav: hubView === 'archive' ? 'archive' : currentSheet, label: hubView === 'archive' ? 'Arsip Peluang' : currentSheet }
+  ];
+  let activeSection = { nav: 'home', label: 'Beranda' };
+  const threshold = 220;
+  for (const sec of sections) {
+    const el = document.getElementById(sec.id);
+    if (el && el.getBoundingClientRect().top <= threshold) {
+      activeSection = sec;
+      break;
+    }
   }
-});
+  const activeLabel = document.getElementById('hub-side-active-label');
+  if (activeLabel) activeLabel.textContent = activeSection.label;
+  const crumb = document.getElementById('hub-breadcrumb-active');
+  if (crumb) crumb.textContent = activeSection.label;
+  syncShellNav(activeSection.nav);
+}
+
+let scrollTickPending = false;
+window.addEventListener('scroll', () => {
+  if (scrollTickPending) return;
+  scrollTickPending = true;
+  window.requestAnimationFrame(() => {
+    scrollTickPending = false;
+    updateScrollProgressAndSpy();
+  });
+}, { passive: true });
+
+function toggleRadialDock(force) {
+  const dock = document.getElementById('hub-radial-dock');
+  const trigger = document.getElementById('hub-radial-trigger');
+  const icon = document.getElementById('hub-radial-icon');
+  if (!dock || !trigger) return;
+  const open = typeof force === 'boolean' ? force : !dock.classList.contains('is-open');
+  dock.classList.toggle('is-open', open);
+  trigger.setAttribute('aria-expanded', String(open));
+  if (icon) icon.className = open ? 'fa-solid fa-plus' : 'fa-solid fa-compass';
+}
+
+function radialJump(target) {
+  toggleRadialDock(false);
+  if (target === 'home') {
+    scrollToTop();
+    return;
+  }
+  if (target === 'catalog') {
+    document.getElementById('hub-catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  hubNavigate(target);
+}
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1547,6 +2493,16 @@ function hubNavigate(target) {
     document.getElementById('traffic-heading')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     return;
   }
+  if (target === 'news') {
+    syncShellNav('news');
+    document.getElementById('hub-news-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  if (target === 'rating') {
+    syncShellNav('rating');
+    document.getElementById('hub-rating-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
   if (target === 'archive') {
     setHubView('archive');
     syncShellNav('archive');
@@ -1584,6 +2540,11 @@ async function loadData(sheetName, subtitle, forceRefresh = false) {
     renderData(cached.items, sheetName);
     return;
   }
+
+  const rollBar = document.getElementById('hub-roll-bar');
+  const rollFooter = document.getElementById('hub-roll-footer');
+  if (rollBar) rollBar.hidden = true;
+  if (rollFooter) rollFooter.hidden = true;
 
   const container = document.getElementById('data-container');
   let skeletonHTML = '';
@@ -1672,7 +2633,7 @@ function toggleFavorite(id) {
   if (favorites.has(id)) favorites.delete(id);
   else favorites.add(id);
   saveFavorites();
-  applyFilters();
+  applyFilters(true);
 }
 
 function toggleFavoritesOnly() {
@@ -1712,6 +2673,7 @@ function refreshCurrentData(evt) {
   loadDashboardStats();
   loadData(currentSheet, currentSubtitle, true);
   loadTraffic(trafficPeriod);
+  loadNews();
 }
 
 function normalizeStatus(status) {
@@ -1744,7 +2706,87 @@ function itemSearchHaystack(item) {
   return parts.map(v => String(v || '').toLowerCase()).join(' ');
 }
 
-function applyFilters() {
+function getRollTotalPages() {
+  if (!filteredItems.length) return 1;
+  if (rollSize === 'all') return 1;
+  return Math.max(1, Math.ceil(filteredItems.length / Number(rollSize)));
+}
+
+function syncAutoRollButton() {
+  const btn = document.getElementById('roll-auto-btn');
+  const icon = document.getElementById('roll-auto-icon');
+  const label = document.getElementById('roll-auto-label');
+  if (!btn || !icon || !label) return;
+  btn.classList.toggle('is-active', autoRollEnabled);
+  icon.className = autoRollEnabled ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+  label.textContent = autoRollEnabled ? 'Auto' : 'Jeda';
+}
+
+function toggleAutoRoll() {
+  autoRollEnabled = !autoRollEnabled;
+  autoRollElapsedMs = 0;
+  syncAutoRollButton();
+  updateRollProgressBar(0);
+}
+
+function changeRollSize(val) {
+  rollSize = val === 'all' ? 'all' : Math.max(1, Number(val) || 4);
+  rollPage = 0;
+  autoRollElapsedMs = 0;
+  renderRollPage();
+}
+
+function stepRoll(delta) {
+  const totalPages = getRollTotalPages();
+  if (totalPages <= 1) return;
+  rollPage = (rollPage + delta + totalPages) % totalPages;
+  autoRollElapsedMs = 0;
+  renderRollPage();
+}
+
+function goToRoll(pageIndex) {
+  const totalPages = getRollTotalPages();
+  rollPage = Math.min(Math.max(0, Number(pageIndex) || 0), totalPages - 1);
+  autoRollElapsedMs = 0;
+  renderRollPage();
+}
+
+function updateRollProgressBar(ratio) {
+  const fill = document.getElementById('hub-roll-progress-fill');
+  if (fill) fill.style.width = `${Math.min(100, Math.max(0, ratio * 100))}%`;
+}
+
+function shouldAutoRollTick() {
+  if (!autoRollEnabled || autoRollHoverPaused || document.hidden) return false;
+  if (rollSize === 'all' || getRollTotalPages() <= 1) return false;
+  const query = (document.getElementById('search-input')?.value || '').trim();
+  if (query || showFavoritesOnly) return false;
+  if (document.getElementById('detail-dialog')?.open || document.getElementById('news-dialog')?.open) return false;
+  return true;
+}
+
+function startAutoRollTicker() {
+  if (autoRollInterval) clearInterval(autoRollInterval);
+  const TICK = 120;
+  autoRollInterval = setInterval(() => {
+    if (!shouldAutoRollTick()) {
+      if (!autoRollEnabled || getRollTotalPages() <= 1) updateRollProgressBar(0);
+      return;
+    }
+    autoRollElapsedMs += TICK;
+    if (autoRollElapsedMs >= AUTO_ROLL_DURATION_MS) {
+      autoRollElapsedMs = 0;
+      const totalPages = getRollTotalPages();
+      rollPage = (rollPage + 1) % totalPages;
+      renderRollPage();
+      updateRollProgressBar(0);
+    } else {
+      updateRollProgressBar(autoRollElapsedMs / AUTO_ROLL_DURATION_MS);
+    }
+  }, TICK);
+}
+
+function applyFilters(preservePage = false) {
   const query = (document.getElementById('search-input')?.value || '').trim().toLowerCase();
   const statusFilter = document.getElementById('status-filter')?.value || 'all';
   const sortMode = document.getElementById('sort-select')?.value || 'deadline-asc';
@@ -1769,15 +2811,76 @@ function applyFilters() {
     return sortMode === 'deadline-desc' ? dbObj.getTime() - daObj.getTime() : daObj.getTime() - dbObj.getTime();
   });
 
-  renderCards(filtered);
+  filteredItems = filtered;
+  const totalPages = getRollTotalPages();
+  const keepPage = preservePage === true;
+  rollPage = keepPage ? Math.min(rollPage, totalPages - 1) : 0;
+  autoRollElapsedMs = 0;
+  renderRollPage();
 }
 
-function renderCards(items) {
+function buildRollPageList(current, total) {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i);
+  const pages = new Set([0, total - 1, current, current - 1, current + 1]);
+  const sorted = [...pages].filter(p => p >= 0 && p < total).sort((a, b) => a - b);
+  const out = [];
+  sorted.forEach((p, idx) => {
+    if (idx > 0 && p - sorted[idx - 1] > 1) out.push('...');
+    out.push(p);
+  });
+  return out;
+}
+
+function renderRollPage() {
+  const total = filteredItems.length;
+  const totalPages = getRollTotalPages();
+  const bar = document.getElementById('hub-roll-bar');
+  const footer = document.getElementById('hub-roll-footer');
+
+  if (!total) {
+    if (bar) bar.hidden = true;
+    if (footer) footer.hidden = true;
+    renderCards([]);
+    return;
+  }
+
+  const perPage = rollSize === 'all' ? total : Number(rollSize);
+  const start = rollPage * perPage;
+  const end = Math.min(total, start + perPage);
+  const pageSlice = filteredItems.slice(start, end);
+
+  if (bar) {
+    bar.hidden = false;
+    document.getElementById('roll-page-badge').textContent = `Roll ${rollPage + 1} / ${totalPages}`;
+    document.getElementById('roll-range-text').textContent = `Menampilkan ${start + 1}–${end} dari ${total} ${hubView === 'archive' ? 'arsip' : 'peluang'}`;
+    document.getElementById('roll-prev-top').disabled = totalPages <= 1;
+    document.getElementById('roll-next-top').disabled = totalPages <= 1;
+  }
+
+  if (footer) {
+    footer.hidden = totalPages <= 1;
+    document.getElementById('roll-prev-bottom').disabled = totalPages <= 1;
+    document.getElementById('roll-next-bottom').disabled = totalPages <= 1;
+    const dotsWrap = document.getElementById('hub-roll-dots');
+    dotsWrap.innerHTML = buildRollPageList(rollPage, totalPages).map(entry => {
+      if (entry === '...') return '<span class="px-1 text-muted small">…</span>';
+      return `<button type="button" class="hub-roll-dot ${entry === rollPage ? 'active' : ''}" onclick="goToRoll(${entry})" aria-label="Roll ${entry + 1}" ${entry === rollPage ? 'aria-current="page"' : ''}>${entry + 1}</button>`;
+    }).join('');
+  }
+
+  renderCards(pageSlice, total, start + 1, end);
+  updateScrollProgressAndSpy();
+}
+
+function renderCards(items, totalFiltered = items.length, rangeStart = 1, rangeEnd = items.length) {
   const container = document.getElementById('data-container');
   container.innerHTML = '';
   currentItems = [];
 
-  document.getElementById('result-count').textContent = `${items.length} ${hubView === 'archive' ? 'arsip' : 'peluang'} ditampilkan`;
+  const labelType = hubView === 'archive' ? 'arsip' : 'peluang';
+  document.getElementById('result-count').textContent = totalFiltered
+    ? `Menampilkan ${rangeStart}–${rangeEnd} dari ${totalFiltered} ${labelType}`
+    : `0 ${labelType} ditampilkan`;
 
   if (!items.length) {
     container.innerHTML = `
@@ -1805,8 +2908,8 @@ function renderCards(items) {
     const waUrl = `https://wa.me/?text=${waText}`;
 
     const wrapper = document.createElement('div');
-    wrapper.className = 'col-12 col-md-6 col-xl-4 animate-card';
-    wrapper.style.animationDelay = `${Math.min(rowIndex * 0.05, 0.35)}s`;
+    wrapper.className = 'col-12 col-md-6 col-xl-4 hub-roll-card';
+    wrapper.style.animationDelay = `${Math.min(rowIndex * 0.05, 0.25)}s`;
     wrapper.innerHTML = `
       <div class="card data-card p-3 d-flex flex-column h-100 border-0">
         <div>
@@ -1842,6 +2945,140 @@ function renderCards(items) {
   container.querySelectorAll('[data-favorite-id]').forEach(btn => {
     btn.addEventListener('click', () => toggleFavorite(btn.dataset.favoriteId));
   });
+}
+
+// ============================================================================
+// BERITA & PENGUMUMAN (ALA PORTAL UNIVERSITAS BAKRIE)
+// ============================================================================
+
+async function loadNews() {
+  try {
+    const data = await supabaseRpc('get_news');
+    if (Array.isArray(data) && data.length > 0) {
+      newsItems = data;
+      newsPage = 0;
+      renderNews();
+    }
+  } catch (err) {
+    // Jika tabel news belum dijalankan di Supabase, tetap tampilkan berita default dengan rapi.
+    console.info('Info berita memakai konten default:', hubErrorText(err));
+  }
+}
+
+function buildNewsBannerHtml(item) {
+  const imgUrl = usableLink(item.gambar_url);
+  if (imgUrl) {
+    return `<img src="${escapeHtml(imgUrl)}" alt="${escapeHtml(item.judul)}" class="hub-news-poster-img" loading="lazy" referrerpolicy="no-referrer">`;
+  }
+  return `
+    <div class="hub-news-poster-banner">
+      <div class="hub-news-poster-top">
+        <span>UNIVERSITAS BAKRIE</span>
+        <span>HMTIF</span>
+      </div>
+      <span class="hub-news-poster-pill">${escapeHtml(item.kategori || 'Pengumuman')}</span>
+      <p class="hub-news-poster-headline">${escapeHtml(item.judul)}</p>
+      <div class="hub-news-poster-foot">HMTIF Career Hub • Universitas Bakrie</div>
+    </div>`;
+}
+
+function renderNews() {
+  const listEl = document.getElementById('hub-news-list');
+  const pagerEl = document.getElementById('hub-news-pager');
+  if (!listEl) return;
+
+  const items = Array.isArray(newsItems) && newsItems.length ? newsItems : DEFAULT_HUB_NEWS;
+  const totalPages = Math.max(1, Math.ceil(items.length / NEWS_PER_PAGE));
+  newsPage = Math.min(Math.max(0, newsPage), totalPages - 1);
+
+  if (pagerEl) {
+    pagerEl.hidden = totalPages <= 1;
+    document.getElementById('news-page-label').textContent = `${newsPage + 1}/${totalPages}`;
+    document.getElementById('news-prev-btn').disabled = totalPages <= 1;
+    document.getElementById('news-next-btn').disabled = totalPages <= 1;
+  }
+
+  const start = newsPage * NEWS_PER_PAGE;
+  const slice = items.slice(start, start + NEWS_PER_PAGE);
+
+  listEl.innerHTML = slice.map((item, idx) => {
+    const actualIndex = start + idx;
+    const attachUrl = usableLink(item.lampiran_url || item.link_url);
+    const attachBtn = attachUrl
+      ? `<a href="${escapeHtml(attachUrl)}" target="_blank" rel="noopener noreferrer" class="hub-news-btn-attach"><i class="fa-solid fa-cloud-arrow-down"></i> ${item.lampiran_url ? 'Download / Buka' : 'Buka Tautan'}</a>`
+      : '';
+    return `
+      <article class="hub-news-card">
+        <h5 class="hub-news-card-title">${escapeHtml(item.judul)}</h5>
+        <div class="hub-news-meta">
+          <span><i class="fa-regular fa-calendar me-1"></i>${escapeHtml(item.tanggal || 'Terbaru')}</span>
+          <span>•</span>
+          <span>${escapeHtml(item.kategori || 'Pengumuman')}</span>
+        </div>
+        ${buildNewsBannerHtml(item)}
+        <p class="hub-news-excerpt">${escapeHtml(item.ringkasan || item.isi_lengkap || '')}</p>
+        <div class="hub-news-actions">
+          ${attachBtn}
+          <button type="button" class="hub-news-btn-more" onclick="openNewsModal(${actualIndex})">Selengkapnya..</button>
+        </div>
+      </article>`;
+  }).join('');
+}
+
+function stepNews(delta) {
+  const items = Array.isArray(newsItems) && newsItems.length ? newsItems : DEFAULT_HUB_NEWS;
+  const totalPages = Math.max(1, Math.ceil(items.length / NEWS_PER_PAGE));
+  if (totalPages <= 1) return;
+  newsPage = (newsPage + delta + totalPages) % totalPages;
+  renderNews();
+}
+
+function openNewsModal(index) {
+  const items = Array.isArray(newsItems) && newsItems.length ? newsItems : DEFAULT_HUB_NEWS;
+  const item = items[index];
+  if (!item) return;
+
+  const dialog = document.getElementById('news-dialog');
+  document.getElementById('news-modal-meta').textContent = `${item.kategori || 'PENGUMUMAN'} • ${item.tanggal || 'TERBARU'}`;
+  document.getElementById('news-modal-title').textContent = item.judul || 'Berita & Pengumuman';
+  document.getElementById('news-modal-banner').innerHTML = buildNewsBannerHtml(item);
+  document.getElementById('news-modal-body').textContent = item.isi_lengkap || item.ringkasan || '';
+
+  const actions = document.getElementById('news-modal-actions');
+  actions.replaceChildren();
+  const attachUrl = usableLink(item.lampiran_url);
+  if (attachUrl) {
+    const a = document.createElement('a');
+    a.href = attachUrl;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.className = 'btn btn-gradient-warm rounded-pill px-4 fw-semibold';
+    a.innerHTML = '<i class="fa-solid fa-cloud-arrow-down me-2"></i>Buka Lampiran';
+    actions.appendChild(a);
+  }
+  const linkUrl = usableLink(item.link_url);
+  if (linkUrl && linkUrl !== attachUrl) {
+    const a = document.createElement('a');
+    a.href = linkUrl;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.className = 'btn btn-gradient-primary rounded-pill px-4 fw-semibold';
+    a.innerHTML = '<i class="fa-solid fa-arrow-up-right-from-square me-2"></i>Buka Tautan';
+    actions.appendChild(a);
+  }
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'btn btn-gradient-secondary rounded-pill px-4 fw-semibold';
+  closeBtn.textContent = 'Tutup';
+  closeBtn.addEventListener('click', closeNewsModal);
+  actions.appendChild(closeBtn);
+
+  dialog.showModal();
+  document.getElementById('news-modal-close').focus();
+}
+
+function closeNewsModal() {
+  document.getElementById('news-dialog').close();
 }
 
 function renderData(items, sheetName) {
