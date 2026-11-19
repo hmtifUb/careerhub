@@ -27,5 +27,5 @@ career-hub/
 2. Pada **Build and deployment**, pilih:
    - **Source**: `Deploy from a branch`
    - **Branch**: `main` — folder `/(root)` → klik **Save**.
-3. Web akan aktif di `https://codecrafter-fourr.github.io/career-hub/`.
+3. Web akan aktif di `https://hmtifub.github.io/careerhub/`.
 4. Masukkan URL tersebut ke **Properti Skrip** Apps Script (`PUBLIC_WEB_URL`) agar link `/exec` lama otomatis mengarah ke web baru.
