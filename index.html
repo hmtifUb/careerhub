@@ -4,8 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#a61932">
-  <meta name="description" content="HMTIF Career Hub Universitas Bakrie — karier, pelatihan, dan kompetisi mahasiswa.">
-  <title>HMTIF Career Hub — Universitas Bakrie</title>
+  <meta name="description" content="HMTIF Career Hub — pusat informasi karier, pelatihan, dan kompetisi mahasiswa Teknik Informatika.">
+  <link rel="icon" type="image/png" href="https://e.top4top.io/p_38813coj21.png">
+  <link rel="apple-touch-icon" href="https://e.top4top.io/p_38813coj21.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HMTIF Career Hub">
+  <meta property="og:description" content="Pusat informasi karier, pelatihan, kompetisi, dan peluang pengembangan diri mahasiswa Teknik Informatika.">
+  <meta property="og:url" content="https://hmtifub.github.io/careerhub/">
+  <meta property="og:image" content="https://e.top4top.io/p_38813coj21.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="HMTIF Career Hub">
+  <meta name="twitter:description" content="Pusat informasi karier, pelatihan, kompetisi, dan peluang pengembangan diri mahasiswa Teknik Informatika.">
+  <meta name="twitter:image" content="https://e.top4top.io/p_38813coj21.png">
+  <title>HMTIF Career Hub</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
@@ -893,7 +904,7 @@ html { scroll-padding-top: 84px; }
 .hub-radial-orb:hover .hub-radial-orb-label,
 .hub-radial-orb:focus-visible .hub-radial-orb-label { opacity: 1; }
 
-/* 4. Stat Cards: Teks rapi di tengah kolom & Total Kunjungan rata kanan */
+/* 4. Stat Cards: Semua teks rapi tepat di tengah kolom (termasuk Total Kunjungan) */
 .hub-stats-grid .stat-card {
   display: flex;
   flex-direction: column;
@@ -911,18 +922,27 @@ html { scroll-padding-top: 84px; }
   line-height: 1.25;
 }
 .hub-stats-grid .stat-card.stat-card-visits {
-  align-items: flex-end;
-  text-align: right;
-  padding: 18px 22px 18px 18px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18px 16px;
 }
 .hub-stats-grid .stat-card.stat-card-visits::before {
-  left: auto;
-  right: 0;
+  left: 0;
+  right: auto;
   background: linear-gradient(180deg, #a61932, #f0b72f);
+}
+.hub-stats-grid .stat-card.stat-card-visits .stat-visits-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 .stat-visits-badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   font-size: .62rem;
   font-weight: 800;
@@ -944,20 +964,57 @@ html { scroll-padding-top: 84px; }
   .hub-stats-grid .stat-card { min-height: 102px; padding: 14px 12px; }
   .hub-stats-grid .stat-card.stat-card-visits {
     grid-column: 1 / -1;
-    min-height: 86px;
-    padding: 14px 20px;
-    flex-direction: row;
+    min-height: 104px;
+    padding: 16px 14px;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    text-align: right;
+    justify-content: center;
+    text-align: center;
   }
   .hub-stats-grid .stat-card.stat-card-visits .stat-visits-right {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
+    align-items: center;
+    text-align: center;
   }
   .hub-scroll-pill { display: none; }
+}
+
+/* Efek Elevator / Scroll-Reveal Bertahap saat Halaman Di-Scroll */
+.hub-elevator {
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity .62s cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms),
+              transform .68s cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.hub-elevator.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.stat-elevator-clip {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.stat-elevator-num {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition: transform .7s cubic-bezier(.16, 1, .3, 1) var(--reveal-delay, 0ms),
+              opacity .55s ease var(--reveal-delay, 0ms);
+}
+.hub-elevator.is-visible .stat-elevator-num {
+  transform: translateY(0);
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hub-elevator,
+  .stat-elevator-num {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* Rapi center untuk kartu kategori, insight mini-card, dan struktur PPP */
@@ -1423,16 +1480,16 @@ html { scroll-padding-top: 84px; }
     </div>
 
     <section class="hub-stats-section" aria-label="Ringkasan statistik Career Hub">
-      <div class="hub-stats-heading"><span class="hub-eyebrow">RINGKASAN PLATFORM</span><p>Live Stats • Cloud Database</p></div>
+      <div class="hub-stats-heading hub-elevator"><span class="hub-eyebrow">RINGKASAN PLATFORM</span><p>Live Stats • Cloud Database</p></div>
       <div class="hub-stats-grid">
-        <div class="stat-card"><div class="stat-number" id="stat-peluang">—</div><div class="small fw-semibold text-muted">Peluang Aktif</div></div>
-        <div class="stat-card"><div class="stat-number" id="stat-lowongan">—</div><div class="small fw-semibold text-muted">Karier</div></div>
-        <div class="stat-card"><div class="stat-number" id="stat-pelatihan">—</div><div class="small fw-semibold text-muted">Pengembangan</div></div>
-        <div class="stat-card"><div class="stat-number" id="stat-lomba">—</div><div class="small fw-semibold text-muted">Opportunities</div></div>
-        <div class="stat-card stat-card-visits">
+        <div class="stat-card hub-elevator" style="--reveal-delay:0ms"><div class="stat-number"><span class="stat-elevator-clip"><span class="stat-elevator-num" id="stat-peluang">—</span></span></div><div class="small fw-semibold text-muted">Peluang Aktif</div></div>
+        <div class="stat-card hub-elevator" style="--reveal-delay:80ms"><div class="stat-number"><span class="stat-elevator-clip"><span class="stat-elevator-num" id="stat-lowongan">—</span></span></div><div class="small fw-semibold text-muted">Karier</div></div>
+        <div class="stat-card hub-elevator" style="--reveal-delay:160ms"><div class="stat-number"><span class="stat-elevator-clip"><span class="stat-elevator-num" id="stat-pelatihan">—</span></span></div><div class="small fw-semibold text-muted">Pengembangan</div></div>
+        <div class="stat-card hub-elevator" style="--reveal-delay:240ms"><div class="stat-number"><span class="stat-elevator-clip"><span class="stat-elevator-num" id="stat-lomba">—</span></span></div><div class="small fw-semibold text-muted">Opportunities</div></div>
+        <div class="stat-card stat-card-visits hub-elevator" style="--reveal-delay:320ms">
           <span class="stat-visits-badge"><i class="fa-solid fa-chart-simple"></i> Live Traffic</span>
           <div class="stat-visits-right">
-            <div class="stat-number" id="stat-kunjungan">—</div>
+            <div class="stat-number"><span class="stat-elevator-clip"><span class="stat-elevator-num" id="stat-kunjungan">—</span></span></div>
             <div class="small fw-semibold text-muted">Total Kunjungan</div>
           </div>
         </div>
@@ -1440,26 +1497,26 @@ html { scroll-padding-top: 84px; }
     </section>
 
     <div class="container mb-5">
-      <div class="hub-section-heading" id="hub-catalog">
+      <div class="hub-section-heading hub-elevator" id="hub-catalog">
         <span class="hub-eyebrow"><i class="fa-solid fa-layer-group me-2"></i>JELAJAHI INFORMASI</span>
         <h2 class="hub-section-title">Pilih kategori kesempatan</h2>
         <p>Beragam kesempatan untuk berkembang bersama komunitas Teknik Informatika.</p>
       </div>
 
       <div class="row g-4 mb-5">
-        <div class="col-md-4">
+        <div class="col-md-4 hub-elevator" style="--reveal-delay:0ms">
           <button class="category-btn btn-karier" aria-label="Tampilkan kategori Karier" onclick="loadData('KARIER', 'Lowongan • Magang • Freelance')">
             KARIER<br><small class="fw-normal">Temukan kesempatan kerja</small>
             <i class="fas fa-briefcase"></i>
           </button>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 hub-elevator" style="--reveal-delay:90ms">
           <button class="category-btn btn-pengembangan" aria-label="Tampilkan kategori Pengembangan" onclick="loadData('PENGEMBANGAN', 'Pelatihan • Webinar • Workshop')">
             PENGEMBANGAN<br><small class="fw-normal">Tingkatkan skill & pengetahuan</small>
             <i class="fas fa-laptop-code"></i>
           </button>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 hub-elevator" style="--reveal-delay:180ms">
           <button class="category-btn btn-opportunities" aria-label="Tampilkan kategori Opportunities" onclick="loadData('OPPORTUNITIES', 'Lomba • Beasiswa • Program')">
             OPPORTUNITIES<br><small class="fw-normal">Raih prestasi & beasiswa</small>
             <i class="fas fa-trophy"></i>
@@ -1572,7 +1629,7 @@ html { scroll-padding-top: 84px; }
         </div>
 
         <div class="hub-board-insight">
-          <section class="mt-0" style="border-color: var(--border-color) !important;" aria-labelledby="traffic-heading">
+          <section class="mt-0 hub-elevator" style="border-color: var(--border-color) !important; --reveal-delay:60ms;" aria-labelledby="traffic-heading">
             <div class="insights-panel">
               <div class="insights-heading mb-3">
                 <div>
@@ -1592,13 +1649,12 @@ html { scroll-padding-top: 84px; }
                 <div class="col-4"><div class="insight-card"><div class="insight-number" id="visits-peak">—</div><div class="insight-label">Tertinggi / hari</div></div></div>
               </div>
               <div class="visits-chart-wrap"><canvas id="trafficChart" role="img" aria-label="Grafik jumlah pembukaan Career Hub per hari"></canvas></div>
-              <p class="traffic-note mb-0 mt-3"><i class="fas fa-shield-halved me-1"></i> Statistik kunjungan dicatat secara anonim setiap pembukaan halaman (zona waktu WIB).</p>
               <p id="traffic-error" class="text-danger small mt-2 mb-0" role="status" hidden></p>
             </div>
           </section>
 
-          <!-- Panel Berita & Pengumuman Kampus (Ala Portal Universitas Bakrie) -->
-          <section id="hub-news-section" aria-labelledby="news-heading">
+          <!-- Panel Berita & Pengumuman -->
+          <section id="hub-news-section" class="hub-elevator" style="--reveal-delay:140ms;" aria-labelledby="news-heading">
             <div class="hub-news-panel">
               <div class="hub-news-header">
                 <div class="hub-news-header-title" id="news-heading">
@@ -1617,7 +1673,7 @@ html { scroll-padding-top: 84px; }
         </div>
       </div>
 
-      <div class="hub-community-banner mt-5" id="hub-community">
+      <div class="hub-community-banner mt-5 hub-elevator" id="hub-community">
         <div>
           <span class="hub-eyebrow" style="color:#f7c65b">BERGABUNG & BERKEMBANG</span>
           <h3>Satu komunitas, banyak kesempatan.</h3>
@@ -1626,7 +1682,7 @@ html { scroll-padding-top: 84px; }
         <a href="https://whatsapp.com/channel/0029VbDskQcDDmFLvlye9R0R" target="_blank" rel="noopener noreferrer" class="hub-community-cta"><i class="fa-brands fa-whatsapp me-2"></i>Gabung saluran <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
       </div>
 
-      <div id="hub-rating-section" class="mt-5 pt-5 border-top" style="border-color: var(--border-color) !important;">
+      <div id="hub-rating-section" class="mt-5 pt-5 border-top hub-elevator" style="border-color: var(--border-color) !important;">
         <div class="row g-4">
           <div class="col-lg-6">
             <div class="card border-0 shadow-sm h-100 data-card" style="border-radius: 15px;">
@@ -1954,14 +2010,14 @@ let autoRollElapsedMs = 0;
 let autoRollInterval = null;
 const AUTO_ROLL_DURATION_MS = 8500;
 
-// State Berita & Pengumuman (ala Web Universitas Bakrie)
+// State Berita & Pengumuman
 const DEFAULT_HUB_NEWS = [
   {
-    judul: 'INFORMASI RESMI HMTIF CAREER HUB UNIVERSITAS BAKRIE',
+    judul: 'INFORMASI RESMI HMTIF CAREER HUB',
     kategori: 'Pengumuman',
     tanggal: 'Terbaru',
     ringkasan: 'Seluruh informasi lowongan kerja, magang, pelatihan, dan lomba mahasiswa Teknik Informatika kini diperbarui otomatis melalui cloud database yang lebih ringan.',
-    isi_lengkap: 'Halo Mahasiswa/i Teknik Informatika Universitas Bakrie!\n\nHMTIF Career Hub kini telah bermigrasi ke infrastruktur cloud database agar akses informasi karier, pelatihan, dan kompetisi jauh lebih cepat dan stabil.\n\nPastikan kamu memantau pembaruan setiap pekan dan bergabung di saluran WhatsApp resmi HMTIF Career Hub agar tidak tertinggal informasi deadline.',
+    isi_lengkap: 'Halo Mahasiswa/i Teknik Informatika!\n\nHMTIF Career Hub kini telah bermigrasi ke infrastruktur cloud database agar akses informasi karier, pelatihan, dan kompetisi jauh lebih cepat dan stabil.\n\nPastikan kamu memantau pembaruan setiap pekan dan bergabung di saluran WhatsApp resmi HMTIF Career Hub agar tidak tertinggal informasi deadline.',
     gambar_url: '',
     lampiran_url: 'https://whatsapp.com/channel/0029VbDskQcDDmFLvlye9R0R',
     link_url: 'https://whatsapp.com/channel/0029VbDskQcDDmFLvlye9R0R'
@@ -1971,7 +2027,7 @@ const DEFAULT_HUB_NEWS = [
     kategori: 'Info HMTIF',
     tanggal: 'PPP HMTIF',
     ringkasan: 'Punya info magang, bootcamp, beasiswa, atau lomba IT? Kirimkan melalui formulir resmi agar segera diverifikasi dan dipublikasikan untuk seluruh mahasiswa.',
-    isi_lengkap: 'Kepada seluruh Mahasiswa/i, Alumni, dan Mitra HMTIF Universitas Bakrie,\n\nApabila kamu memiliki informasi lowongan kerja, kesempatan magang, pelatihan/webinar, maupun lomba & beasiswa yang bermanfaat bagi mahasiswa Teknik Informatika, silakan kirimkan melalui Google Form resmi Career Hub.\n\nTim Departemen PPP HMTIF akan memverifikasi dan langsung menayangkannya di portal ini.',
+    isi_lengkap: 'Kepada seluruh Mahasiswa/i, Alumni, dan Mitra HMTIF,\n\nApabila kamu memiliki informasi lowongan kerja, kesempatan magang, pelatihan/webinar, maupun lomba & beasiswa yang bermanfaat bagi mahasiswa Teknik Informatika, silakan kirimkan melalui Google Form resmi Career Hub.\n\nTim Departemen PPP HMTIF akan memverifikasi dan langsung menayangkannya di portal ini.',
     gambar_url: '',
     lampiran_url: 'https://forms.gle/A8zraMzTBVWqeiKy6',
     link_url: 'https://forms.gle/A8zraMzTBVWqeiKy6'
@@ -2175,6 +2231,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   syncShellNav(hubView === 'archive' ? 'archive' : 'home');
   updateScrollProgressAndSpy();
+  initElevatorReveal();
   syncAutoRollButton();
   startAutoRollTicker();
 });
@@ -2312,15 +2369,93 @@ function toggleTheme() {
   if (trafficResponse) renderTraffic(trafficResponse);
 }
 
+const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let elevatorObserver = null;
+
+function formatElevatorNumber(value, decimals = 0) {
+  return Number(value || 0).toLocaleString('id-ID', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: decimals
+  });
+}
+
+function runElevatorCounter(el) {
+  if (!el || el.dataset.targetNum === undefined) return;
+  const target = Number(el.dataset.targetNum) || 0;
+  const decimals = Number(el.dataset.targetDecimals || 0);
+  if (reducedMotionQuery.matches) {
+    el.textContent = formatElevatorNumber(target, decimals);
+    el.dataset.animatedValue = String(target);
+    return;
+  }
+  if (el.dataset.animatedValue === String(target)) return;
+  el.dataset.animatedValue = String(target);
+
+  const duration = target > 500 ? 1050 : 720;
+  const startVal = Number(el.dataset.currentDisplayNum || 0);
+  const startTime = performance.now();
+  const prevAnim = Number(el.dataset.rafId || 0);
+  if (prevAnim) cancelAnimationFrame(prevAnim);
+
+  function step(now) {
+    const progress = Math.min(1, (now - startTime) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = startVal + (target - startVal) * eased;
+    el.textContent = formatElevatorNumber(decimals > 0 ? Math.round(current * 10) / 10 : Math.round(current), decimals);
+    if (progress < 1) {
+      el.dataset.rafId = String(requestAnimationFrame(step));
+    } else {
+      el.dataset.currentDisplayNum = String(target);
+      el.textContent = formatElevatorNumber(target, decimals);
+    }
+  }
+  el.dataset.rafId = String(requestAnimationFrame(step));
+}
+
+function setAnimatedStat(id, value, decimals = 0) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const numeric = Number(value || 0);
+  el.dataset.targetNum = String(numeric);
+  el.dataset.targetDecimals = String(decimals);
+
+  const elevatorHost = el.closest('.hub-elevator');
+  if (!elevatorHost || elevatorHost.classList.contains('is-visible') || reducedMotionQuery.matches) {
+    runElevatorCounter(el);
+  }
+}
+
+function initElevatorReveal() {
+  const nodes = document.querySelectorAll('.hub-elevator');
+  if (!nodes.length) return;
+  if (reducedMotionQuery.matches || typeof IntersectionObserver === 'undefined') {
+    nodes.forEach(node => {
+      node.classList.add('is-visible');
+      node.querySelectorAll('[data-target-num]').forEach(runElevatorCounter);
+    });
+    return;
+  }
+  if (elevatorObserver) elevatorObserver.disconnect();
+  elevatorObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      el.classList.add('is-visible');
+      el.querySelectorAll('[data-target-num]').forEach(runElevatorCounter);
+      elevatorObserver.unobserve(el);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' });
+
+  nodes.forEach(node => elevatorObserver.observe(node));
+}
+
 function updateStats(stats) {
   stats = stats || {};
-  document.getElementById('stat-peluang').innerText = Number(stats.peluangAktif || 0).toLocaleString('id-ID');
-  document.getElementById('stat-lowongan').innerText = Number(stats.lowongan || 0).toLocaleString('id-ID');
-  document.getElementById('stat-pelatihan').innerText = Number(stats.pelatihan || 0).toLocaleString('id-ID');
-  document.getElementById('stat-lomba').innerText = Number(stats.lomba || 0).toLocaleString('id-ID');
-  document.getElementById('stat-kunjungan').innerText = trafficResponse
-    ? Number(trafficResponse.total || 0).toLocaleString('id-ID')
-    : Number(stats.kunjungan || 0).toLocaleString('id-ID');
+  setAnimatedStat('stat-peluang', stats.peluangAktif || 0);
+  setAnimatedStat('stat-lowongan', stats.lowongan || 0);
+  setAnimatedStat('stat-pelatihan', stats.pelatihan || 0);
+  setAnimatedStat('stat-lomba', stats.lomba || 0);
+  setAnimatedStat('stat-kunjungan', trafficResponse ? (trafficResponse.total || 0) : (stats.kunjungan || 0));
   document.getElementById('last-updated').innerText = stats.terakhirupdate || '-';
   document.getElementById('archive-count').textContent = Number(stats.arsipTotal || 0).toLocaleString('id-ID');
 }
@@ -2973,12 +3108,12 @@ function buildNewsBannerHtml(item) {
   return `
     <div class="hub-news-poster-banner">
       <div class="hub-news-poster-top">
-        <span>UNIVERSITAS BAKRIE</span>
+        <span>HMTIF CAREER HUB</span>
         <span>HMTIF</span>
       </div>
       <span class="hub-news-poster-pill">${escapeHtml(item.kategori || 'Pengumuman')}</span>
       <p class="hub-news-poster-headline">${escapeHtml(item.judul)}</p>
-      <div class="hub-news-poster-foot">HMTIF Career Hub • Universitas Bakrie</div>
+      <div class="hub-news-poster-foot">HMTIF Career Hub • Informasi Resmi</div>
     </div>`;
 }
 
@@ -3149,7 +3284,7 @@ async function registerVisitAndLoadTraffic() {
     trafficPeriod = 7;
     trafficResponse = data;
     renderTraffic(data);
-    document.getElementById('stat-kunjungan').textContent = Number(data.total || 0).toLocaleString('id-ID');
+    setAnimatedStat('stat-kunjungan', data.total || 0);
   } catch (err) {
     const reason = hubErrorText(err);
     console.error('Gagal mencatat kunjungan Career Hub:', reason);
@@ -3172,7 +3307,7 @@ async function loadTraffic(days, keepError) {
     if (req !== trafficRequestId) return;
     trafficResponse = data;
     renderTraffic(data);
-    document.getElementById('stat-kunjungan').textContent = Number(data.total || 0).toLocaleString('id-ID');
+    setAnimatedStat('stat-kunjungan', data.total || 0);
   } catch (err) {
     if (req !== trafficRequestId) return;
     errEl.textContent = 'Grafik kunjungan belum dapat dimuat: ' + hubErrorText(err);
@@ -3183,9 +3318,9 @@ async function loadTraffic(days, keepError) {
 function renderTraffic(data) {
   if (!data) return;
   const fmt = num => Number(num || 0).toLocaleString('id-ID', { maximumFractionDigits: 1 });
-  document.getElementById('visits-today').textContent = fmt(data.today);
-  document.getElementById('visits-average').textContent = fmt(data.average);
-  document.getElementById('visits-peak').textContent = fmt(data.peak);
+  setAnimatedStat('visits-today', data.today || 0, 1);
+  setAnimatedStat('visits-average', data.average || 0, 1);
+  setAnimatedStat('visits-peak', data.peak || 0, 1);
 
   const dark = document.documentElement.getAttribute('data-theme') === 'dark';
   const textColor = dark ? '#d8cbce' : '#7b7176';
