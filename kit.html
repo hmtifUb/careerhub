@@ -482,6 +482,7 @@
               </div>
               <div class="d-flex gap-2 flex-wrap">
                 <button type="button" class="kit-btn kit-btn-gold" onclick="loadSampleCv()"><i class="fa-solid fa-wand-magic-sparkles"></i> Isi Contoh IT</button>
+                <button type="button" class="kit-btn kit-btn-danger" onclick="clearCvData()" title="Kosongkan seluruh isian CV"><i class="fa-solid fa-trash-can"></i> Kosongkan</button>
                 <button type="button" class="kit-btn kit-btn-soft" onclick="exportCvJson()" title="Simpan backup JSON"><i class="fa-solid fa-download"></i> JSON</button>
                 <label class="kit-btn kit-btn-soft mb-0" title="Muat backup JSON">
                   <i class="fa-solid fa-upload"></i> Import
@@ -493,7 +494,7 @@
             <div class="cv-section-box mb-3">
               <div class="cv-section-head"><h5><i class="fa-solid fa-id-card me-1"></i> Identitas &amp; Kontak</h5></div>
               <div class="row g-2">
-                <div class="col-12 col-sm-6"><label class="kit-label">Nama Lengkap</label><input id="cv-name" class="kit-input" placeholder="Rehan Rizki Rahmat Ramadhan"></div>
+                <div class="col-12 col-sm-6"><label class="kit-label">Nama Lengkap</label><input id="cv-name" class="kit-input" placeholder="Nama Lengkap Kamu"></div>
                 <div class="col-12 col-sm-6"><label class="kit-label">Target Posisi</label><input id="cv-role" class="kit-input" placeholder="Software Engineering Intern / Frontend Developer"></div>
                 <div class="col-12 col-sm-6"><label class="kit-label">Email</label><input id="cv-email" class="kit-input" placeholder="nama@student.bakrie.ac.id"></div>
                 <div class="col-12 col-sm-6"><label class="kit-label">No. HP / WhatsApp</label><input id="cv-phone" class="kit-input" placeholder="+62 812-xxxx-xxxx"></div>
@@ -588,7 +589,7 @@
 
           <div class="row g-2">
             <div class="col-12 col-sm-6"><label class="kit-label">Nama Lengkap</label><input id="em-name" class="kit-input" placeholder="Nama kamu"></div>
-            <div class="col-12 col-sm-6"><label class="kit-label">Jurusan &amp; Kampus</label><input id="em-campus" class="kit-input" value="Teknik Informatika Universitas Bakrie"></div>
+            <div class="col-12 col-sm-6"><label class="kit-label">Jurusan &amp; Kampus</label><input id="em-campus" class="kit-input" placeholder="Teknik Informatika Universitas Bakrie"></div>
             <div class="col-12 col-sm-6"><label class="kit-label">Posisi yang Dilamar</label><input id="em-role" class="kit-input" placeholder="Frontend Developer Intern"></div>
             <div class="col-12 col-sm-6"><label class="kit-label">Nama Perusahaan</label><input id="em-company" class="kit-input" placeholder="PT Teknologi Nusantara"></div>
             <div class="col-12 col-sm-6"><label class="kit-label">Nama HRD / Penerima (opsional)</label><input id="em-hrd" class="kit-input" placeholder="Tim Rekrutmen"></div>
@@ -966,15 +967,36 @@
       }
     };
 
+    const EMPTY_CV = {
+      name: '',
+      role: '',
+      email: '',
+      phone: '',
+      location: '',
+      linkedin: '',
+      github: '',
+      summary: '',
+      eduSchool: '',
+      eduDegree: '',
+      eduPeriod: '',
+      eduGpa: '',
+      eduCourse: '',
+      exps: [],
+      projs: [],
+      skillLang: '',
+      skillTools: '',
+      certs: ''
+    };
+
     const SAMPLE_CV = {
-      name: 'Rehan Rizki Rahmat Ramadhan',
+      name: 'Budi Santoso',
       role: 'Software Engineering Intern | Web & Cloud Enthusiast',
-      email: 'rehan.informatika@student.bakrie.ac.id',
+      email: 'budi.santoso@student.bakrie.ac.id',
       phone: '+62 812-3456-7890',
       location: 'Jakarta Selatan',
-      linkedin: 'linkedin.com/in/rehan-informatika',
-      github: 'github.com/hmtifUb',
-      summary: 'Mahasiswa S1 Teknik Informatika yang berfokus pada pengembangan aplikasi web modern, arsitektur database PostgreSQL, dan automasi sistem. Berpengalaman membangun platform portal karier komunitas yang melayani 2.000+ kunjungan dengan waktu muat di bawah 500 ms.',
+      linkedin: 'linkedin.com/in/budi-santoso',
+      github: 'github.com/budisantoso',
+      summary: 'Mahasiswa S1 Teknik Informatika yang berfokus pada pengembangan aplikasi web modern, arsitektur database PostgreSQL, dan automasi sistem. Berpengalaman membangun aplikasi komunitas yang melayani ribuan kunjungan dengan performa muat cepat.',
       eduSchool: 'Universitas Bakrie',
       eduDegree: 'S1 Teknik Informatika',
       eduPeriod: '2023 – Sekarang',
@@ -982,28 +1004,28 @@
       eduCourse: 'Struktur Data, Basis Data, Rekayasa Perangkat Lunak, Pengembangan Web',
       exps: [
         {
-          title: 'Kepala Departemen Pengembangan Profesi & Peluang (PPP)',
-          org: 'HMTIF Universitas Bakrie',
+          title: 'Staf Departemen Pengembangan Teknologi',
+          org: 'Himpunan Mahasiswa Teknik Informatika',
           period: '2025 – Sekarang',
-          bullets: 'Merancang dan meluncurkan HMTIF Career Hub yang menghimpun 130+ informasi magang, pelatihan, dan lomba mahasiswa.\nMemimpin tim beranggotakan 4 pengurus dalam kurasi peluang mingguan dan distribusi informasi melalui saluran WhatsApp.'
+          bullets: 'Mengembangkan portal informasi karier dan pelatihan yang menghimpun 130+ peluang aktif untuk mahasiswa.\nBerkolaborasi bersama tim beranggotakan 4 orang dalam kurasi data mingguan dan automasi distribusi informasi.'
         }
       ],
       projs: [
         {
-          name: 'HMTIF Career Hub (Arsitektur Hybrid Cloud & PWA)',
-          stack: 'JavaScript, PostgreSQL (Supabase), Row Level Security, Apps Script, GitHub Pages',
-          link: 'https://hmtifub.github.io/careerhub/',
-          bullets: 'Memigrasikan backend dari Google Sheets langsung ke Supabase PostgreSQL sehingga waktu muat turun lebih dari 75%.\nMenerapkan sinkronisasi atomik 5 menit, pencatatan trafik tanpa antrean lock, deep-link program, dan mode PWA installable.'
+          name: 'Portal Informasi Karier Berbasis Cloud & PWA',
+          stack: 'JavaScript, PostgreSQL, Row Level Security, REST API',
+          link: 'https://github.com/budisantoso/career-portal',
+          bullets: 'Merancang arsitektur database cloud sehingga waktu muat halaman turun lebih dari 70%.\nMenerapkan sinkronisasi data otomatis, fitur pencarian cepat, deep-link program, dan dukungan PWA.'
         },
         {
-          name: 'Career Prep Studio & ATS CV Builder',
-          stack: 'HTML5, CSS3 Print Media, Vanilla JavaScript, LocalStorage',
-          link: 'https://hmtifub.github.io/careerhub/kit.html',
-          bullets: 'Membangun generator CV ATS 1 kolom dengan analisis skor kesiapan real-time dan ekspor PDF A4 langsung di browser.'
+          name: 'Aplikasi Manajemen Tugas & Jadwal Kuliah',
+          stack: 'TypeScript, React, Node.js, PostgreSQL',
+          link: 'https://github.com/budisantoso/campus-planner',
+          bullets: 'Membangun sistem pengingat tenggat tugas dengan notifikasi otomatis yang digunakan oleh 80+ mahasiswa.'
         }
       ],
       skillLang: 'JavaScript (ES6+), TypeScript, Python, SQL, HTML5, CSS3',
-      skillTools: 'PostgreSQL, Supabase, Git & GitHub, Node.js, Bootstrap, Chart.js, Google Apps Script, Figma',
+      skillTools: 'PostgreSQL, Git & GitHub, Node.js, React, Bootstrap, Figma',
       certs: 'Belajar Dasar Pemrograman Web — Dicoding (2025)\nSQL & Relational Database Foundations (2025)'
     };
 
@@ -1213,16 +1235,26 @@
       renderResources();
     }
 
+    function cloneEmptyCv() {
+      return JSON.parse(JSON.stringify(EMPTY_CV));
+    }
+
     function loadSavedCv() {
+      try { localStorage.removeItem('careerKitCvData'); } catch (_) {}
       try {
-        const raw = kitStore.get('careerKitCvData');
-        if (raw) return JSON.parse(raw);
+        const raw = kitStore.get('careerKitCvDraft');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            return Object.assign(cloneEmptyCv(), parsed);
+          }
+        }
       } catch (_) {}
-      return JSON.parse(JSON.stringify(SAMPLE_CV));
+      return cloneEmptyCv();
     }
 
     function saveCvData() {
-      kitStore.set('careerKitCvData', JSON.stringify(cvData));
+      kitStore.set('careerKitCvDraft', JSON.stringify(cvData));
     }
 
     function hydrateCvForm() {
@@ -1362,49 +1394,64 @@
       const projs = (cvData.projs || []).filter(p => p.name || p.bullets);
       const certs = splitBullets(cvData.certs);
 
-      let html = `<h2>${escapeHtml(cvData.name || 'NAMA LENGKAP KAMU')}</h2>`;
-      if (cvData.role) html += `<div class="cv-role">${escapeHtml(cvData.role)}</div>`;
-      if (contacts.length) html += `<div class="cv-contact">${contacts.map(escapeHtml).join(' &nbsp;|&nbsp; ')}</div>`;
+      const hasAnyContent = Boolean(
+        cvData.name || cvData.role || contacts.length || (cvData.summary && cvData.summary.trim()) ||
+        cvData.eduSchool || cvData.eduDegree || exps.length || projs.length ||
+        cvData.skillLang || cvData.skillTools || certs.length
+      );
 
-      if (cvData.summary && cvData.summary.trim()) {
-        html += `<div class="cv-sec-title">Ringkasan Profil</div><p>${escapeHtml(cvData.summary.trim())}</p>`;
-      }
+      let html = '';
+      if (!hasAnyContent) {
+        html = `<div style="text-align:center;padding:88px 24px;color:#64748b;font-family:'Plus Jakarta Sans',sans-serif;">
+          <div style="font-size:2rem;margin-bottom:10px;opacity:.55;"><i class="fa-regular fa-file-lines"></i></div>
+          <div style="font-size:1rem;font-weight:800;color:#1e293b;margin-bottom:6px;">Pratinjau CV ATS Masih Kosong</div>
+          <div style="font-size:.82rem;max-width:340px;margin:0 auto;line-height:1.6;">Mulai isi formulir di sebelah kiri untuk melihat hasil CV format ATS 1 kolom secara real-time, atau klik <strong>Isi Contoh IT</strong> sebagai referensi.</div>
+        </div>`;
+      } else {
+        html = `<h2>${escapeHtml(cvData.name || 'NAMA LENGKAP KAMU')}</h2>`;
+        if (cvData.role) html += `<div class="cv-role">${escapeHtml(cvData.role)}</div>`;
+        if (contacts.length) html += `<div class="cv-contact">${contacts.map(escapeHtml).join(' &nbsp;|&nbsp; ')}</div>`;
 
-      if (cvData.eduSchool || cvData.eduDegree) {
-        html += `<div class="cv-sec-title">Pendidikan</div>
-          <div class="cv-row-head"><span>${escapeHtml(cvData.eduSchool || '')}</span><span>${escapeHtml(cvData.eduPeriod || '')}</span></div>
-          <div class="cv-row-sub"><span>${escapeHtml(cvData.eduDegree || '')}</span><span>${cvData.eduGpa ? 'IPK: ' + escapeHtml(cvData.eduGpa) : ''}</span></div>
-          ${cvData.eduCourse ? `<p><strong>Mata Kuliah Relevan:</strong> ${escapeHtml(cvData.eduCourse)}</p>` : ''}`;
-      }
+        if (cvData.summary && cvData.summary.trim()) {
+          html += `<div class="cv-sec-title">Ringkasan Profil</div><p>${escapeHtml(cvData.summary.trim())}</p>`;
+        }
 
-      if (exps.length) {
-        html += `<div class="cv-sec-title">Pengalaman &amp; Organisasi</div>`;
-        exps.forEach(ex => {
-          const b = splitBullets(ex.bullets);
-          html += `<div class="cv-row-head"><span>${escapeHtml(ex.title || '')}</span><span>${escapeHtml(ex.period || '')}</span></div>
-            <div class="cv-row-sub"><span>${escapeHtml(ex.org || '')}</span><span></span></div>
-            ${b.length ? `<ul>${b.map(li => `<li>${escapeHtml(li)}</li>`).join('')}</ul>` : ''}`;
-        });
-      }
+        if (cvData.eduSchool || cvData.eduDegree) {
+          html += `<div class="cv-sec-title">Pendidikan</div>
+            <div class="cv-row-head"><span>${escapeHtml(cvData.eduSchool || '')}</span><span>${escapeHtml(cvData.eduPeriod || '')}</span></div>
+            <div class="cv-row-sub"><span>${escapeHtml(cvData.eduDegree || '')}</span><span>${cvData.eduGpa ? 'IPK: ' + escapeHtml(cvData.eduGpa) : ''}</span></div>
+            ${cvData.eduCourse ? `<p><strong>Mata Kuliah Relevan:</strong> ${escapeHtml(cvData.eduCourse)}</p>` : ''}`;
+        }
 
-      if (projs.length) {
-        html += `<div class="cv-sec-title">Proyek IT &amp; Portofolio</div>`;
-        projs.forEach(p => {
-          const b = splitBullets(p.bullets);
-          html += `<div class="cv-row-head"><span>${escapeHtml(p.name || '')}</span><span style="font-weight:400;font-size:8.6pt;">${escapeHtml(p.link || '')}</span></div>
-            ${p.stack ? `<div class="cv-row-sub"><span>Tech Stack: ${escapeHtml(p.stack)}</span><span></span></div>` : ''}
-            ${b.length ? `<ul>${b.map(li => `<li>${escapeHtml(li)}</li>`).join('')}</ul>` : ''}`;
-        });
-      }
+        if (exps.length) {
+          html += `<div class="cv-sec-title">Pengalaman &amp; Organisasi</div>`;
+          exps.forEach(ex => {
+            const b = splitBullets(ex.bullets);
+            html += `<div class="cv-row-head"><span>${escapeHtml(ex.title || '')}</span><span>${escapeHtml(ex.period || '')}</span></div>
+              <div class="cv-row-sub"><span>${escapeHtml(ex.org || '')}</span><span></span></div>
+              ${b.length ? `<ul>${b.map(li => `<li>${escapeHtml(li)}</li>`).join('')}</ul>` : ''}`;
+          });
+        }
 
-      if (cvData.skillLang || cvData.skillTools) {
-        html += `<div class="cv-sec-title">Keahlian Teknis</div>`;
-        if (cvData.skillLang) html += `<p><strong>Bahasa Pemrograman:</strong> ${escapeHtml(cvData.skillLang)}</p>`;
-        if (cvData.skillTools) html += `<p><strong>Framework &amp; Tools:</strong> ${escapeHtml(cvData.skillTools)}</p>`;
-      }
+        if (projs.length) {
+          html += `<div class="cv-sec-title">Proyek IT &amp; Portofolio</div>`;
+          projs.forEach(p => {
+            const b = splitBullets(p.bullets);
+            html += `<div class="cv-row-head"><span>${escapeHtml(p.name || '')}</span><span style="font-weight:400;font-size:8.6pt;">${escapeHtml(p.link || '')}</span></div>
+              ${p.stack ? `<div class="cv-row-sub"><span>Tech Stack: ${escapeHtml(p.stack)}</span><span></span></div>` : ''}
+              ${b.length ? `<ul>${b.map(li => `<li>${escapeHtml(li)}</li>`).join('')}</ul>` : ''}`;
+          });
+        }
 
-      if (certs.length) {
-        html += `<div class="cv-sec-title">Sertifikasi &amp; Prestasi</div><ul>${certs.map(c => `<li>${escapeHtml(c)}</li>`).join('')}</ul>`;
+        if (cvData.skillLang || cvData.skillTools) {
+          html += `<div class="cv-sec-title">Keahlian Teknis</div>`;
+          if (cvData.skillLang) html += `<p><strong>Bahasa Pemrograman:</strong> ${escapeHtml(cvData.skillLang)}</p>`;
+          if (cvData.skillTools) html += `<p><strong>Framework &amp; Tools:</strong> ${escapeHtml(cvData.skillTools)}</p>`;
+        }
+
+        if (certs.length) {
+          html += `<div class="cv-sec-title">Sertifikasi &amp; Prestasi</div><ul>${certs.map(c => `<li>${escapeHtml(c)}</li>`).join('')}</ul>`;
+        }
       }
 
       document.getElementById('cv-paper').innerHTML = html;
@@ -1442,6 +1489,13 @@
       showKitToast('Contoh CV ATS Teknik Informatika dimuat!');
     }
 
+    function clearCvData() {
+      cvData = cloneEmptyCv();
+      try { localStorage.removeItem('careerKitCvDraft'); } catch (_) {}
+      hydrateCvForm();
+      showKitToast('Seluruh isian CV telah dikosongkan.');
+    }
+
     function printAtsCv() {
       window.print();
     }
@@ -1464,7 +1518,7 @@
         try {
           const parsed = JSON.parse(String(reader.result || '{}'));
           if (parsed && typeof parsed === 'object') {
-            cvData = Object.assign(JSON.parse(JSON.stringify(SAMPLE_CV)), parsed);
+            cvData = Object.assign(cloneEmptyCv(), parsed);
             saveCvData();
             hydrateCvForm();
             showKitToast('Draft CV berhasil diimpor!');
