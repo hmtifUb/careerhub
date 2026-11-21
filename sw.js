@@ -1,7 +1,8 @@
-const CACHE_NAME = 'hmtif-career-hub-v1';
+const CACHE_NAME = 'hmtif-career-hub-v2';
 const APP_SHELL = [
   './',
   './index.html',
+  './kit.html',
   './config.js',
   './manifest.json',
   './assets/logo-hmtif.png',

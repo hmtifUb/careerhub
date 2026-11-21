@@ -1445,6 +1445,114 @@ html { scroll-padding-top: 84px; }
   .pwa-install-btn { width: 42px; padding: 0; justify-content: center; }
   .share-link-btn { width: 40px; height: 40px; }
 }
+
+.hub-side-kit-link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0 3px 16px;
+  padding: 11px 12px;
+  border-radius: 14px;
+  text-decoration: none;
+  background: linear-gradient(135deg, rgba(240, 183, 47, .17), rgba(166, 25, 50, .28));
+  border: 1px solid rgba(240, 183, 47, .38);
+  color: #fff;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.hub-side-kit-link:hover {
+  transform: translateY(-2px);
+  border-color: #f0b72f;
+  background: linear-gradient(135deg, rgba(240, 183, 47, .26), rgba(213, 43, 73, .38));
+  color: #fff;
+}
+.hub-side-kit-ico {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #f0b72f;
+  color: #2b1d12;
+  display: grid;
+  place-items: center;
+  font-size: .9rem;
+  flex: 0 0 34px;
+}
+.hub-side-kit-copy { min-width: 0; flex: 1; }
+.hub-side-kit-copy strong { display: block; font-size: .8rem; font-weight: 800; line-height: 1.2; color: #fff; }
+.hub-side-kit-copy small { display: block; font-size: .65rem; color: #f6d99a; margin-top: 2px; }
+.hub-side-kit-ext { font-size: .7rem; color: #f0b72f; opacity: .9; }
+
+.hub-hero-btn-gold {
+  background: #f0b72f;
+  color: #2b1d12;
+  border-color: #f0b72f;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .18);
+}
+.hub-hero-btn-gold:hover {
+  background: #ffca47;
+  color: #2b1d12;
+  border-color: #ffca47;
+}
+
+.hub-kit-spotlight {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 32px;
+  border-radius: 22px;
+  background: radial-gradient(circle at 90% 15%, rgba(240, 183, 47, .2), transparent 45%),
+              linear-gradient(118deg, #4b091c 0%, #8e1430 56%, #b82542 100%);
+  color: #fff;
+  box-shadow: 0 16px 38px rgba(130, 20, 44, .18);
+}
+.hub-kit-spotlight-copy { flex: 1; min-width: 0; }
+.hub-kit-spotlight h3 { font-weight: 800; font-size: clamp(1.22rem, 2.2vw, 1.55rem); margin: 9px 0; line-height: 1.25; color: #fff; }
+.hub-kit-spotlight p { margin: 0 0 16px; color: #f8e4ea; font-size: .84rem; line-height: 1.65; max-width: 660px; }
+.hub-kit-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.hub-kit-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .13);
+  border: 1px solid rgba(255, 255, 255, .24);
+  color: #fff;
+  text-decoration: none;
+  font-size: .74rem;
+  font-weight: 700;
+  transition: background .18s ease, transform .18s ease;
+}
+.hub-kit-pill:hover { background: #fff; color: #8e1430; transform: translateY(-1px); }
+.hub-kit-spotlight-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  text-align: center;
+}
+.hub-kit-spotlight-cta small { font-size: .68rem; color: #f5d3dc; }
+.hub-kit-main-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: 14px 22px;
+  border-radius: 13px;
+  background: #f0b72f;
+  color: #2b1d12;
+  text-decoration: none;
+  font-size: .84rem;
+  font-weight: 800;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .2);
+  transition: transform .18s ease, background .18s ease;
+}
+.hub-kit-main-btn:hover { background: #ffca47; color: #2b1d12; transform: translateY(-2px); }
+@media (max-width: 820px) {
+  .hub-kit-spotlight { flex-direction: column; align-items: stretch; padding: 22px 20px; }
+  .hub-kit-spotlight-cta { align-items: flex-start; text-align: left; }
+}
 </style>
 </head>
 <body>
@@ -1495,6 +1603,15 @@ html { scroll-padding-top: 84px; }
         <button class="hub-nav-link" type="button" data-hub-nav="news" onclick="hubNavigate('news')"><i class="fa-solid fa-bullhorn"></i><span>Berita &amp; Info</span></button>
         <button class="hub-nav-link" type="button" data-hub-nav="rating" onclick="hubNavigate('rating')"><i class="fa-solid fa-star"></i><span>Penilaian</span></button>
       </nav>
+      <div class="hub-side-label" style="margin-top:16px;">STUDIO KARIER</div>
+      <a class="hub-side-kit-link" href="./kit.html">
+        <span class="hub-side-kit-ico"><i class="fa-solid fa-rocket"></i></span>
+        <span class="hub-side-kit-copy">
+          <strong>Kit Persiapan Karier</strong>
+          <small>CV ATS • Email • Interview</small>
+        </span>
+        <i class="fa-solid fa-arrow-up-right-from-square hub-side-kit-ext"></i>
+      </a>
       <div class="hub-side-note">
         <span>IDENTITAS HMTIF</span>
         <strong>Grow your future.</strong>
@@ -1540,6 +1657,7 @@ html { scroll-padding-top: 84px; }
         <p>Pusat informasi karier, pelatihan, kompetisi, dan peluang pengembangan diri mahasiswa Teknik Informatika.</p>
         <div class="hub-hero-actions">
           <a href="#hub-catalog" class="hub-hero-btn hub-hero-btn-primary">Jelajahi peluang <i class="fa-solid fa-arrow-right ms-2"></i></a>
+          <a href="./kit.html" class="hub-hero-btn hub-hero-btn-gold"><i class="fa-solid fa-rocket me-2"></i>Kit Persiapan Karier</a>
           <button type="button" onclick="hubNavigate('archive')" class="hub-hero-btn hub-hero-btn-outline">Lihat arsip <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></button>
         </div>
       </div>
@@ -1751,7 +1869,26 @@ html { scroll-padding-top: 84px; }
         </div>
       </div>
 
-      <div class="hub-community-banner mt-5 hub-elevator" id="hub-community">
+      <section class="hub-kit-spotlight mt-5 hub-elevator" aria-labelledby="hub-kit-title">
+        <div class="hub-kit-spotlight-copy">
+          <span class="hub-eyebrow" style="color:#f7c65b;"><i class="fa-solid fa-rocket me-1"></i> HALAMAN KHUSUS • CAREER PREP STUDIO</span>
+          <h3 id="hub-kit-title">Siapkan CV ATS, Email HRD &amp; Interview sebelum melamar.</h3>
+          <p>Akses studio persiapan karier interaktif di halaman khusus: bikin CV ATS 1 kolom langsung PDF, generator email lamaran, simulator wawancara 90 detik, hingga roadmap karier IT.</p>
+          <div class="hub-kit-pills">
+            <a href="./kit.html#cv" class="hub-kit-pill"><i class="fa-solid fa-file-lines"></i> ATS CV Builder</a>
+            <a href="./kit.html#email" class="hub-kit-pill"><i class="fa-solid fa-envelope-open-text"></i> Email &amp; DM HRD</a>
+            <a href="./kit.html#interview" class="hub-kit-pill"><i class="fa-solid fa-comments"></i> Simulator Interview</a>
+            <a href="./kit.html#roadmap" class="hub-kit-pill"><i class="fa-solid fa-route"></i> Roadmap IT</a>
+            <a href="./kit.html#resources" class="hub-kit-pill"><i class="fa-solid fa-book-open"></i> Katalog Resource</a>
+          </div>
+        </div>
+        <div class="hub-kit-spotlight-cta">
+          <a href="./kit.html" class="hub-kit-main-btn">Buka Kit Karier <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
+          <small>Gratis • Data tersimpan aman di browsermu</small>
+        </div>
+      </section>
+
+      <div class="hub-community-banner mt-4 hub-elevator" id="hub-community">
         <div>
           <span class="hub-eyebrow" style="color:#f7c65b">BERGABUNG & BERKEMBANG</span>
           <h3>Satu komunitas, banyak kesempatan.</h3>

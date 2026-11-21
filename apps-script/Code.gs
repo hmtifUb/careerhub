@@ -1,5 +1,6 @@
 const CAREER_HUB_SHEETS = ['KARIER', 'PENGEMBANGAN', 'OPPORTUNITIES'];
 const CAREER_HUB_NEWS_SHEET = 'BERITA';
+const CAREER_HUB_KIT_SHEET = 'CAREER_KIT';
 const CAREER_HUB_TZ = 'Asia/Jakarta';
 const CAREER_HUB_ARCHIVE_PREFIX = 'ARSIP - ';
 const CAREER_HUB_TRAFFIC_SHEET = 'STAT_KUNJUNGAN';
@@ -19,6 +20,7 @@ function onOpen() {
     .addItem('Arsipkan Program Berakhir & Sync', 'archiveCareerHubExpiredMenu')
     .addSeparator()
     .addItem('Buat Template Tab BERITA', 'setupCareerHubNewsSheetMenu')
+    .addItem('Buat Template Tab CAREER_KIT', 'setupCareerHubKitSheetMenu')
     .addItem('Migrasi Data Lama ke Supabase (Sekali)', 'migrateExistingStatsMenu')
     .addItem('Cek Koneksi Supabase & Sheet', 'checkCareerHubConnectionMenu')
     .addToUi();
@@ -32,6 +34,7 @@ function syncAllToSupabaseMenu() {
       'Sync Berhasil',
       'Program tersinkron: ' + res.synced +
       (typeof res.synced_news === 'number' ? '\nBerita tersinkron: ' + res.synced_news : '') +
+      (typeof res.synced_kit === 'number' ? '\nCareer Kit tersinkron: ' + res.synced_kit : '') +
       '\nTerakhir update: ' + res.last_updated,
       ui.ButtonSet.OK
     );
@@ -47,6 +50,16 @@ function setupCareerHubNewsSheetMenu() {
     ui.alert('Tab BERITA Siap', msg, ui.ButtonSet.OK);
   } catch (err) {
     ui.alert('Gagal Membuat Tab BERITA', String(err && err.message ? err.message : err), ui.ButtonSet.OK);
+  }
+}
+
+function setupCareerHubKitSheetMenu() {
+  const ui = SpreadsheetApp.getUi();
+  try {
+    const msg = setupCareerHubKitSheet();
+    ui.alert('Tab CAREER_KIT Siap', msg, ui.ButtonSet.OK);
+  } catch (err) {
+    ui.alert('Gagal Membuat Tab CAREER_KIT', String(err && err.message ? err.message : err), ui.ButtonSet.OK);
   }
 }
 
@@ -106,6 +119,7 @@ function cleanSheetName_(name) {
 function isCareerHubMonitoredSheet_(name) {
   const cleaned = cleanSheetName_(name);
   if (cleaned === cleanSheetName_(CAREER_HUB_NEWS_SHEET)) return true;
+  if (cleaned === cleanSheetName_(CAREER_HUB_KIT_SHEET)) return true;
   if (CAREER_HUB_SHEETS.includes(cleaned)) return true;
   return CAREER_HUB_SHEETS.some(cat => cleaned === cleanSheetName_(CAREER_HUB_ARCHIVE_PREFIX + cat));
 }
@@ -406,6 +420,98 @@ function setupCareerHubNewsSheet() {
   return 'Tab BERITA berhasil dibuat dengan contoh 1 berita. Kamu bisa menambahkan berita kampus/HMTIF di tab tersebut.';
 }
 
+function careerHubCollectKit_(ss) {
+  const sheet = findSheetCaseInsensitive_(ss, CAREER_HUB_KIT_SHEET);
+  if (!sheet || sheet.getLastRow() < 2) return null;
+
+  const range = sheet.getDataRange();
+  const display = range.getDisplayValues();
+  const rich = range.getRichTextValues();
+  const formulas = range.getFormulas();
+  const headers = (display[0] || []).map(v => String(v || '').trim().toLowerCase());
+
+  const col = (regex, fb) => {
+    const idx = headers.findIndex(v => regex.test(v));
+    return idx >= 0 ? idx : fb;
+  };
+  const cJudul = col(/judul|nama|title/, 0);
+  const cKategori = col(/kategori|topik/, 1);
+  const cTipe = col(/tipe|jenis|format/, 2);
+  const cLevel = col(/level|tingkat|target/, 3);
+  const cDeskripsi = col(/deskripsi|ringkasan|keterangan/, 4);
+  const cLink = col(/link|url|tautan/, 5);
+  const cTag = col(/tag|label/, 6);
+  const cUnggulan = col(/unggulan|featured|pin/, 7);
+  const cStatus = col(/status|aktif/, 8);
+
+  const items = [];
+  for (let i = 1; i < display.length; i++) {
+    const judul = String(display[i][cJudul] || '').trim();
+    if (!judul) continue;
+    const statusText = String(display[i][cStatus] || 'Aktif').trim().toLowerCase();
+    const isActive = !/nonaktif|arsip|hidden|sembunyi|false|tidak/.test(statusText);
+    const featText = String(display[i][cUnggulan] || '').trim().toLowerCase();
+    const isFeatured = /^(ya|yes|true|1|unggulan|pin|★)$/.test(featText);
+
+    const val = (idx) => idx < display[i].length
+      ? String(extractCellValue_(display[i][idx], rich[i][idx], formulas[i][idx]) || '').trim()
+      : '';
+
+    items.push({
+      row_order: items.length + 1,
+      judul: judul,
+      kategori: String(display[i][cKategori] || 'CV ATS').trim() || 'CV ATS',
+      tipe: String(display[i][cTipe] || 'Panduan').trim() || 'Panduan',
+      level: String(display[i][cLevel] || 'Semua Level').trim() || 'Semua Level',
+      deskripsi: String(display[i][cDeskripsi] || '').trim(),
+      link_url: val(cLink),
+      tag: String(display[i][cTag] || '').trim(),
+      is_featured: isFeatured,
+      is_active: isActive
+    });
+  }
+  return items;
+}
+
+function setupCareerHubKitSheet() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = findSheetCaseInsensitive_(ss, CAREER_HUB_KIT_SHEET);
+  if (sheet) return 'Tab CAREER_KIT sudah ada. Edit barisnya lalu jalankan Sync Semua Data ke Supabase.';
+
+  sheet = ss.insertSheet(CAREER_HUB_KIT_SHEET);
+  const headers = ['Judul', 'Kategori', 'Tipe', 'Level', 'Deskripsi', 'Link URL', 'Tag', 'Unggulan', 'Status'];
+  sheet.getRange(1, 1, 1, headers.length)
+    .setValues([headers])
+    .setFontWeight('bold')
+    .setBackground('#2453c0')
+    .setFontColor('#ffffff');
+  sheet.setFrozenRows(1);
+  sheet.setTabColor('#2453c0');
+  sheet.appendRow([
+    'Template CV ATS Mahasiswa IT (Jake / Harvard Style)',
+    'CV ATS',
+    'Template',
+    'Mahasiswa & Fresh Grad',
+    'Format 1 kolom bersih ramah mesin ATS, ideal untuk melamar magang software engineer, data, dan UI/UX.',
+    'https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs',
+    'ATS, LaTeX, Magang',
+    'Ya',
+    'Aktif'
+  ]);
+  sheet.appendRow([
+    'Developer Roadmaps — Peta Belajar Karier IT',
+    'Portofolio & GitHub',
+    'Roadmap',
+    'Semua Level',
+    'Peta skill terstruktur untuk Frontend, Backend, DevOps, AI/Data, Cyber Security, hingga Mobile Developer.',
+    'https://roadmap.sh/',
+    'Roadmap, Skill IT',
+    'Ya',
+    'Aktif'
+  ]);
+  return 'Tab CAREER_KIT berhasil dibuat dengan contoh resource. Tambah link Drive/Notion/Panduan lalu Sync ke Supabase.';
+}
+
 function syncAllToSupabase(allowEmpty) {
   const lock = LockService.getScriptLock();
   lock.waitLock(25000);
@@ -450,12 +556,26 @@ function syncAllToSupabase(allowEmpty) {
       }
     }
 
+    let syncedKit = null;
+    const kitItems = careerHubCollectKit_(ss);
+    if (kitItems !== null) {
+      try {
+        const kitRes = supabaseRequest_('/rest/v1/rpc/replace_career_hub_kit', 'post', {
+          p_items: kitItems
+        });
+        syncedKit = kitRes && typeof kitRes.synced_kit === 'number' ? kitRes.synced_kit : kitItems.length;
+      } catch (kitErr) {
+        console.warn('Sync tab CAREER_KIT dilewati (pastikan tabel career_kit sudah dibuat di Supabase): ' + kitErr);
+      }
+    }
+
     const props = PropertiesService.getScriptProperties();
     props.setProperty('SUPABASE_SYNC_DIRTY', 'false');
     props.setProperty('SUPABASE_LAST_SYNC_AT', String(Date.now()));
 
     const output = result || { synced: allPrograms.length, last_updated: lastUpdated };
     if (syncedNews !== null) output.synced_news = syncedNews;
+    if (syncedKit !== null) output.synced_kit = syncedKit;
     return output;
   } finally {
     lock.releaseLock();

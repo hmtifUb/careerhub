@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#a61932">
+  <meta name="description" content="Kit Persiapan Karier HMTIF — CV ATS Builder, Generator Email Lamaran, Simulator Interview IT, Roadmap Karier, dan Katalog Resource.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Career Prep Kit">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" href="./assets/icon-192.png">
+  <link rel="apple-touch-icon" href="./assets/icon-192.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kit Persiapan Karier — HMTIF Career Hub">
+  <meta property="og:description" content="ATS CV Builder + Export PDF, Generator Email & DM HRD, Simulator Interview IT, Roadmap Karier, dan Resource Pilihan.">
+  <meta property="og:url" content="https://hmtifub.github.io/careerhub/kit.html">
+  <meta property="og:image" content="https://hmtifub.github.io/careerhub/assets/icon-512.png">
+  <title>Kit Persiapan Karier — HMTIF Career Hub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <script>try { if(localStorage.getItem('theme')==='dark') document.documentElement.setAttribute('data-theme','dark'); } catch(e) {}</script>
+  <style>
+    :root {
+      --bg: #f8f6f6;
+      --surface: #ffffff;
+      --surface-soft: #f3eff0;
+      --text: #241d20;
+      --muted: #6e6268;
+      --border: #e6dde0;
+      --primary: #a61932;
+      --primary-bright: #d52b49;
+      --primary-soft: rgba(166, 25, 50, .10);
+      --gold: #f0b72f;
+      --blue: #2453c0;
+      --success: #15803d;
+      --grad-primary: linear-gradient(125deg, #a61932, #d52b49);
+      --grad-hero: linear-gradient(118deg, #4b091b 0%, #8e1430 50%, #cc2e4b 100%);
+      --grad-gold: linear-gradient(125deg, #d2a129, #f0b72f);
+      --grad-blue: linear-gradient(125deg, #173b96, #3b66d4);
+      --shadow: 0 12px 32px rgba(24, 14, 18, .055);
+    }
+    [data-theme="dark"] {
+      --bg: #151316;
+      --surface: #221f23;
+      --surface-soft: #2c272e;
+      --text: #f0eaed;
+      --muted: #b8a9b0;
+      --border: #3d363d;
+      --primary: #e84b68;
+      --primary-soft: rgba(232, 75, 104, .18);
+      --blue: #60a5fa;
+      --success: #4ade80;
+      --shadow: 0 14px 36px rgba(0, 0, 0, .35);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      transition: background .25s ease, color .25s ease;
+    }
+
+    .kit-scroll-bar {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%; z-index: 200;
+      background: linear-gradient(90deg, #a61932, #d52b49, #f0b72f);
+      box-shadow: 0 0 12px rgba(213, 43, 73, .55); pointer-events: none;
+    }
+
+    .kit-topbar {
+      position: sticky; top: 0; z-index: 60;
+      background: color-mix(in srgb, var(--bg) 86%, transparent);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .kit-topbar-inner {
+      max-width: 1280px; margin: 0 auto; padding: 12px 18px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+    .kit-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+    .kit-brand-logos { display: flex; gap: 5px; }
+    .kit-brand-logos img {
+      width: 36px; height: 36px; object-fit: contain;
+      background: #fff; border-radius: 9px; padding: 3px; border: 1px solid var(--border);
+    }
+    .kit-brand strong { display: block; font-size: .95rem; line-height: 1.1; font-weight: 800; }
+    .kit-brand small { display: block; font-size: .62rem; font-weight: 800; letter-spacing: .14em; color: var(--primary); }
+
+    .kit-top-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .kit-pill-btn {
+      display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 14px;
+      border-radius: 12px; border: 1px solid var(--border); background: var(--surface);
+      color: var(--text); font-size: .78rem; font-weight: 700; text-decoration: none; cursor: pointer;
+      transition: .18s ease;
+    }
+    .kit-pill-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .kit-readiness-pill {
+      display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px;
+      border-radius: 999px; background: var(--primary-soft); color: var(--primary);
+      font-size: .74rem; font-weight: 800;
+    }
+    .kit-icon-btn {
+      width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text); display: grid; place-items: center;
+      cursor: pointer; transition: .18s ease;
+    }
+    .kit-icon-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+    .kit-shell { max-width: 1280px; margin: 0 auto; padding: 22px 18px 64px; }
+
+    .kit-hero {
+      position: relative; overflow: hidden; border-radius: 24px;
+      padding: 34px clamp(22px, 3.4vw, 48px);
+      background: var(--grad-hero); color: #fff;
+      box-shadow: 0 18px 42px rgba(140, 36, 64, .18);
+      margin-bottom: 22px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    }
+    .kit-hero::before {
+      content: ''; position: absolute; right: -70px; top: -120px; width: 320px; height: 320px;
+      border-radius: 50%; border: 2px solid rgba(255, 255, 255, .14); pointer-events: none;
+    }
+    .kit-hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .7rem; font-weight: 800; letter-spacing: .16em; color: #ffd4de; margin-bottom: 10px;
+    }
+    .kit-hero h1 { font-size: clamp(1.7rem, 3.6vw, 2.75rem); font-weight: 800; letter-spacing: -.04em; margin: 0 0 10px; }
+    .kit-hero h1 em { font-style: normal; color: #ffcf67; }
+    .kit-hero p { max-width: 640px; font-size: .9rem; line-height: 1.7; color: #f8e4ea; margin: 0; }
+    .kit-hero-stats {
+      display: grid; grid-template-columns: repeat(2, minmax(115px, 1fr)); gap: 10px;
+      position: relative; z-index: 1;
+    }
+    .kit-mini-stat {
+      background: rgba(255, 255, 255, .13); border: 1px solid rgba(255, 255, 255, .24);
+      backdrop-filter: blur(10px); border-radius: 15px; padding: 14px 16px; text-align: center;
+    }
+    .kit-mini-stat strong { display: block; font-size: 1.45rem; font-weight: 800; color: #ffcf67; line-height: 1.1; }
+    .kit-mini-stat span { font-size: .7rem; color: #fce9ee; font-weight: 600; }
+
+    .kit-tabs-wrap {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+      padding: 8px; margin-bottom: 22px; box-shadow: var(--shadow);
+      position: sticky; top: 68px; z-index: 40;
+    }
+    .kit-tab-btn {
+      flex: 1 1 165px; border: 0; border-radius: 12px; padding: 11px 14px;
+      background: transparent; color: var(--muted); font-size: .82rem; font-weight: 800;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      cursor: pointer; transition: .2s ease;
+    }
+    .kit-tab-btn:hover { background: var(--surface-soft); color: var(--text); }
+    .kit-tab-btn.active {
+      background: var(--grad-primary); color: #fff;
+      box-shadow: 0 7px 18px rgba(166, 25, 50, .25);
+    }
+
+    .kit-panel { display: none; }
+    .kit-panel.active { display: block; animation: kitFade .28s ease; }
+    @keyframes kitFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .kit-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 18px; padding: 20px; box-shadow: var(--shadow);
+    }
+    .kit-card-title { font-size: 1.05rem; font-weight: 800; margin: 0 0 4px; }
+    .kit-card-sub { font-size: .8rem; color: var(--muted); margin: 0; }
+
+    .kit-input, .kit-select, .kit-textarea {
+      width: 100%; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--surface-soft); color: var(--text);
+      padding: 10px 13px; font-family: inherit; font-size: .85rem; outline: none;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    .kit-input:focus, .kit-select:focus, .kit-textarea:focus {
+      border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+    .kit-label { display: block; font-size: .74rem; font-weight: 800; color: var(--muted); margin-bottom: 5px; }
+
+    .kit-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      min-height: 40px; padding: 0 16px; border-radius: 11px; border: 0;
+      font-family: inherit; font-size: .8rem; font-weight: 800; cursor: pointer;
+      text-decoration: none; transition: transform .18s ease, filter .18s ease;
+    }
+    .kit-btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    .kit-btn-primary { background: var(--grad-primary); color: #fff !important; }
+    .kit-btn-gold { background: var(--grad-gold); color: #2b1d12 !important; }
+    .kit-btn-blue { background: var(--grad-blue); color: #fff !important; }
+    .kit-btn-soft {
+      background: var(--surface-soft); color: var(--text) !important;
+      border: 1px solid var(--border);
+    }
+    .kit-btn-danger { background: rgba(220, 53, 69, .12); color: #dc3545; border: 1px solid rgba(220, 53, 69, .3); }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    .kit-chip {
+      border: 1px solid var(--border); background: var(--surface-soft); color: var(--muted);
+      border-radius: 999px; padding: 6px 13px; font-size: .75rem; font-weight: 700;
+      cursor: pointer; transition: .18s ease;
+    }
+    .kit-chip:hover { color: var(--text); border-color: var(--primary); }
+    .kit-chip.active { background: var(--grad-primary); color: #fff; border-color: transparent; }
+
+    .res-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .res-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 17px;
+      padding: 18px; display: flex; flex-direction: column; height: 100%;
+      box-shadow: var(--shadow); transition: transform .2s ease, border-color .2s ease;
+      position: relative;
+    }
+    .res-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+    .res-card.is-featured { border-top: 4px solid var(--gold); }
+    .res-badges { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+    .res-cat-pill {
+      padding: 4px 10px; border-radius: 999px; font-size: .68rem; font-weight: 800;
+      background: var(--primary-soft); color: var(--primary);
+    }
+    .res-type-pill {
+      padding: 4px 9px; border-radius: 999px; font-size: .68rem; font-weight: 700;
+      background: var(--surface-soft); color: var(--muted); border: 1px solid var(--border);
+    }
+    .res-title { font-size: .98rem; font-weight: 800; margin: 0 0 6px; line-height: 1.35; }
+    .res-desc { font-size: .8rem; color: var(--muted); line-height: 1.55; margin: 0 0 12px; flex: 1; }
+    .res-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+    .res-tag {
+      font-size: .68rem; font-weight: 700; padding: 3px 8px; border-radius: 6px;
+      background: var(--surface-soft); color: var(--muted);
+    }
+    .res-actions { display: flex; align-items: center; gap: 8px; margin-top: auto; }
+    .res-fav-btn {
+      width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--surface-soft); color: var(--muted); display: grid; place-items: center;
+      cursor: pointer; transition: .18s ease;
+    }
+    .res-fav-btn.active { background: var(--grad-gold); color: #2b1d12; border-color: transparent; }
+
+    .cv-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 20px; align-items: start; }
+    .cv-form-card { display: flex; flex-direction: column; gap: 16px; }
+    .cv-section-box {
+      border: 1px solid var(--border); border-radius: 14px; padding: 14px;
+      background: var(--surface-soft);
+    }
+    .cv-section-head {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px;
+    }
+    .cv-section-head h5 { margin: 0; font-size: .86rem; font-weight: 800; }
+    .cv-dyn-item {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px; margin-bottom: 10px;
+    }
+    .cv-dyn-item:last-child { margin-bottom: 0; }
+
+    .ats-score-bar {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow);
+    }
+    .ats-meter-track { height: 9px; border-radius: 99px; background: var(--surface-soft); overflow: hidden; margin: 10px 0; }
+    .ats-meter-fill { height: 100%; width: 0%; border-radius: 99px; background: linear-gradient(90deg, #a61932, #f0b72f, #16a34a); transition: width .35s ease; }
+    .ats-checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; font-size: .74rem; }
+    .ats-check-item { display: flex; align-items: center; gap: 6px; color: var(--muted); }
+    .ats-check-item.ok { color: var(--success); font-weight: 700; }
+
+    .cv-preview-shell {
+      background: #e9e4e6; border-radius: 16px; padding: 14px;
+      border: 1px solid var(--border); overflow-x: auto;
+    }
+    [data-theme="dark"] .cv-preview-shell { background: #141215; }
+    .cv-paper {
+      background: #ffffff; color: #111111; width: 100%; min-height: 760px;
+      padding: 32px 36px; border-radius: 6px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .14);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 10.5pt; line-height: 1.42;
+    }
+    .cv-paper h2 {
+      margin: 0 0 3px; font-size: 18pt; font-weight: 700; letter-spacing: .02em;
+      text-align: center; text-transform: uppercase; color: #000;
+    }
+    .cv-paper .cv-role { text-align: center; font-size: 10pt; font-weight: 700; color: #333; margin-bottom: 4px; }
+    .cv-paper .cv-contact { text-align: center; font-size: 8.8pt; color: #333; margin-bottom: 12px; word-break: break-word; }
+    .cv-paper .cv-sec-title {
+      font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+      border-bottom: 1.3px solid #111; padding-bottom: 2px; margin: 13px 0 6px; color: #000;
+    }
+    .cv-paper .cv-row-head { display: flex; justify-content: space-between; gap: 10px; font-weight: 700; font-size: 9.8pt; }
+    .cv-paper .cv-row-sub { display: flex; justify-content: space-between; gap: 10px; font-style: italic; font-size: 9.2pt; color: #333; margin-bottom: 3px; }
+    .cv-paper ul { margin: 2px 0 8px 18px; padding: 0; }
+    .cv-paper li { margin-bottom: 2.5px; font-size: 9.4pt; }
+    .cv-paper p { margin: 0 0 6px; font-size: 9.4pt; }
+
+    .email-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 20px; align-items: start; }
+    .interview-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 20px; align-items: start; }
+
+    .q-box {
+      border-radius: 16px; padding: 20px; background: var(--surface-soft);
+      border: 1px solid var(--border); margin: 14px 0;
+    }
+    .q-text { font-size: 1.12rem; font-weight: 800; line-height: 1.42; margin: 8px 0 12px; }
+    .q-guide {
+      margin-top: 12px; padding: 14px; border-radius: 12px;
+      background: var(--surface); border-left: 4px solid var(--gold);
+      font-size: .82rem; line-height: 1.6;
+    }
+    .timer-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 13px; border-radius: 999px;
+      background: var(--surface); border: 1px solid var(--border);
+      font-family: ui-monospace, Consolas, monospace; font-weight: 800; font-size: .86rem;
+    }
+    .timer-pill.urgent { border-color: #dc3545; color: #dc3545; }
+
+    .check-group-title { font-size: .75rem; font-weight: 800; letter-spacing: .1em; color: var(--primary); margin: 14px 0 8px; text-transform: uppercase; }
+    .check-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 8px 10px; border-radius: 10px; cursor: pointer;
+      font-size: .8rem; transition: background .15s ease;
+    }
+    .check-item:hover { background: var(--surface-soft); }
+    .check-item input { margin-top: 3px; accent-color: #a61932; width: 16px; height: 16px; flex: 0 0 auto; }
+    .check-item.done span { text-decoration: line-through; opacity: .62; }
+
+    .ready-ring-wrap {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px; border-radius: 14px; background: var(--surface-soft);
+      border: 1px solid var(--border); margin-bottom: 10px;
+    }
+    .ready-ring { position: relative; width: 58px; height: 58px; flex: 0 0 58px; display: grid; place-items: center; }
+    .ready-ring svg { width: 58px; height: 58px; transform: rotate(-90deg); }
+    .ready-ring span { position: absolute; font-size: .78rem; font-weight: 800; }
+
+    .roadmap-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+    .roadmap-box {
+      background: var(--surface-soft); border: 1px solid var(--border);
+      border-radius: 15px; padding: 16px;
+    }
+    .roadmap-box h6 { font-size: .82rem; font-weight: 800; margin: 0 0 10px; color: var(--primary); text-transform: uppercase; letter-spacing: .06em; }
+    .roadmap-box ul { margin: 0; padding-left: 18px; font-size: .82rem; color: var(--text); }
+    .roadmap-box li { margin-bottom: 7px; line-height: 1.5; }
+
+    .kit-toast {
+      position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); z-index: 300;
+      background: #171719; color: #fff; border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 999px; padding: 10px 18px; font-size: .8rem; font-weight: 700;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .35); opacity: 0; pointer-events: none;
+      transition: opacity .22s ease, transform .22s ease;
+    }
+    .kit-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 991.98px) {
+      .res-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cv-layout, .email-grid, .interview-grid, .roadmap-grid { grid-template-columns: 1fr; }
+      .kit-tabs-wrap { position: static; }
+    }
+    @media (max-width: 600px) {
+      .res-grid, .ats-checks { grid-template-columns: 1fr; }
+      .kit-hero { padding: 24px 18px; }
+      .kit-hero-stats { width: 100%; }
+      .cv-paper { padding: 20px 18px; }
+      .kit-readiness-pill { display: none; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 12mm; }
+      body { background: #fff !important; color: #000 !important; padding: 0 !important; margin: 0 !important; }
+      .kit-scroll-bar, .kit-topbar, .kit-hero, .kit-tabs-wrap, .cv-form-card, .ats-score-bar,
+      .cv-print-hide, #panel-resources, #panel-email, #panel-interview, #panel-roadmap, .kit-toast { display: none !important; }
+      #panel-cv { display: block !important; }
+      .kit-shell { max-width: none !important; padding: 0 !important; margin: 0 !important; }
+      .cv-layout { display: block !important; }
+      .cv-preview-shell { background: #fff !important; border: 0 !important; padding: 0 !important; overflow: visible !important; }
+      .cv-paper { box-shadow: none !important; padding: 0 !important; min-height: auto !important; border-radius: 0 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="kit-scroll-bar" id="kit-scroll-bar" aria-hidden="true"></div>
+
+  <header class="kit-topbar">
+    <div class="kit-topbar-inner">
+      <a class="kit-brand" href="./index.html">
+        <div class="kit-brand-logos">
+          <img src="./assets/logo-ub.png" alt="Logo Universitas Bakrie">
+          <img src="./assets/logo-hmtif.png" alt="Logo HMTIF">
+        </div>
+        <div>
+          <strong>HMTIF</strong>
+          <small>CAREER PREP KIT</small>
+        </div>
+      </a>
+
+      <div class="kit-top-actions">
+        <span class="kit-readiness-pill"><i class="fa-solid fa-gauge-high"></i> Kesiapan: <span id="top-readiness-pct">0%</span></span>
+        <a href="./index.html" class="kit-pill-btn"><i class="fa-solid fa-arrow-left"></i> Career Hub</a>
+        <button type="button" class="kit-icon-btn" id="theme-toggle" onclick="toggleKitTheme()" aria-label="Ubah tema">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="kit-shell">
+    <section class="kit-hero">
+      <div style="position:relative;z-index:1;flex:1;min-width:260px;">
+        <div class="kit-hero-eyebrow"><i class="fa-solid fa-rocket"></i> HMTIF CAREER PREPARATION STUDIO</div>
+        <h1>Siap magang &amp; kerja,<br>bukan cuma <em>daftar.</em></h1>
+        <p>Buat CV ATS standar industri langsung ekspor PDF, susun email &amp; DM HRD instan, latih interview IT pakai metode STAR, ikuti roadmap karier, dan akses katalog resource pilihan pengurus HMTIF.</p>
+      </div>
+      <div class="kit-hero-stats">
+        <div class="kit-mini-stat"><strong id="hero-res-count">12</strong><span>Resource Pilihan</span></div>
+        <div class="kit-mini-stat"><strong id="hero-ats-score">0%</strong><span>Skor CV ATS-mu</span></div>
+        <div class="kit-mini-stat"><strong id="hero-ready-score">0%</strong><span>Checklist Siap</span></div>
+        <div class="kit-mini-stat"><strong>7 Jalur</strong><span>Roadmap IT</span></div>
+      </div>
+    </section>
+
+    <nav class="kit-tabs-wrap" role="tablist" aria-label="Menu Kit Persiapan Karier">
+      <button type="button" class="kit-tab-btn active" data-kit-tab="resources" onclick="switchKitTab('resources')">
+        <i class="fa-solid fa-book-bookmark"></i><span>Katalog Resource</span>
+      </button>
+      <button type="button" class="kit-tab-btn" data-kit-tab="cv" onclick="switchKitTab('cv')">
+        <i class="fa-solid fa-file-lines"></i><span>ATS CV Builder</span>
+      </button>
+      <button type="button" class="kit-tab-btn" data-kit-tab="email" onclick="switchKitTab('email')">
+        <i class="fa-solid fa-envelope-open-text"></i><span>Email &amp; DM HRD</span>
+      </button>
+      <button type="button" class="kit-tab-btn" data-kit-tab="interview" onclick="switchKitTab('interview')">
+        <i class="fa-solid fa-microphone-lines"></i><span>Interview &amp; Checklist</span>
+      </button>
+      <button type="button" class="kit-tab-btn" data-kit-tab="roadmap" onclick="switchKitTab('roadmap')">
+        <i class="fa-solid fa-route"></i><span>Roadmap Karier IT</span>
+      </button>
+    </nav>
+
+    <section id="panel-resources" class="kit-panel active">
+      <div class="kit-card mb-3">
+        <div class="row g-2 align-items-center mb-3">
+          <div class="col-12 col-md-6">
+            <input id="res-search" type="search" class="kit-input" placeholder="Cari template CV, panduan GitHub, LinkedIn, interview..." autocomplete="off">
+          </div>
+          <div class="col-6 col-md-3">
+            <select id="res-type-filter" class="kit-select" aria-label="Filter tipe resource">
+              <option value="all">Semua Tipe</option>
+              <option value="Template">Template</option>
+              <option value="Panduan">Panduan</option>
+              <option value="Latihan">Latihan</option>
+              <option value="Tools">Tools</option>
+              <option value="Roadmap">Roadmap</option>
+            </select>
+          </div>
+          <div class="col-6 col-md-3 d-flex gap-2">
+            <button type="button" id="res-fav-toggle" class="kit-btn kit-btn-soft flex-grow-1" onclick="toggleResFavFilter()">
+              <i class="fa-regular fa-bookmark"></i> Tersimpan
+            </button>
+            <button type="button" class="kit-btn kit-btn-blue" onclick="loadRemoteKit(true)" title="Muat ulang dari database">
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <div class="chip-row" id="res-cat-chips"></div>
+          <small class="text-muted fw-semibold" id="res-meta-status">Memuat katalog...</small>
+        </div>
+      </div>
+
+      <div class="res-grid" id="res-grid"></div>
+    </section>
+
+    <section id="panel-cv" class="kit-panel">
+      <div class="cv-layout">
+        <div class="cv-form-card">
+          <div class="kit-card">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+              <div>
+                <h4 class="kit-card-title">Editor CV ATS (Tersimpan Lokal)</h4>
+                <p class="kit-card-sub">Data CV kamu hanya tersimpan di browser perangkat ini, tidak dikirim ke server.</p>
+              </div>
+              <div class="d-flex gap-2 flex-wrap">
+                <button type="button" class="kit-btn kit-btn-gold" onclick="loadSampleCv()"><i class="fa-solid fa-wand-magic-sparkles"></i> Isi Contoh IT</button>
+                <button type="button" class="kit-btn kit-btn-soft" onclick="exportCvJson()" title="Simpan backup JSON"><i class="fa-solid fa-download"></i> JSON</button>
+                <label class="kit-btn kit-btn-soft mb-0" title="Muat backup JSON">
+                  <i class="fa-solid fa-upload"></i> Import
+                  <input type="file" accept="application/json" hidden onchange="importCvJson(event)">
+                </label>
+              </div>
+            </div>
+
+            <div class="cv-section-box mb-3">
+              <div class="cv-section-head"><h5><i class="fa-solid fa-id-card me-1"></i> Identitas &amp; Kontak</h5></div>
+              <div class="row g-2">
+                <div class="col-12 col-sm-6"><label class="kit-label">Nama Lengkap</label><input id="cv-name" class="kit-input" placeholder="Rehan Rizki Rahmat Ramadhan"></div>
+                <div class="col-12 col-sm-6"><label class="kit-label">Target Posisi</label><input id="cv-role" class="kit-input" placeholder="Software Engineering Intern / Frontend Developer"></div>
+                <div class="col-12 col-sm-6"><label class="kit-label">Email</label><input id="cv-email" class="kit-input" placeholder="nama@student.bakrie.ac.id"></div>
+                <div class="col-12 col-sm-6"><label class="kit-label">No. HP / WhatsApp</label><input id="cv-phone" class="kit-input" placeholder="+62 812-xxxx-xxxx"></div>
+                <div class="col-12 col-sm-4"><label class="kit-label">Domisili</label><input id="cv-location" class="kit-input" placeholder="Jakarta Selatan"></div>
+                <div class="col-12 col-sm-4"><label class="kit-label">LinkedIn</label><input id="cv-linkedin" class="kit-input" placeholder="linkedin.com/in/username"></div>
+                <div class="col-12 col-sm-4"><label class="kit-label">GitHub / Portofolio</label><input id="cv-github" class="kit-input" placeholder="github.com/username"></div>
+              </div>
+            </div>
+
+            <div class="cv-section-box mb-3">
+              <div class="cv-section-head"><h5><i class="fa-solid fa-user-pen me-1"></i> Ringkasan Profil (2–3 Kalimat)</h5></div>
+              <textarea id="cv-summary" class="kit-textarea" rows="3" placeholder="Mahasiswa S1 Teknik Informatika yang fokus pada pengembangan aplikasi web & database..."></textarea>
+            </div>
+
+            <div class="cv-section-box mb-3">
+              <div class="cv-section-head"><h5><i class="fa-solid fa-graduation-cap me-1"></i> Pendidikan</h5></div>
+              <div class="row g-2">
+                <div class="col-12 col-sm-6"><label class="kit-label">Universitas</label><input id="cv-edu-school" class="kit-input" placeholder="Universitas Bakrie"></div>
+                <div class="col-12 col-sm-6"><label class="kit-label">Program Studi</label><input id="cv-edu-degree" class="kit-input" placeholder="S1 Teknik Informatika"></div>
+                <div class="col-6 col-sm-4"><label class="kit-label">Periode</label><input id="cv-edu-period" class="kit-input" placeholder="2023 – Sekarang"></div>
+                <div class="col-6 col-sm-3"><label class="kit-label">IPK</label><input id="cv-edu-gpa" class="kit-input" placeholder="3.75 / 4.00"></div>
+                <div class="col-12 col-sm-5"><label class="kit-label">Mata Kuliah Relevan</label><input id="cv-edu-course" class="kit-input" placeholder="Struktur Data, Basdat, RPL, Web"></div>
+              </div>
+            </div>
+
+            <div class="cv-section-box mb-3">
+              <div class="cv-section-head">
+                <h5><i class="fa-solid fa-briefcase me-1"></i> Pengalaman Kerja / Organisasi</h5>
+                <button type="button" class="kit-btn kit-btn-primary" style="min-height:32px;padding:0 11px;font-size:.73rem;" onclick="addCvExp()"><i class="fa-solid fa-plus"></i> Tambah</button>
+              </div>
+              <div id="cv-exp-list"></div>
+            </div>
+
+            <div class="cv-section-box mb-3">
+              <div class="cv-section-head">
+                <h5><i class="fa-solid fa-code me-1"></i> Proyek IT &amp; Portofolio</h5>
+                <button type="button" class="kit-btn kit-btn-primary" style="min-height:32px;padding:0 11px;font-size:.73rem;" onclick="addCvProj()"><i class="fa-solid fa-plus"></i> Tambah</button>
+              </div>
+              <div id="cv-proj-list"></div>
+            </div>
+
+            <div class="cv-section-box">
+              <div class="cv-section-head"><h5><i class="fa-solid fa-screwdriver-wrench me-1"></i> Keahlian &amp; Sertifikasi</h5></div>
+              <div class="row g-2">
+                <div class="col-12"><label class="kit-label">Bahasa Pemrograman</label><input id="cv-skill-lang" class="kit-input" placeholder="JavaScript, TypeScript, Python, SQL, Java"></div>
+                <div class="col-12"><label class="kit-label">Framework &amp; Tools</label><input id="cv-skill-tools" class="kit-input" placeholder="React, Node.js, PostgreSQL, Supabase, Git, Docker, Figma"></div>
+                <div class="col-12"><label class="kit-label">Sertifikasi / Prestasi (pisahkan dengan baris baru)</label><textarea id="cv-certs" class="kit-textarea" rows="2" placeholder="Dicoding Belajar Dasar Pemrograman Web (2025)&#10;Finalis Lomba UI/UX Nasional (2026)"></textarea></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="ats-score-bar">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <div>
+                <div class="small fw-bold text-uppercase" style="letter-spacing:.1em;color:var(--primary);">Analisis Kesiapan ATS</div>
+                <strong id="ats-score-label" style="font-size:1.15rem;">Skor: 0 / 100</strong>
+              </div>
+              <button type="button" class="kit-btn kit-btn-primary" onclick="printAtsCv()">
+                <i class="fa-solid fa-file-pdf"></i> Cetak / Simpan PDF (A4)
+              </button>
+            </div>
+            <div class="ats-meter-track"><div class="ats-meter-fill" id="ats-meter-fill"></div></div>
+            <div class="ats-checks" id="ats-checks"></div>
+          </div>
+
+          <div class="cv-preview-shell">
+            <div class="d-flex justify-content-between align-items-center mb-2 cv-print-hide">
+              <small class="fw-bold" style="color:var(--muted);"><i class="fa-solid fa-eye me-1"></i> Live Preview Format ATS (1 Kolom)</small>
+              <small style="color:var(--muted);">Tips: Pakai rumus XYZ (Dampak + Angka + Cara)</small>
+            </div>
+            <article class="cv-paper" id="cv-paper"></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-email" class="kit-panel">
+      <div class="email-grid">
+        <div class="kit-card">
+          <h4 class="kit-card-title mb-1">Generator Email Lamaran &amp; DM Recruiter</h4>
+          <p class="kit-card-sub mb-3">Isi data singkat di bawah, pilih jenis pesan, lalu langsung salin atau buka di email.</p>
+
+          <div class="chip-row mb-3" id="email-preset-chips">
+            <button type="button" class="kit-chip active" data-email-tpl="id_apply" onclick="selectEmailTpl('id_apply')">Email Lamaran (ID)</button>
+            <button type="button" class="kit-chip" data-email-tpl="en_apply" onclick="selectEmailTpl('en_apply')">Application Email (EN)</button>
+            <button type="button" class="kit-chip" data-email-tpl="linkedin_dm" onclick="selectEmailTpl('linkedin_dm')">DM LinkedIn HRD</button>
+            <button type="button" class="kit-chip" data-email-tpl="followup" onclick="selectEmailTpl('followup')">Follow-Up Lamaran</button>
+            <button type="button" class="kit-chip" data-email-tpl="thankyou" onclick="selectEmailTpl('thankyou')">Thank-You Interview</button>
+          </div>
+
+          <div class="row g-2">
+            <div class="col-12 col-sm-6"><label class="kit-label">Nama Lengkap</label><input id="em-name" class="kit-input" placeholder="Nama kamu"></div>
+            <div class="col-12 col-sm-6"><label class="kit-label">Jurusan &amp; Kampus</label><input id="em-campus" class="kit-input" value="Teknik Informatika Universitas Bakrie"></div>
+            <div class="col-12 col-sm-6"><label class="kit-label">Posisi yang Dilamar</label><input id="em-role" class="kit-input" placeholder="Frontend Developer Intern"></div>
+            <div class="col-12 col-sm-6"><label class="kit-label">Nama Perusahaan</label><input id="em-company" class="kit-input" placeholder="PT Teknologi Nusantara"></div>
+            <div class="col-12 col-sm-6"><label class="kit-label">Nama HRD / Penerima (opsional)</label><input id="em-hrd" class="kit-input" placeholder="Tim Rekrutmen"></div>
+            <div class="col-12 col-sm-6"><label class="kit-label">Email Tujuan HRD (opsional)</label><input id="em-to" class="kit-input" placeholder="career@perusahaan.com"></div>
+            <div class="col-12"><label class="kit-label">Skill / Proyek Unggulan yang Mau Ditonjolkan</label><input id="em-highlight" class="kit-input" placeholder="membangun portal karier berbasis JavaScript, PostgreSQL/Supabase, dan REST API"></div>
+            <div class="col-12"><label class="kit-label">Link Portofolio / GitHub / LinkedIn</label><input id="em-link" class="kit-input" placeholder="https://github.com/username"></div>
+          </div>
+        </div>
+
+        <div class="kit-card">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <div>
+              <h4 class="kit-card-title mb-0">Hasil Pesan Siap Kirim</h4>
+              <p class="kit-card-sub">Bisa langsung diedit bebas sebelum disalin.</p>
+            </div>
+            <span class="badge rounded-pill" style="background:var(--primary-soft);color:var(--primary);" id="em-char-count">0 karakter</span>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label class="kit-label mb-0">Subject Email</label>
+              <button type="button" class="kit-btn kit-btn-soft" style="min-height:28px;padding:0 10px;font-size:.7rem;" onclick="copyElText('em-out-subject','Subject tersalin!')">
+                <i class="fa-regular fa-copy"></i> Salin Subject
+              </button>
+            </div>
+            <input id="em-out-subject" class="kit-input fw-bold">
+          </div>
+
+          <div class="mb-3">
+            <label class="kit-label">Isi Pesan / Body</label>
+            <textarea id="em-out-body" class="kit-textarea" rows="13" style="line-height:1.6;"></textarea>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2">
+            <button type="button" class="kit-btn kit-btn-primary flex-grow-1" onclick="copyElText('em-out-body','Teks pesan berhasil disalin!')">
+              <i class="fa-solid fa-copy"></i> Salin Isi Pesan
+            </button>
+            <a id="em-mailto-btn" href="#" class="kit-btn kit-btn-gold">
+              <i class="fa-solid fa-paper-plane"></i> Buka di Email
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-interview" class="kit-panel">
+      <div class="interview-grid">
+        <div class="kit-card">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <div>
+              <h4 class="kit-card-title mb-0">Simulator Latihan Interview IT &amp; HRD</h4>
+              <p class="kit-card-sub">Latih jawabanmu dalam 90 detik pakai struktur STAR (Situation, Task, Action, Result).</p>
+            </div>
+            <div class="timer-pill" id="int-timer"><i class="fa-regular fa-clock"></i> <span id="int-timer-val">01:30</span></div>
+          </div>
+
+          <div class="chip-row mb-3" id="int-cat-chips"></div>
+
+          <div class="q-box">
+            <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
+              <span class="res-cat-pill" id="int-q-cat">HRD / Behavioral</span>
+              <small class="text-muted fw-bold" id="int-q-idx">Pertanyaan 1 / 20</small>
+            </div>
+            <p class="q-text" id="int-q-text">Ceritakan tentang diri kamu dan kenapa tertarik melamar posisi ini?</p>
+            <div class="d-flex flex-wrap gap-2">
+              <button type="button" class="kit-btn kit-btn-primary" onclick="nextInterviewQuestion(true)"><i class="fa-solid fa-shuffle"></i> Acak Pertanyaan</button>
+              <button type="button" class="kit-btn kit-btn-soft" onclick="nextInterviewQuestion(false)"><i class="fa-solid fa-forward"></i> Berikutnya</button>
+              <button type="button" class="kit-btn kit-btn-gold" id="int-timer-btn" onclick="toggleInterviewTimer()"><i class="fa-solid fa-play"></i> Mulai 90 dtk</button>
+              <button type="button" class="kit-btn kit-btn-soft" onclick="resetInterviewTimer()"><i class="fa-solid fa-rotate-left"></i></button>
+              <button type="button" class="kit-btn kit-btn-blue" onclick="toggleInterviewGuide()"><i class="fa-solid fa-lightbulb"></i> Panduan Jawaban</button>
+            </div>
+            <div class="q-guide" id="int-q-guide" hidden></div>
+          </div>
+
+          <div>
+            <label class="kit-label">Catatan Latihan Jawabanmu (opsional, untuk latihan pribadi)</label>
+            <textarea id="int-notes" class="kit-textarea" rows="4" placeholder="Tulis poin kunci Situation → Task → Action → Result di sini..."></textarea>
+          </div>
+        </div>
+
+        <div class="kit-card">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h4 class="kit-card-title mb-0">Checklist Kesiapan Lamar</h4>
+            <button type="button" class="kit-btn kit-btn-soft" style="min-height:30px;padding:0 10px;font-size:.7rem;" onclick="resetChecklist()">Reset</button>
+          </div>
+
+          <div class="ready-ring-wrap">
+            <div class="ready-ring">
+              <svg viewBox="0 0 58 58" aria-hidden="true">
+                <circle cx="29" cy="29" r="24" fill="none" stroke="var(--border)" stroke-width="5"></circle>
+                <circle id="ready-ring-fg" cx="29" cy="29" r="24" fill="none" stroke="#a61932" stroke-width="5" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"></circle>
+              </svg>
+              <span id="ready-ring-pct">0%</span>
+            </div>
+            <div>
+              <strong id="ready-rank" style="display:block;font-size:.95rem;">Mulai Persiapan</strong>
+              <small class="text-muted" id="ready-count-text">0 dari 16 checklist selesai</small>
+            </div>
+          </div>
+
+          <div id="checklist-container"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-roadmap" class="kit-panel">
+      <div class="kit-card">
+        <div class="mb-3">
+          <h4 class="kit-card-title">Peta Jalur Karier Mahasiswa Teknik Informatika</h4>
+          <p class="kit-card-sub">Pilih jalur karier yang ingin kamu fokuskan untuk melihat skill inti, tools, 3 ide proyek portofolio, dan strategi lolos magang pertama.</p>
+        </div>
+
+        <div class="chip-row mb-3" id="roadmap-chips"></div>
+
+        <div class="p-3 rounded-4 mb-3" style="background:var(--surface-soft);border:1px solid var(--border);">
+          <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+            <div>
+              <span class="res-cat-pill mb-2 d-inline-block" id="rm-badge">JALUR KARIER</span>
+              <h3 class="fw-bold mb-1" id="rm-title">Frontend Developer</h3>
+              <p class="text-muted small mb-0" id="rm-summary"></p>
+            </div>
+            <a href="./index.html" class="kit-btn kit-btn-primary"><i class="fa-solid fa-briefcase"></i> Cari Lowongan Jalur Ini</a>
+          </div>
+        </div>
+
+        <div class="roadmap-grid">
+          <div class="roadmap-box">
+            <h6><i class="fa-solid fa-layer-group me-1"></i> Skill Wajib &amp; Stack</h6>
+            <ul id="rm-skills"></ul>
+          </div>
+          <div class="roadmap-box">
+            <h6><i class="fa-solid fa-laptop-code me-1"></i> 3 Ide Proyek Portofolio</h6>
+            <ul id="rm-projects"></ul>
+          </div>
+          <div class="roadmap-box">
+            <h6><i class="fa-solid fa-trophy me-1"></i> Strategi Lolos Magang</h6>
+            <ul id="rm-tips"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="kit-toast" class="kit-toast" role="status" aria-live="polite"></div>
+
+  <script src="./config.js"></script>
+  <script>
+    const kitStore = {
+      get(k, fb = null) { try { const v = localStorage.getItem(k); return v === null ? fb : v; } catch (_) { return fb; } },
+      set(k, v) { try { localStorage.setItem(k, v); } catch (_) {} }
+    };
+
+    const STARTER_RESOURCES = [
+      { judul: 'Jake\'s Resume — Template CV ATS Standar Tech Global', kategori: 'CV ATS', tipe: 'Template', level: 'Mahasiswa & Fresh Grad', deskripsi: 'Template 1 kolom paling populer di industri software engineering. Bersih, padat, dan 100% ramah parser ATS.', link_url: 'https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs', tag: 'ATS, LaTeX, Software Eng', is_featured: true },
+      { judul: 'Panduan Menulis CV ATS & Rumus XYZ ala Google', kategori: 'CV ATS', tipe: 'Panduan', level: 'Semua Level', deskripsi: 'Cara menulis poin pengalaman dengan rumus Accomplished [X] as measured by [Y] by doing [Z] agar langsung dilirik recruiter.', link_url: 'https://www.inc.com/bill-murphy-jr/google-recruiters-say-these-5-words-on-your-resume-make-you-more-likely-to-get-hired.html', tag: 'XYZ Formula, Action Verbs', is_featured: true },
+      { judul: 'Roadmap.sh — Peta Belajar Lengkap Karier IT', kategori: 'Portofolio & GitHub', tipe: 'Roadmap', level: 'Semua Level', deskripsi: 'Panduan langkah demi langkah untuk Frontend, Backend, Fullstack, DevOps, AI/Data Scientist, Cyber Security, hingga Android.', link_url: 'https://roadmap.sh/', tag: 'Roadmap, Skill Tree', is_featured: true },
+      { judul: 'GitHub Profile README Generator', kategori: 'Portofolio & GitHub', tipe: 'Tools', level: 'Pemula', deskripsi: 'Buat halaman profil GitHub yang estetik, menampilkan tech stack, statistik kontribusi, dan pinned repository unggulan.', link_url: 'https://rahuldkjain.github.io/gh-profile-readme-generator/', tag: 'GitHub, Branding', is_featured: false },
+      { judul: 'Tech Interview Handbook (Gratis & Lengkap)', kategori: 'Interview', tipe: 'Panduan', level: 'Menengah', deskripsi: 'Panduan lengkap persiapan coding interview, behavioral STAR, cara negosiasi, hingga pola algoritma yang paling sering keluar.', link_url: 'https://www.techinterviewhandbook.org/', tag: 'Coding Interview, STAR', is_featured: true },
+      { judul: 'NeetCode 150 — Kurasi Soal Algoritma Terpenting', kategori: 'Interview', tipe: 'Latihan', level: 'Menengah', deskripsi: 'Daftar 150 soal struktur data & algoritma pilihan beserta penjelasan pola solusi video untuk persiapan technical test.', link_url: 'https://neetcode.io/practice', tag: 'DSA, LeetCode', is_featured: false },
+      { judul: 'System Design Primer (GitHub Open Source)', kategori: 'Interview', tipe: 'Panduan', level: 'Menengah – Lanjut', deskripsi: 'Materi arsitektur sistem skala besar (caching, load balancer, database sharding) yang sering ditanyakan di interview backend.', link_url: 'https://github.com/donnemartin/system-design-primer', tag: 'Backend, Arsitektur', is_featured: false },
+      { judul: 'Panduan Optimasi Profil LinkedIn untuk Mahasiswa', kategori: 'LinkedIn', tipe: 'Panduan', level: 'Mahasiswa', deskripsi: 'Cara merapikan Headline, About, Featured Portfolio, dan strategi networking dengan recruiter serta alumni IT.', link_url: 'https://university.linkedin.com/linkedin-for-students', tag: 'LinkedIn, Networking', is_featured: false },
+      { judul: 'Frontend Mentor — Latihan Proyek UI Nyata', kategori: 'Portofolio & GitHub', tipe: 'Latihan', level: 'Pemula – Menengah', deskripsi: 'Tantangan slicing desain nyata untuk memperkaya portofolio GitHub & live demo bagi calon Frontend Developer.', link_url: 'https://www.frontendmentor.io/challenges', tag: 'HTML, CSS, React', is_featured: false },
+      { judul: 'Kaggle Learn — Kursus Gratis Data, SQL & Machine Learning', kategori: 'Magang & Beasiswa', tipe: 'Latihan', level: 'Pemula – Menengah', deskripsi: 'Micro-course gratis bersertifikat untuk Python, Pandas, SQL, Data Visualization, hingga Machine Learning.', link_url: 'https://www.kaggle.com/learn', tag: 'Data, Python, SQL', is_featured: false },
+      { judul: 'GitHub Student Developer Pack (Tools Pro Gratis)', kategori: 'Magang & Beasiswa', tipe: 'Tools', level: 'Mahasiswa', deskripsi: 'Klaim domain gratis, JetBrains, Copilot, cloud credit, dan puluhan tools developer profesional dengan email kampus.', link_url: 'https://education.github.com/pack', tag: 'Student Pack, Gratis', is_featured: true },
+      { judul: 'Kirim Rekomendasi Resource ke Pengurus HMTIF', kategori: 'Magang & Beasiswa', tipe: 'Panduan', level: 'Komunitas', deskripsi: 'Punya template CV, catatan kuliah, atau link belajar IT keren? Bantu bagikan ke teman-teman lewat form resmi HMTIF.', link_url: 'https://forms.gle/A8zraMzTBVWqeiKy6', tag: 'Kontribusi, HMTIF', is_featured: false }
+    ];
+
+    const INTERVIEW_QUESTIONS = [
+      { cat: 'HRD / Behavioral', q: 'Ceritakan tentang diri kamu secara singkat dan kenapa kamu tertarik melamar posisi ini?', guide: 'Gunakan alur Present → Past → Future (maks 90 detik): perkenalkan prodi & fokus skill saat ini, sebutkan 1–2 proyek/pengalaman relevan beserta dampaknya, lalu tutup dengan alasan spesifik kenapa tertarik pada perusahaan & posisi tersebut.' },
+      { cat: 'HRD / Behavioral', q: 'Ceritakan proyek IT atau tugas tim tersulit yang pernah kamu kerjakan. Apa peranmu dan bagaimana menyelesaikannya?', guide: 'Pakai STAR: Situation (konteks proyek & kendala), Task (tanggung jawab spesifikmu), Action (langkah teknis & komunikasi yang kamu ambil), Result (hasil nyata seperti waktu loading turun 60% atau proyek selesai tepat waktu).' },
+      { cat: 'HRD / Behavioral', q: 'Apa kelemahan terbesarmu saat ini dan bagaimana kamu mengatasinya?', guide: 'Pilih kelemahan nyata tapi bukan syarat fatal posisi (misal: dulu suka terlalu detail di awal / kurang rutin dokumentasi), lalu tekankan langkah konkret perbaikan yang sudah berjalan dan hasilnya.' },
+      { cat: 'HRD / Behavioral', q: 'Bagaimana kamu menangani konflik atau perbedaan pendapat teknis di dalam tim?', guide: 'Tunjukkan objektivitas: dengarkan sudut pandang rekan, bawa data/benchmark atau buat prototipe kecil, utamakan tujuan produk/user, bukan ego pribadi.' },
+      { cat: 'HRD / Behavioral', q: 'Kenapa kami harus memilih kamu dibanding kandidat mahasiswa lain?', guide: 'Gabungkan 3 hal: bukti karya nyata (proyek live/GitHub), kecepatan belajar teknologi baru, dan kemampuan komunikasi/kolaborasi dalam organisasi seperti HMTIF.' },
+      { cat: 'Frontend & Web', q: 'Apa perbedaan utama antara var, let, dan const di JavaScript serta kapan masing-masing digunakan?', guide: 'Jelaskan scope (function-scoped vs block-scoped), hoisting & Temporal Dead Zone, serta re-assignment. Best practice modern: selalu default ke const, pakai let jika nilai berubah, hindari var.' },
+      { cat: 'Frontend & Web', q: 'Bagaimana cara mengoptimalkan performa web agar loading jauh lebih cepat di perangkat mobile?', guide: 'Sebutkan: optimasi ukuran gambar (WebP/resize + lazy load), kurangi request jaringan (caching & gabungkan query), minify/defer script, hindari layout shift (CLS), dan pakai CDN statis.' },
+      { cat: 'Frontend & Web', q: 'Jelaskan konsep Event Loop, Promise, dan async/await di JavaScript.', guide: 'JS single-threaded; operasi async ditangani Web API lalu masuk microtask queue (Promise) dan macrotask queue (setTimeout). async/await adalah syntax bersih di atas Promise dengan try/catch untuk error handling.' },
+      { cat: 'Frontend & Web', q: 'Apa perbedaan localStorage, sessionStorage, dan Cookies? Kapan tidak boleh menyimpan token di localStorage?', guide: 'Bandingkan kapasitas, masa berlaku, dan pengiriman otomatis di header HTTP. Tekankan bahwa token sensitif rawan XSS di localStorage sehingga HttpOnly Cookie sering lebih aman untuk session sensitif.' },
+      { cat: 'Backend & DB', q: 'Apa perbedaan REST API dan RPC, serta jelaskan status HTTP 200, 201, 400, 401, 403, 404, 500.', guide: '200 OK, 201 Created, 400 Bad Request (input klien salah), 401 Unauthorized (belum login/key salah), 403 Forbidden (login tapi tak punya hak akses), 404 Not Found, 500 Internal Server Error.' },
+      { cat: 'Backend & DB', q: 'Kenapa query database bisa melambat saat data membesar, dan bagaimana Index serta Pagination membantu?', guide: 'Tanpa index database melakukan full table scan O(N). B-Tree index mempercepat pencarian ke O(log N) pada kolom filter/join/sort. Pagination (LIMIT/OFFSET atau cursor) mencegah transfer ribuan baris sekaligus.' },
+      { cat: 'Backend & DB', q: 'Bagaimana mencegah SQL Injection, XSS, dan kebocoran API key di aplikasi web?', guide: 'Gunakan parameterized queries / prepared statements (SQLi), escape output HTML / textContent (XSS), aktifkan Row Level Security (RLS), dan simpan secret key hanya di sisi server (env/Script Properties), bukan frontend.' },
+      { cat: 'Backend & DB', q: 'Apa itu Race Condition saat banyak user mengakses data bersamaan (misal counter kunjungan) dan solusinya?', guide: 'Dua request membaca nilai sama lalu menulis balik sehingga hitungan hilang. Solusinya operasi atomik di database seperti INSERT ... ON CONFLICT DO UPDATE SET count = count + 1 atau transaksi/row locking.' },
+      { cat: 'Data & AI', q: 'Jelaskan perbedaan INNER JOIN, LEFT JOIN, dan GROUP BY + HAVING di SQL.', guide: 'INNER JOIN hanya mengembalikan baris cocok di kedua tabel; LEFT JOIN mempertahankan semua baris tabel kiri. WHERE memfilter baris sebelum agregasi, sedangkan HAVING memfilter hasil setelah GROUP BY.' },
+      { cat: 'Data & AI', q: 'Apa itu Overfitting pada model Machine Learning dan bagaimana cara mencegahnya?', guide: 'Model terlalu menghafal data training sehingga buruk di data baru. Pencegahan: tambah data/augmentasi, regularisasi (L1/L2/Dropout), cross-validation, early stopping, dan kurangi kompleksitas model.' },
+      { cat: 'Data & AI', q: 'Bagaimana langkahmu saat menerima dataset mentah yang banyak missing values dan duplikat?', guide: 'Exploratory Data Analysis dulu (cek distribusi & tipe), tangani duplikat, analisis pola missing (hapus vs imputasi mean/median/mode sesuai konteks bisnis), cek outlier, lalu validasi kualitas data.' },
+      { cat: 'Logika & Teamwork', q: 'Bagaimana alur kerja Git yang rapi saat mengerjakan proyek bersama 4 orang anggota tim?', guide: 'Pakai branching strategy (main stabil, branch per fitur seperti feat/login), commit message jelas, rutin git pull/rebase sebelum PR, dan lakukan code review via Pull Request sebelum merge.' },
+      { cat: 'Logika & Teamwork', q: 'Kalau kamu diberi fitur baru dengan teknologi yang belum pernah kamu pakai sebelumnya, apa langkah pertamamu?', guide: 'Pahami dulu problem & acceptance criteria, baca dokumentasi resmi & contoh minimal (hello world), buat prototipe kecil terisolasi, uji edge-case, lalu integrasikan bertahap.' }
+    ];
+
+    const CHECKLIST_GROUPS = [
+      {
+        title: 'CV ATS & Dokumen',
+        items: [
+          { id: 'c1', text: 'CV menggunakan format 1 kolom bersih (ATS-friendly) maksimal 1 halaman' },
+          { id: 'c2', text: 'Minimal 3 poin pengalaman/proyek memakai angka dampak terukur (%, jumlah user)' },
+          { id: 'c3', text: 'Tercantum link aktif GitHub, LinkedIn, dan email profesional' },
+          { id: 'c4', text: 'Nama file PDF rapi: CV_NamaLengkap_Posisi.pdf (bukan final_v3.pdf)' }
+        ]
+      },
+      {
+        title: 'Portofolio & GitHub',
+        items: [
+          { id: 'c5', text: 'Minimal 2–3 proyek IT ter-pin di GitHub dengan README jelas + screenshot' },
+          { id: 'c6', text: 'Minimal 1 proyek sudah live online (GitHub Pages / Vercel / Cloudflare)' },
+          { id: 'c7', text: 'Tidak ada password / secret API key yang bocor di repository publik' },
+          { id: 'c8', text: 'Profil GitHub rapi (foto, bio singkat, tech stack utama)' }
+        ]
+      },
+      {
+        title: 'LinkedIn & Networking',
+        items: [
+          { id: 'c9', text: 'Headline LinkedIn spesifik (contoh: Informatics Student | Web & Cloud Enthusiast)' },
+          { id: 'c10', text: 'Bagian About & Featured sudah diisi ringkasan skill + link proyek terbaik' },
+          { id: 'c11', text: 'Sudah punya template email lamaran & DM HRD yang dipersonalisasi' },
+          { id: 'c12', text: 'Terhubung dengan alumni, senior HMTIF, atau recruiter di bidang incaran' }
+        ]
+      },
+      {
+        title: 'Kesiapan Interview',
+        items: [
+          { id: 'c13', text: 'Sudah latihan perkenalan diri 60–90 detik tanpa terbata-bata' },
+          { id: 'c14', text: 'Menyiapkan minimal 3 cerita proyek/organisasi dengan struktur STAR' },
+          { id: 'c15', text: 'Sudah riset produk, tech stack, dan budaya perusahaan yang dilamar' },
+          { id: 'c16', text: 'Menyiapkan 2–3 pertanyaan cerdas untuk ditanyakan balik ke interviewer' }
+        ]
+      }
+    ];
+
+    const ROADMAPS = {
+      frontend: {
+        badge: 'WEB & UI ENGINEERING',
+        title: 'Frontend Developer',
+        summary: 'Membangun antarmuka web yang cepat, responsif, aksesibel, dan terhubung mulus dengan API backend.',
+        skills: [
+          'HTML5 Semantik, CSS3 (Flexbox, Grid, Responsive, Animasi)',
+          'JavaScript Modern ES6+ (Fetch API, Async/Await, DOM, State)',
+          'TypeScript + 1 Framework Utama (React / Next.js / Vue)',
+          'Tailwind CSS, Git & GitHub Workflow, Web Performance & PWA'
+        ],
+        projects: [
+          'Portal informasi / dashboard interaktif terhubung REST API + dark mode + pencarian',
+          'Aplikasi Kanban / Task Tracker dengan drag-and-drop & penyimpanan lokal/cloud',
+          'Clone halaman produk e-commerce lengkap keranjang, filter multi-kriteria & skor Lighthouse > 90'
+        ],
+        tips: [
+          'Selalu sertakan link Live Demo di atas README GitHub — recruiter lebih sering klik demo daripada baca kode dulu.',
+          'Tunjukkan kepedulian pada tampilan HP (responsive), loading skeleton, dan penanganan error jaringan.',
+          'Pelajari cara kerja browser (CORS, caching, Core Web Vitals) untuk nilai plus saat technical interview.'
+        ]
+      },
+      backend: {
+        badge: 'SERVER, API & DATABASE',
+        title: 'Backend Developer',
+        summary: 'Merancang API yang aman, struktur database efisien, autentikasi, serta performa server skala besar.',
+        skills: [
+          '1 Bahasa Utama (Node.js / Go / Python / Java Spring / PHP Laravel)',
+          'Desain REST API, Autentikasi JWT / OAuth2, Validasi & Error Handling',
+          'PostgreSQL / MySQL (Relasi, Indexing, Transaksi, Optimasi Query)',
+          'Docker dasar, Redis Caching, Git, & Keamanan (SQLi, Rate Limiting, RLS)'
+        ],
+        projects: [
+          'REST API Sistem Peminjaman / Ticketing lengkap Auth JWT, Role-Based Access, & dokumentasi Swagger',
+          'URL Shortener dengan analitik klik atomik, caching, dan rate limiting',
+          'Pipeline sinkronisasi data otomatis antar layanan (seperti arsitektur Hybrid Sheets → PostgreSQL)'
+        ],
+        tips: [
+          'Tulis dokumentasi endpoint API (Swagger/OpenAPI atau Postman Collection) di setiap repo backend.',
+          'Pahami cara kerja Index database dan transaksi ACID — hampir pasti keluar di tes magang backend.',
+          'Deploy API gratismu (Render / Railway / Cloudflare Workers / Supabase) agar bisa langsung dicoba interviewer.'
+        ]
+      },
+      fullstack: {
+        badge: 'END-TO-END PRODUCT BUILDER',
+        title: 'Fullstack Engineer',
+        summary: 'Menguasai pengembangan produk utuh dari antarmuka frontend, API backend, database, hingga deployment.',
+        skills: [
+          'Frontend (React / Next.js / TypeScript) + CSS Modern',
+          'Backend (Node.js / Express / Next API / Supabase / Prisma)',
+          'Relational DB (PostgreSQL), Auth, Storage, & Row Level Security',
+          'CI/CD dasar (GitHub Actions), Deployment (Vercel / Cloudflare / VPS)'
+        ],
+        projects: [
+          'Platform komunitas / Career Hub kampus full end-to-end dengan CMS, statistik real-time, & PWA',
+          'Aplikasi SaaS catatan/manajemen keuangan tim dengan login Google & export laporan',
+          'Sistem pendaftaran event kampus dengan QR check-in dan dashboard panitia'
+        ],
+        tips: [
+          'Bangun proyek yang benar-benar dipakai orang nyata (himpunan, UKM, atau UMKM) — nilai jualnya berkali lipat.',
+          'Buat diagram arsitektur sistem di README agar interviewer langsung paham alur data aplikasimu.',
+          'Kuasai debugging menyeluruh: DevTools Network tab, log server, dan query SQL.'
+        ]
+      },
+      data: {
+        badge: 'ANALYTICS, SQL & AI',
+        title: 'Data Analyst / Data Scientist',
+        summary: 'Mengolah data mentah menjadi insight bisnis, visualisasi interaktif, hingga model prediksi Machine Learning.',
+        skills: [
+          'SQL Mahir (JOIN, CTE, Window Functions, Agregasi)',
+          'Python (Pandas, NumPy, Matplotlib/Seaborn, Scikit-Learn)',
+          'Visualisasi & BI (Looker Studio / Power BI / Tableau / Excel Pivot)',
+          'Statistika Dasar, Data Cleaning, & Storytelling Bisnis'
+        ],
+        projects: [
+          'Dashboard analisis tren lowongan/kunjungan lengkap rekomendasi keputusan berbasis data',
+          'Model prediksi churn pelanggan / klasifikasi sentimen ulasan berbahasa Indonesia',
+          'End-to-end analisis dataset publik (Kaggle/BPS) dipublikasikan jadi artikel + notebook rapi'
+        ],
+        tips: [
+          'Jangan hanya tampilkan grafik — selalu tulis bagian "Insight & Rekomendasi Aksi" di awal portofolio.',
+          'Latih soal SQL Window Functions & CASE WHEN di LeetCode/HackerRank sebelum technical test.',
+          'Publikasikan studi kasusmu di GitHub, Kaggle, atau Medium/LinkedIn agar mudah ditemukan recruiter.'
+        ]
+      },
+      uiux: {
+        badge: 'PRODUCT & INTERFACE DESIGN',
+        title: 'UI/UX Designer',
+        summary: 'Merancang pengalaman pengguna yang intuitif melalui riset, wireframe, design system, dan prototyping.',
+        skills: [
+          'Figma (Auto Layout, Components, Variants, Design Tokens, Interactive Prototype)',
+          'UX Research (User Interview, Persona, User Journey, Usability Testing)',
+          'Prinsip Visual (Hirarki Tipografi, Kontras Aksesibilitas WCAG, Grid)',
+          'Dasar HTML/CSS agar mudah berkolaborasi dengan developer'
+        ],
+        projects: [
+          'Redesign aplikasi kampus / layanan publik lengkap dengan riset masalah & uji coba sebelum-sesudah',
+          'Design System mini (komponen tombol, form, dark/light mode) untuk aplikasi mobile & web',
+          'Case study aplikasi baru dari riset user hingga high-fidelity interactive prototype di Figma'
+        ],
+        tips: [
+          'Recruiter UX menilai PROSES berpikir (kenapa pilih solusi A bukan B), bukan cuma gambar layar yang cantik.',
+          'Sajikan 2–3 Case Study terstruktur (Masalah → Riset → Solusi → Hasil Testing) di Notion/Behance/Web.',
+          'Uji prototipe kamu ke minimal 3–5 teman lalu dokumentasikan revisi berdasarkan masukan mereka.'
+        ]
+      },
+      mobile: {
+        badge: 'ANDROID, IOS & CROSS-PLATFORM',
+        title: 'Mobile Developer',
+        summary: 'Membangun aplikasi mobile yang mulus, hemat baterai, responsif, dan terintegrasi API/notifikasi.',
+        skills: [
+          'Flutter (Dart) atau React Native (TypeScript) atau Kotlin (Android)',
+          'State Management (Riverpod/Bloc/Provider/Zustand), Navigasi, & Async API',
+          'Local Storage (SQLite/Hive), Push Notification, & Autentikasi',
+          'Pemahaman UI Guidelines (Material 3 / Human Interface) & Build APK/AAB'
+        ],
+        projects: [
+          'Aplikasi pendamping mahasiswa (jadwal kuliah, pengingat tugas, info Career Hub + notifikasi)',
+          'Aplikasi pelacak kebiasaan / keuangan harian dengan grafik & sinkronisasi cloud',
+          'Aplikasi katalog kuliner/kos sekitar kampus dengan peta & filter jarak'
+        ],
+        tips: [
+          'Rekam video demo singkat 30–60 detik dari emulator/HP lalu taruh di README GitHub & LinkedIn.',
+          'Perhatikan performa list panjang, penanganan koneksi lambat/offline, dan tampilan berbagai ukuran layar.',
+          'Pahami lifecycle aplikasi mobile dan manajemen memori dasar.'
+        ]
+      },
+      cyber: {
+        badge: 'SECURITY & INFRASTRUCTURE',
+        title: 'Cyber Security',
+        summary: 'Melindungi aplikasi, jaringan, dan data dari celah keamanan melalui pengujian, monitoring, dan hardening.',
+        skills: [
+          'Dasar Jaringan (TCP/IP, HTTP/HTTPS, DNS, Firewall, Wireshark)',
+          'Linux Command Line, Scripting (Python/Bash), & Administrasi Server',
+          'OWASP Top 10 Web Vulnerabilities (SQLi, XSS, IDOR, CSRF, Auth Flaws)',
+          'Tools Pengujian Dasar (Burp Suite, Nmap) & Analisis Log Keamanan'
+        ],
+        projects: [
+          'Write-up latihan CTF / lab legal (TryHackMe, PicoCTF, PortSwigger Web Security Academy)',
+          'Audit keamanan & perbaikan konfigurasi aplikasi web sendiri (RLS, CSP, header keamanan)',
+          'Skrip Python pemantau log akses / scanner header keamanan HTTP untuk web milik sendiri'
+        ],
+        tips: [
+          'Selalu berlatih hanya di platform legal (TryHackMe, Hack The Box, PortSwigger) dan dokumentasikan write-up.',
+          'Sertakan profil TryHackMe/PortSwigger & laporan perbaikan celah OWASP di portofolio.',
+          'Pahami cara kerja aplikasi web & database dulu — security engineer terbaik paham cara developer membangun sistem.'
+        ]
+      }
+    };
+
+    const SAMPLE_CV = {
+      name: 'Rehan Rizki Rahmat Ramadhan',
+      role: 'Software Engineering Intern | Web & Cloud Enthusiast',
+      email: 'rehan.informatika@student.bakrie.ac.id',
+      phone: '+62 812-3456-7890',
+      location: 'Jakarta Selatan',
+      linkedin: 'linkedin.com/in/rehan-informatika',
+      github: 'github.com/hmtifUb',
+      summary: 'Mahasiswa S1 Teknik Informatika yang berfokus pada pengembangan aplikasi web modern, arsitektur database PostgreSQL, dan automasi sistem. Berpengalaman membangun platform portal karier komunitas yang melayani 2.000+ kunjungan dengan waktu muat di bawah 500 ms.',
+      eduSchool: 'Universitas Bakrie',
+      eduDegree: 'S1 Teknik Informatika',
+      eduPeriod: '2023 – Sekarang',
+      eduGpa: '3.78 / 4.00',
+      eduCourse: 'Struktur Data, Basis Data, Rekayasa Perangkat Lunak, Pengembangan Web',
+      exps: [
+        {
+          title: 'Kepala Departemen Pengembangan Profesi & Peluang (PPP)',
+          org: 'HMTIF Universitas Bakrie',
+          period: '2025 – Sekarang',
+          bullets: 'Merancang dan meluncurkan HMTIF Career Hub yang menghimpun 130+ informasi magang, pelatihan, dan lomba mahasiswa.\nMemimpin tim beranggotakan 4 pengurus dalam kurasi peluang mingguan dan distribusi informasi melalui saluran WhatsApp.'
+        }
+      ],
+      projs: [
+        {
+          name: 'HMTIF Career Hub (Arsitektur Hybrid Cloud & PWA)',
+          stack: 'JavaScript, PostgreSQL (Supabase), Row Level Security, Apps Script, GitHub Pages',
+          link: 'https://hmtifub.github.io/careerhub/',
+          bullets: 'Memigrasikan backend dari Google Sheets langsung ke Supabase PostgreSQL sehingga waktu muat turun lebih dari 75%.\nMenerapkan sinkronisasi atomik 5 menit, pencatatan trafik tanpa antrean lock, deep-link program, dan mode PWA installable.'
+        },
+        {
+          name: 'Career Prep Studio & ATS CV Builder',
+          stack: 'HTML5, CSS3 Print Media, Vanilla JavaScript, LocalStorage',
+          link: 'https://hmtifub.github.io/careerhub/kit.html',
+          bullets: 'Membangun generator CV ATS 1 kolom dengan analisis skor kesiapan real-time dan ekspor PDF A4 langsung di browser.'
+        }
+      ],
+      skillLang: 'JavaScript (ES6+), TypeScript, Python, SQL, HTML5, CSS3',
+      skillTools: 'PostgreSQL, Supabase, Git & GitHub, Node.js, Bootstrap, Chart.js, Google Apps Script, Figma',
+      certs: 'Belajar Dasar Pemrograman Web — Dicoding (2025)\nSQL & Relational Database Foundations (2025)'
+    };
+
+    function safeJsonArray(raw) {
+      try {
+        const parsed = JSON.parse(raw || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (_) { return []; }
+    }
+
+    let allResources = STARTER_RESOURCES.slice();
+    let resCategory = 'Semua';
+    let resFavOnly = false;
+    let savedResources = new Set(safeJsonArray(kitStore.get('careerKitSavedRes', '[]')));
+
+    let cvData = loadSavedCv();
+    let currentEmailTpl = 'id_apply';
+
+    let intCat = 'Semua';
+    let intIndex = 0;
+    let intSeconds = 90;
+    let intTimerId = null;
+
+    let checkedSet = new Set(safeJsonArray(kitStore.get('careerKitChecklist', '[]')));
+    let activeRoadmap = 'frontend';
+
+    function escapeHtml(v) {
+      return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    }
+
+    function safeUrl(v) {
+      const s = String(v || '').trim();
+      try {
+        const u = new URL(/^www\./i.test(s) ? 'https://' + s : s);
+        return ['http:', 'https:'].includes(u.protocol) ? u.href : '';
+      } catch (_) { return ''; }
+    }
+
+    let kitToastTimer = null;
+    function showKitToast(msg) {
+      const el = document.getElementById('kit-toast');
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.add('is-visible');
+      clearTimeout(kitToastTimer);
+      kitToastTimer = setTimeout(() => el.classList.remove('is-visible'), 2600);
+    }
+
+    function toggleKitTheme() {
+      const root = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      if (root.getAttribute('data-theme') === 'dark') {
+        root.removeAttribute('data-theme');
+        icon.className = 'fa-solid fa-moon';
+        kitStore.set('theme', 'light');
+      } else {
+        root.setAttribute('data-theme', 'dark');
+        icon.className = 'fa-solid fa-sun';
+        kitStore.set('theme', 'dark');
+      }
+    }
+
+    function switchKitTab(tab) {
+      const valid = ['resources', 'cv', 'email', 'interview', 'roadmap'];
+      if (!valid.includes(tab)) tab = 'resources';
+      document.querySelectorAll('[data-kit-tab]').forEach(btn => btn.classList.toggle('active', btn.dataset.kitTab === tab));
+      document.querySelectorAll('.kit-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + tab)?.classList.add('active');
+      if (history.replaceState) {
+        try { history.replaceState(null, '', '#' + tab); } catch (_) {}
+      }
+      if (tab === 'email') syncEmailFromCvIfEmpty();
+      updateKitScrollBar();
+    }
+
+    function updateKitScrollBar() {
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+      const bar = document.getElementById('kit-scroll-bar');
+      if (bar) bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', updateKitScrollBar, { passive: true });
+
+    async function loadRemoteKit(showFeedback = false) {
+      const cfg = window.HUB_CONFIG || {};
+      const url = String(cfg.SUPABASE_URL || '').trim().replace(/\/+$/, '');
+      const key = String(cfg.SUPABASE_ANON_KEY || '').trim();
+      const statusEl = document.getElementById('res-meta-status');
+      if (!url || !key || url.includes('GANTI-')) {
+        if (statusEl) statusEl.textContent = `${allResources.length} resource pilihan tersedia`;
+        return;
+      }
+      try {
+        const headers = { 'Content-Type': 'application/json', 'apikey': key };
+        if (key.startsWith('eyJ')) headers.Authorization = 'Bearer ' + key;
+        const res = await fetch(`${url}/rest/v1/rpc/get_career_kit`, { method: 'POST', headers, body: '{}' });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            allResources = data;
+            renderResourceCategories();
+            renderResources();
+            if (statusEl) statusEl.textContent = `${data.length} resource tersinkron dari Google Sheets`;
+            if (showFeedback) showKitToast('Katalog resource diperbarui dari database!');
+            return;
+          }
+        }
+      } catch (_) {}
+      if (statusEl) statusEl.textContent = `${allResources.length} resource starter kurasi HMTIF`;
+      if (showFeedback) showKitToast('Menampilkan katalog resource bawaan HMTIF.');
+    }
+
+    function resKey(item) {
+      return `${item.judul || ''}|${item.link_url || ''}`.toLowerCase();
+    }
+
+    function renderResourceCategories() {
+      const cats = ['Semua', ...new Set(allResources.map(r => String(r.kategori || 'Lainnya').trim()))];
+      if (!cats.includes(resCategory)) resCategory = 'Semua';
+      const wrap = document.getElementById('res-cat-chips');
+      wrap.innerHTML = cats.map(c =>
+        `<button type="button" class="kit-chip ${c === resCategory ? 'active' : ''}" data-res-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`
+      ).join('');
+      document.getElementById('hero-res-count').textContent = String(allResources.length);
+    }
+
+    function setResCategory(cat) {
+      resCategory = cat;
+      renderResourceCategories();
+      renderResources();
+    }
+
+    function toggleResFavFilter() {
+      resFavOnly = !resFavOnly;
+      const btn = document.getElementById('res-fav-toggle');
+      btn.className = 'kit-btn flex-grow-1 ' + (resFavOnly ? 'kit-btn-gold' : 'kit-btn-soft');
+      btn.innerHTML = resFavOnly ? '<i class="fa-solid fa-bookmark"></i> Tersimpan' : '<i class="fa-regular fa-bookmark"></i> Tersimpan';
+      renderResources();
+    }
+
+    function toggleSaveResource(key) {
+      if (savedResources.has(key)) savedResources.delete(key);
+      else savedResources.add(key);
+      kitStore.set('careerKitSavedRes', JSON.stringify([...savedResources]));
+      renderResources();
+    }
+
+    function renderResources() {
+      const q = (document.getElementById('res-search')?.value || '').trim().toLowerCase();
+      const typeFilter = document.getElementById('res-type-filter')?.value || 'all';
+      const grid = document.getElementById('res-grid');
+
+      const filtered = allResources.filter(item => {
+        if (resCategory !== 'Semua' && String(item.kategori || '').trim() !== resCategory) return false;
+        if (typeFilter !== 'all' && String(item.tipe || '').toLowerCase() !== typeFilter.toLowerCase()) return false;
+        if (resFavOnly && !savedResources.has(resKey(item))) return false;
+        if (q) {
+          const hay = [item.judul, item.kategori, item.tipe, item.level, item.deskripsi, item.tag].join(' ').toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="kit-card text-center" style="grid-column:1/-1;padding:38px 20px;">
+          <i class="fa-solid fa-folder-open mb-2" style="font-size:2rem;color:var(--muted);"></i>
+          <h5 class="fw-bold mb-1">Resource tidak ditemukan</h5>
+          <p class="text-muted small mb-3">Coba ubah kata kunci atau reset filter kategori.</p>
+          <button type="button" class="kit-btn kit-btn-primary" onclick="resetResFilters()">Reset Filter</button>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const key = resKey(item);
+        const saved = savedResources.has(key);
+        const url = safeUrl(item.link_url);
+        const tags = String(item.tag || '').split(',').map(t => t.trim()).filter(Boolean).slice(0, 4);
+        return `<article class="res-card ${item.is_featured ? 'is-featured' : ''}">
+          <div class="res-badges">
+            <span class="res-cat-pill">${item.is_featured ? '★ ' : ''}${escapeHtml(item.kategori || 'Umum')}</span>
+            <span class="res-type-pill">${escapeHtml(item.tipe || 'Panduan')} • ${escapeHtml(item.level || 'Semua')}</span>
+          </div>
+          <h5 class="res-title">${escapeHtml(item.judul)}</h5>
+          <p class="res-desc">${escapeHtml(item.deskripsi || '')}</p>
+          ${tags.length ? `<div class="res-tags">${tags.map(t => `<span class="res-tag">#${escapeHtml(t)}</span>`).join('')}</div>` : ''}
+          <div class="res-actions">
+            ${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="kit-btn kit-btn-primary flex-grow-1"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Resource</a>` : `<button type="button" class="kit-btn kit-btn-soft flex-grow-1" disabled>Link belum tersedia</button>`}
+            <button type="button" class="res-fav-btn ${saved ? 'active' : ''}" data-save-res="${escapeHtml(key)}" title="${saved ? 'Hapus dari tersimpan' : 'Simpan resource'}">
+              <i class="${saved ? 'fa-solid' : 'fa-regular'} fa-bookmark"></i>
+            </button>
+          </div>
+        </article>`;
+      }).join('');
+
+      grid.querySelectorAll('[data-save-res]').forEach(btn => {
+        btn.addEventListener('click', () => toggleSaveResource(btn.dataset.saveRes));
+      });
+    }
+
+    function resetResFilters() {
+      document.getElementById('res-search').value = '';
+      document.getElementById('res-type-filter').value = 'all';
+      resCategory = 'Semua';
+      if (resFavOnly) toggleResFavFilter();
+      renderResourceCategories();
+      renderResources();
+    }
+
+    function loadSavedCv() {
+      try {
+        const raw = kitStore.get('careerKitCvData');
+        if (raw) return JSON.parse(raw);
+      } catch (_) {}
+      return JSON.parse(JSON.stringify(SAMPLE_CV));
+    }
+
+    function saveCvData() {
+      kitStore.set('careerKitCvData', JSON.stringify(cvData));
+    }
+
+    function hydrateCvForm() {
+      const map = {
+        'cv-name': 'name', 'cv-role': 'role', 'cv-email': 'email', 'cv-phone': 'phone',
+        'cv-location': 'location', 'cv-linkedin': 'linkedin', 'cv-github': 'github',
+        'cv-summary': 'summary', 'cv-edu-school': 'eduSchool', 'cv-edu-degree': 'eduDegree',
+        'cv-edu-period': 'eduPeriod', 'cv-edu-gpa': 'eduGpa', 'cv-edu-course': 'eduCourse',
+        'cv-skill-lang': 'skillLang', 'cv-skill-tools': 'skillTools', 'cv-certs': 'certs'
+      };
+      Object.entries(map).forEach(([id, prop]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = cvData[prop] || '';
+      });
+      renderCvExpEditor();
+      renderCvProjEditor();
+      renderCvPreviewAndScore();
+    }
+
+    function bindCvStaticInputs() {
+      const map = {
+        'cv-name': 'name', 'cv-role': 'role', 'cv-email': 'email', 'cv-phone': 'phone',
+        'cv-location': 'location', 'cv-linkedin': 'linkedin', 'cv-github': 'github',
+        'cv-summary': 'summary', 'cv-edu-school': 'eduSchool', 'cv-edu-degree': 'eduDegree',
+        'cv-edu-period': 'eduPeriod', 'cv-edu-gpa': 'eduGpa', 'cv-edu-course': 'eduCourse',
+        'cv-skill-lang': 'skillLang', 'cv-skill-tools': 'skillTools', 'cv-certs': 'certs'
+      };
+      Object.entries(map).forEach(([id, prop]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', () => {
+          cvData[prop] = el.value;
+          saveCvData();
+          renderCvPreviewAndScore();
+        });
+      });
+    }
+
+    function renderCvExpEditor() {
+      const wrap = document.getElementById('cv-exp-list');
+      const list = Array.isArray(cvData.exps) ? cvData.exps : [];
+      if (!list.length) {
+        wrap.innerHTML = '<small class="text-muted">Belum ada pengalaman. Klik "+ Tambah" untuk menambahkan pengalaman magang atau organisasi.</small>';
+        return;
+      }
+      wrap.innerHTML = list.map((ex, i) => `
+        <div class="cv-dyn-item">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong class="small">Pengalaman #${i + 1}</strong>
+            <button type="button" class="kit-btn kit-btn-danger" style="min-height:26px;padding:0 9px;font-size:.7rem;" onclick="removeCvExp(${i})"><i class="fa-solid fa-trash"></i></button>
+          </div>
+          <div class="row g-2">
+            <div class="col-12 col-sm-6"><input class="kit-input" placeholder="Posisi / Peran" value="${escapeHtml(ex.title)}" oninput="updateCvExp(${i},'title',this.value)"></div>
+            <div class="col-12 col-sm-6"><input class="kit-input" placeholder="Perusahaan / Organisasi" value="${escapeHtml(ex.org)}" oninput="updateCvExp(${i},'org',this.value)"></div>
+            <div class="col-12"><input class="kit-input" placeholder="Periode (misal: Jan 2025 – Sekarang)" value="${escapeHtml(ex.period)}" oninput="updateCvExp(${i},'period',this.value)"></div>
+            <div class="col-12"><textarea class="kit-textarea" rows="3" placeholder="Tulis poin pencapaian (1 baris = 1 bullet, sertakan angka dampak)" oninput="updateCvExp(${i},'bullets',this.value)">${escapeHtml(ex.bullets)}</textarea></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addCvExp() {
+      cvData.exps = Array.isArray(cvData.exps) ? cvData.exps : [];
+      cvData.exps.push({ title: '', org: '', period: '', bullets: '' });
+      saveCvData();
+      renderCvExpEditor();
+      renderCvPreviewAndScore();
+    }
+
+    function removeCvExp(idx) {
+      cvData.exps.splice(idx, 1);
+      saveCvData();
+      renderCvExpEditor();
+      renderCvPreviewAndScore();
+    }
+
+    function updateCvExp(idx, field, val) {
+      if (!cvData.exps[idx]) return;
+      cvData.exps[idx][field] = val;
+      saveCvData();
+      renderCvPreviewAndScore();
+    }
+
+    function renderCvProjEditor() {
+      const wrap = document.getElementById('cv-proj-list');
+      const list = Array.isArray(cvData.projs) ? cvData.projs : [];
+      if (!list.length) {
+        wrap.innerHTML = '<small class="text-muted">Belum ada proyek IT. Klik "+ Tambah" untuk menambahkan proyek kuliah/pribadi.</small>';
+        return;
+      }
+      wrap.innerHTML = list.map((p, i) => `
+        <div class="cv-dyn-item">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong class="small">Proyek #${i + 1}</strong>
+            <button type="button" class="kit-btn kit-btn-danger" style="min-height:26px;padding:0 9px;font-size:.7rem;" onclick="removeCvProj(${i})"><i class="fa-solid fa-trash"></i></button>
+          </div>
+          <div class="row g-2">
+            <div class="col-12 col-sm-6"><input class="kit-input" placeholder="Nama Proyek" value="${escapeHtml(p.name)}" oninput="updateCvProj(${i},'name',this.value)"></div>
+            <div class="col-12 col-sm-6"><input class="kit-input" placeholder="Tech Stack (React, SQL, dll.)" value="${escapeHtml(p.stack)}" oninput="updateCvProj(${i},'stack',this.value)"></div>
+            <div class="col-12"><input class="kit-input" placeholder="Link Demo / GitHub (opsional)" value="${escapeHtml(p.link)}" oninput="updateCvProj(${i},'link',this.value)"></div>
+            <div class="col-12"><textarea class="kit-textarea" rows="3" placeholder="Jelaskan solusi & dampaknya (1 baris = 1 bullet)" oninput="updateCvProj(${i},'bullets',this.value)">${escapeHtml(p.bullets)}</textarea></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addCvProj() {
+      cvData.projs = Array.isArray(cvData.projs) ? cvData.projs : [];
+      cvData.projs.push({ name: '', stack: '', link: '', bullets: '' });
+      saveCvData();
+      renderCvProjEditor();
+      renderCvPreviewAndScore();
+    }
+
+    function removeCvProj(idx) {
+      cvData.projs.splice(idx, 1);
+      saveCvData();
+      renderCvProjEditor();
+      renderCvPreviewAndScore();
+    }
+
+    function updateCvProj(idx, field, val) {
+      if (!cvData.projs[idx]) return;
+      cvData.projs[idx][field] = val;
+      saveCvData();
+      renderCvPreviewAndScore();
+    }
+
+    function splitBullets(text) {
+      return String(text || '').split(/\r?\n/).map(s => s.replace(/^[-•*]\s*/, '').trim()).filter(Boolean);
+    }
+
+    function renderCvPreviewAndScore() {
+      const contacts = [cvData.location, cvData.phone, cvData.email, cvData.linkedin, cvData.github]
+        .map(v => String(v || '').trim()).filter(Boolean);
+      const exps = (cvData.exps || []).filter(e => e.title || e.org || e.bullets);
+      const projs = (cvData.projs || []).filter(p => p.name || p.bullets);
+      const certs = splitBullets(cvData.certs);
+
+      let html = `<h2>${escapeHtml(cvData.name || 'NAMA LENGKAP KAMU')}</h2>`;
+      if (cvData.role) html += `<div class="cv-role">${escapeHtml(cvData.role)}</div>`;
+      if (contacts.length) html += `<div class="cv-contact">${contacts.map(escapeHtml).join(' &nbsp;|&nbsp; ')}</div>`;
+
+      if (cvData.summary && cvData.summary.trim()) {
+        html += `<div class="cv-sec-title">Ringkasan Profil</div><p>${escapeHtml(cvData.summary.trim())}</p>`;
+      }
+
+      if (cvData.eduSchool || cvData.eduDegree) {
+        html += `<div class="cv-sec-title">Pendidikan</div>
+          <div class="cv-row-head"><span>${escapeHtml(cvData.eduSchool || '')}</span><span>${escapeHtml(cvData.eduPeriod || '')}</span></div>
+          <div class="cv-row-sub"><span>${escapeHtml(cvData.eduDegree || '')}</span><span>${cvData.eduGpa ? 'IPK: ' + escapeHtml(cvData.eduGpa) : ''}</span></div>
+          ${cvData.eduCourse ? `<p><strong>Mata Kuliah Relevan:</strong> ${escapeHtml(cvData.eduCourse)}</p>` : ''}`;
+      }
+
+      if (exps.length) {
+        html += `<div class="cv-sec-title">Pengalaman &amp; Organisasi</div>`;
+        exps.forEach(ex => {
+          const b = splitBullets(ex.bullets);
+          html += `<div class="cv-row-head"><span>${escapeHtml(ex.title || '')}</span><span>${escapeHtml(ex.period || '')}</span></div>
+            <div class="cv-row-sub"><span>${escapeHtml(ex.org || '')}</span><span></span></div>
+            ${b.length ? `<ul>${b.map(li => `<li>${escapeHtml(li)}</li>`).join('')}</ul>` : ''}`;
+        });
+      }
+
+      if (projs.length) {
+        html += `<div class="cv-sec-title">Proyek IT &amp; Portofolio</div>`;
+        projs.forEach(p => {
+          const b = splitBullets(p.bullets);
+          html += `<div class="cv-row-head"><span>${escapeHtml(p.name || '')}</span><span style="font-weight:400;font-size:8.6pt;">${escapeHtml(p.link || '')}</span></div>
+            ${p.stack ? `<div class="cv-row-sub"><span>Tech Stack: ${escapeHtml(p.stack)}</span><span></span></div>` : ''}
+            ${b.length ? `<ul>${b.map(li => `<li>${escapeHtml(li)}</li>`).join('')}</ul>` : ''}`;
+        });
+      }
+
+      if (cvData.skillLang || cvData.skillTools) {
+        html += `<div class="cv-sec-title">Keahlian Teknis</div>`;
+        if (cvData.skillLang) html += `<p><strong>Bahasa Pemrograman:</strong> ${escapeHtml(cvData.skillLang)}</p>`;
+        if (cvData.skillTools) html += `<p><strong>Framework &amp; Tools:</strong> ${escapeHtml(cvData.skillTools)}</p>`;
+      }
+
+      if (certs.length) {
+        html += `<div class="cv-sec-title">Sertifikasi &amp; Prestasi</div><ul>${certs.map(c => `<li>${escapeHtml(c)}</li>`).join('')}</ul>`;
+      }
+
+      document.getElementById('cv-paper').innerHTML = html;
+
+      const allBullets = [
+        ...exps.flatMap(e => splitBullets(e.bullets)),
+        ...projs.flatMap(p => splitBullets(p.bullets))
+      ].join(' ');
+      const summaryWords = String(cvData.summary || '').trim().split(/\s+/).filter(Boolean).length;
+
+      const checks = [
+        { label: 'Nama, email & kontak lengkap', ok: Boolean(cvData.name && cvData.email && cvData.phone), weight: 15 },
+        { label: 'Ada link GitHub / LinkedIn', ok: Boolean(cvData.github || cvData.linkedin), weight: 15 },
+        { label: 'Ringkasan profil ideal (15–70 kata)', ok: summaryWords >= 15 && summaryWords <= 70, weight: 10 },
+        { label: 'Pendidikan terisi lengkap', ok: Boolean(cvData.eduSchool && cvData.eduDegree), weight: 10 },
+        { label: 'Minimal 1 pengalaman/organisasi', ok: exps.length >= 1, weight: 15 },
+        { label: 'Minimal 2 proyek IT portofolio', ok: projs.length >= 2, weight: 15 },
+        { label: 'Ada angka / metrik dampak (%, +, angka)', ok: /\d/.test(allBullets), weight: 10 },
+        { label: 'Keahlian teknis terstruktur', ok: Boolean(cvData.skillLang && cvData.skillTools), weight: 10 }
+      ];
+
+      const score = checks.reduce((s, c) => s + (c.ok ? c.weight : 0), 0);
+      document.getElementById('ats-score-label').textContent = `Skor ATS: ${score} / 100`;
+      document.getElementById('hero-ats-score').textContent = `${score}%`;
+      document.getElementById('ats-meter-fill').style.width = `${score}%`;
+      document.getElementById('ats-checks').innerHTML = checks.map(c =>
+        `<div class="ats-check-item ${c.ok ? 'ok' : ''}"><i class="fa-solid ${c.ok ? 'fa-circle-check' : 'fa-circle-dot'}"></i><span>${escapeHtml(c.label)}</span></div>`
+      ).join('');
+    }
+
+    function loadSampleCv() {
+      cvData = JSON.parse(JSON.stringify(SAMPLE_CV));
+      saveCvData();
+      hydrateCvForm();
+      showKitToast('Contoh CV ATS Teknik Informatika dimuat!');
+    }
+
+    function printAtsCv() {
+      window.print();
+    }
+
+    function exportCvJson() {
+      const blob = new Blob([JSON.stringify(cvData, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `CV_${(cvData.name || 'HMTIF').replace(/\s+/g, '_')}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showKitToast('Draft CV tersimpan sebagai file JSON!');
+    }
+
+    function importCvJson(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || '{}'));
+          if (parsed && typeof parsed === 'object') {
+            cvData = Object.assign(JSON.parse(JSON.stringify(SAMPLE_CV)), parsed);
+            saveCvData();
+            hydrateCvForm();
+            showKitToast('Draft CV berhasil diimpor!');
+          }
+        } catch (_) {
+          showKitToast('File JSON tidak valid.');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function syncEmailFromCvIfEmpty() {
+      const n = document.getElementById('em-name');
+      const l = document.getElementById('em-link');
+      if (n && !n.value && cvData.name) n.value = cvData.name;
+      if (l && !l.value && (cvData.github || cvData.linkedin)) {
+        const raw = cvData.github || cvData.linkedin;
+        l.value = /^https?:\/\//i.test(raw) ? raw : 'https://' + raw;
+      }
+      buildEmailTemplate();
+    }
+
+    function selectEmailTpl(tpl) {
+      currentEmailTpl = tpl;
+      document.querySelectorAll('[data-email-tpl]').forEach(b => b.classList.toggle('active', b.dataset.emailTpl === tpl));
+      buildEmailTemplate();
+    }
+
+    function buildEmailTemplate() {
+      const name = document.getElementById('em-name').value.trim() || '[Nama Lengkap]';
+      const campus = document.getElementById('em-campus').value.trim() || 'Teknik Informatika Universitas Bakrie';
+      const role = document.getElementById('em-role').value.trim() || '[Posisi yang Dilamar]';
+      const company = document.getElementById('em-company').value.trim() || '[Nama Perusahaan]';
+      const hrd = document.getElementById('em-hrd').value.trim() || 'Tim Rekrutmen';
+      const to = document.getElementById('em-to').value.trim();
+      const highlight = document.getElementById('em-highlight').value.trim() || 'pengembangan aplikasi web modern, pengelolaan database, dan kolaborasi proyek tim';
+      const link = document.getElementById('em-link').value.trim() || 'https://github.com/username';
+
+      let subject = '';
+      let body = '';
+
+      if (currentEmailTpl === 'id_apply') {
+        subject = `Lamaran ${role} — ${name}`;
+        body = `Yth. ${hrd} ${company},\n\nPerkenalkan, saya ${name}, mahasiswa ${campus}. Melalui email ini, saya bermaksud mengajukan lamaran untuk posisi ${role} di ${company}.\n\nSaya memiliki pengalaman dan ketertarikan kuat dalam ${highlight}. Saya terbiasa bekerja secara terstruktur, cepat beradaptasi dengan teknologi baru, dan siap berkontribusi nyata bagi tim ${company}.\n\nSebagai bahan pertimbangan, saya lampirkan CV terbaru saya serta tautan portofolio/profil berikut:\n${link}\n\nBesar harapan saya untuk dapat mengikuti tahap wawancara guna menjelaskan lebih lanjut kontribusi yang dapat saya berikan. Terima kasih atas waktu dan perhatian Bapak/Ibu.\n\nHormat saya,\n${name}`;
+      } else if (currentEmailTpl === 'en_apply') {
+        subject = `Application for ${role} — ${name}`;
+        body = `Dear ${hrd} at ${company},\n\nI hope this email finds you well. My name is ${name}, an undergraduate student majoring in ${campus}. I am writing to express my strong interest in the ${role} opportunity at ${company}.\n\nThrough my academic projects and organizational experience, I have hands-on experience in ${highlight}. I am eager to bring strong problem-solving skills and a fast-learning mindset to support your engineering team.\n\nPlease find my resume attached for your review. You can also explore my projects and profile here:\n${link}\n\nThank you very much for your time and consideration. I would welcome the opportunity to discuss how I can contribute to ${company}.\n\nBest regards,\n${name}`;
+      } else if (currentEmailTpl === 'linkedin_dm') {
+        subject = `(Pesan DM LinkedIn — tidak perlu subject)`;
+        body = `Halo Kak ${hrd}, salam kenal! Saya ${name}, mahasiswa ${campus}.\n\nSaya melihat ${company} sedang membuka kesempatan untuk posisi ${role} dan saya sudah mengirimkan lamaran secara resmi. Kebetulan saya punya pengalaman langsung dalam ${highlight} (portofolio: ${link}).\n\nJika berkenan, apakah ada tips atau informasi tambahan terkait proses seleksi posisi tersebut? Terima kasih banyak atas waktunya, Kak!`;
+      } else if (currentEmailTpl === 'followup') {
+        subject = `Follow-Up Lamaran ${role} — ${name}`;
+        body = `Yth. ${hrd} ${company},\n\nSemoga Bapak/Ibu dalam keadaan sehat. Saya ${name}, bermaksud menanyakan perkembangan terkait lamaran saya untuk posisi ${role} yang telah saya kirimkan sebelumnya.\n\nSaya masih sangat antusias untuk bergabung dan berkontribusi bersama tim ${company}. Apabila diperlukan informasi tambahan atau portofolio pendukung (${link}), saya siap mengirimkannya segera.\n\nTerima kasih banyak atas waktu dan respon Bapak/Ibu.\n\nHormat saya,\n${name}`;
+      } else {
+        subject = `Terima Kasih atas Kesempatan Wawancara ${role} — ${name}`;
+        body = `Yth. ${hrd} ${company},\n\nTerima kasih banyak atas waktu dan kesempatan wawancara untuk posisi ${role} hari ini. Saya sangat menikmati diskusi mengenai tantangan teknis serta budaya kerja di ${company}.\n\nPembicaraan tadi semakin memperkuat antusiasme saya untuk berkontribusi, khususnya melalui pengalaman saya dalam ${highlight}.\n\nSaya menantikan kabar baik untuk tahap selanjutnya. Semoga hari Bapak/Ibu menyenangkan.\n\nHormat saya,\n${name}`;
+      }
+
+      document.getElementById('em-out-subject').value = subject;
+      document.getElementById('em-out-body').value = body;
+      updateMailtoAndCount();
+    }
+
+    function updateMailtoAndCount() {
+      const to = document.getElementById('em-to').value.trim();
+      const subj = document.getElementById('em-out-subject').value;
+      const body = document.getElementById('em-out-body').value;
+      document.getElementById('em-char-count').textContent = `${body.length} karakter`;
+      const href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+      document.getElementById('em-mailto-btn').href = href;
+    }
+
+    async function copyElText(id, msg) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const val = el.value || el.textContent || '';
+      try {
+        if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(val);
+        else { el.select(); document.execCommand('copy'); }
+        showKitToast(msg);
+      } catch (_) { showKitToast('Gagal menyalin otomatis.'); }
+    }
+
+    function getFilteredQuestions() {
+      return intCat === 'Semua' ? INTERVIEW_QUESTIONS : INTERVIEW_QUESTIONS.filter(q => q.cat === intCat);
+    }
+
+    function renderInterviewCategories() {
+      const cats = ['Semua', ...new Set(INTERVIEW_QUESTIONS.map(q => q.cat))];
+      document.getElementById('int-cat-chips').innerHTML = cats.map(c =>
+        `<button type="button" class="kit-chip ${c === intCat ? 'active' : ''}" data-int-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`
+      ).join('');
+    }
+
+    function setInterviewCat(cat) {
+      intCat = cat;
+      intIndex = 0;
+      renderInterviewCategories();
+      renderInterviewQuestion();
+    }
+
+    function renderInterviewQuestion() {
+      const list = getFilteredQuestions();
+      if (!list.length) return;
+      intIndex = ((intIndex % list.length) + list.length) % list.length;
+      const item = list[intIndex];
+      document.getElementById('int-q-cat').textContent = item.cat;
+      document.getElementById('int-q-idx').textContent = `Pertanyaan ${intIndex + 1} / ${list.length}`;
+      document.getElementById('int-q-text').textContent = item.q;
+      const guideEl = document.getElementById('int-q-guide');
+      guideEl.innerHTML = `<strong><i class="fa-solid fa-star me-1"></i> Panduan Jawaban:</strong><br>${escapeHtml(item.guide)}`;
+      guideEl.hidden = true;
+      resetInterviewTimer();
+    }
+
+    function nextInterviewQuestion(random) {
+      const list = getFilteredQuestions();
+      if (random && list.length > 1) {
+        let pick = intIndex;
+        while (pick === intIndex) pick = Math.floor(Math.random() * list.length);
+        intIndex = pick;
+      } else {
+        intIndex++;
+      }
+      renderInterviewQuestion();
+    }
+
+    function toggleInterviewGuide() {
+      const el = document.getElementById('int-q-guide');
+      el.hidden = !el.hidden;
+    }
+
+    function updateTimerDisplay() {
+      const m = String(Math.floor(intSeconds / 60)).padStart(2, '0');
+      const s = String(intSeconds % 60).padStart(2, '0');
+      document.getElementById('int-timer-val').textContent = `${m}:${s}`;
+      document.getElementById('int-timer').classList.toggle('urgent', intSeconds <= 15);
+    }
+
+    function toggleInterviewTimer() {
+      const btn = document.getElementById('int-timer-btn');
+      if (intTimerId) {
+        clearInterval(intTimerId);
+        intTimerId = null;
+        btn.innerHTML = '<i class="fa-solid fa-play"></i> Lanjut';
+        return;
+      }
+      if (intSeconds <= 0) intSeconds = 90;
+      btn.innerHTML = '<i class="fa-solid fa-pause"></i> Jeda';
+      intTimerId = setInterval(() => {
+        intSeconds--;
+        updateTimerDisplay();
+        if (intSeconds <= 0) {
+          clearInterval(intTimerId);
+          intTimerId = null;
+          btn.innerHTML = '<i class="fa-solid fa-play"></i> Mulai 90 dtk';
+          showKitToast('Waktu 90 detik habis! Cek panduan jawaban STAR.');
+        }
+      }, 1000);
+    }
+
+    function resetInterviewTimer() {
+      if (intTimerId) { clearInterval(intTimerId); intTimerId = null; }
+      intSeconds = 90;
+      updateTimerDisplay();
+      const btn = document.getElementById('int-timer-btn');
+      if (btn) btn.innerHTML = '<i class="fa-solid fa-play"></i> Mulai 90 dtk';
+    }
+
+    function renderChecklist() {
+      const wrap = document.getElementById('checklist-container');
+      let total = 0;
+      let done = 0;
+      wrap.innerHTML = CHECKLIST_GROUPS.map(g => {
+        const rows = g.items.map(it => {
+          total++;
+          const isDone = checkedSet.has(it.id);
+          if (isDone) done++;
+          return `<label class="check-item ${isDone ? 'done' : ''}">
+            <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleCheckItem('${it.id}')">
+            <span>${escapeHtml(it.text)}</span>
+          </label>`;
+        }).join('');
+        return `<div class="check-group-title">${escapeHtml(g.title)}</div>${rows}`;
+      }).join('');
+
+      const pct = Math.round((done / Math.max(1, total)) * 100);
+      const circ = 150.8;
+      document.getElementById('ready-ring-fg').style.strokeDashoffset = String(circ * (1 - pct / 100));
+      document.getElementById('ready-ring-pct').textContent = pct + '%';
+      document.getElementById('hero-ready-score').textContent = pct + '%';
+      document.getElementById('top-readiness-pct').textContent = pct + '%';
+      document.getElementById('ready-count-text').textContent = `${done} dari ${total} checklist selesai`;
+
+      const rank = pct >= 90 ? 'Job-Ready Pro! 🚀' : pct >= 65 ? 'Siap Lamar Magang 💪' : pct >= 35 ? 'Progres Bagus ✨' : 'Mulai Persiapan';
+      document.getElementById('ready-rank').textContent = rank;
+    }
+
+    function toggleCheckItem(id) {
+      if (checkedSet.has(id)) checkedSet.delete(id);
+      else checkedSet.add(id);
+      kitStore.set('careerKitChecklist', JSON.stringify([...checkedSet]));
+      renderChecklist();
+    }
+
+    function resetChecklist() {
+      checkedSet.clear();
+      kitStore.set('careerKitChecklist', '[]');
+      renderChecklist();
+      showKitToast('Checklist kesiapan di-reset.');
+    }
+
+    function renderRoadmaps() {
+      const keys = Object.keys(ROADMAPS);
+      document.getElementById('roadmap-chips').innerHTML = keys.map(k =>
+        `<button type="button" class="kit-chip ${k === activeRoadmap ? 'active' : ''}" onclick="selectRoadmap('${k}')">${escapeHtml(ROADMAPS[k].title)}</button>`
+      ).join('');
+      const rm = ROADMAPS[activeRoadmap];
+      document.getElementById('rm-badge').textContent = rm.badge;
+      document.getElementById('rm-title').textContent = rm.title;
+      document.getElementById('rm-summary').textContent = rm.summary;
+      document.getElementById('rm-skills').innerHTML = rm.skills.map(s => `<li>${escapeHtml(s)}</li>`).join('');
+      document.getElementById('rm-projects').innerHTML = rm.projects.map(p => `<li>${escapeHtml(p)}</li>`).join('');
+      document.getElementById('rm-tips').innerHTML = rm.tips.map(t => `<li>${escapeHtml(t)}</li>`).join('');
+    }
+
+    function selectRoadmap(key) {
+      if (!ROADMAPS[key]) return;
+      activeRoadmap = key;
+      renderRoadmaps();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (kitStore.get('theme') === 'dark') {
+        document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+      }
+      renderResourceCategories();
+      renderResources();
+      loadRemoteKit(false);
+
+      document.getElementById('res-search').addEventListener('input', renderResources);
+      document.getElementById('res-type-filter').addEventListener('change', renderResources);
+      document.getElementById('res-cat-chips').addEventListener('click', e => {
+        const btn = e.target.closest('[data-res-cat]');
+        if (btn) setResCategory(btn.dataset.resCat);
+      });
+      document.getElementById('int-cat-chips').addEventListener('click', e => {
+        const btn = e.target.closest('[data-int-cat]');
+        if (btn) setInterviewCat(btn.dataset.intCat);
+      });
+
+      bindCvStaticInputs();
+      hydrateCvForm();
+
+      ['em-name', 'em-campus', 'em-role', 'em-company', 'em-hrd', 'em-to', 'em-highlight', 'em-link'].forEach(id => {
+        document.getElementById(id).addEventListener('input', buildEmailTemplate);
+      });
+      document.getElementById('em-out-subject').addEventListener('input', updateMailtoAndCount);
+      document.getElementById('em-out-body').addEventListener('input', updateMailtoAndCount);
+      syncEmailFromCvIfEmpty();
+
+      renderInterviewCategories();
+      renderInterviewQuestion();
+      renderChecklist();
+      renderRoadmaps();
+
+      const applyHashTab = () => {
+        const hashTab = (window.location.hash || '').replace(/^#/, '').toLowerCase();
+        if (['resources', 'cv', 'email', 'interview', 'roadmap'].includes(hashTab)) {
+          switchKitTab(hashTab);
+        }
+      };
+      applyHashTab();
+      window.addEventListener('hashchange', applyHashTab);
+
+      if ('serviceWorker' in navigator && /^https?:$/i.test(window.location.protocol)) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    });
+  </script>
+</body>
+</html>
