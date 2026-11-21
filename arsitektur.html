@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Arsitektur Hybrid — HMTIF Career Hub</title>
-  <link rel="icon" type="image/png" href="https://e.top4top.io/p_38813coj21.png" />
+  <link rel="icon" type="image/png" href="./assets/icon-192.png" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
   <style>
     :root {
@@ -204,13 +204,13 @@
     @media (prefers-reduced-motion: reduce) {
       .edge-active-fwd, .edge-active-bwd { animation: none; }
     }
-  </style>
+</style>
 </head>
 <body>
   <div class="wrap">
     <header class="header">
       <div class="brand">
-        <img src="https://e.top4top.io/p_38813coj21.png" alt="Logo HMTIF" />
+        <img src="./assets/logo-hmtif.png" alt="Logo HMTIF" />
         <div>
           <small>ARSITEKTUR SISTEM HYBRID</small>
           <h1>Alur Kerja HMTIF Career Hub</h1>
@@ -247,7 +247,6 @@
             </marker>
           </defs>
 
-          <!-- Zone Headings -->
           <text x="172" y="16" text-anchor="middle" font-size="11" font-weight="800" fill="var(--muted)" letter-spacing="0.08em">ADMIN / CMS PENGURUS</text>
           <line x1="12" y1="22" x2="332" y2="22" stroke="var(--border)" stroke-dasharray="3 3" />
 
@@ -257,7 +256,6 @@
           <text x="688" y="16" text-anchor="middle" font-size="11" font-weight="800" fill="var(--muted)" letter-spacing="0.08em">WEB PUBLIK &amp; PENGGUNA</text>
           <line x1="528" y1="22" x2="848" y2="22" stroke="var(--border)" stroke-dasharray="3 3" />
 
-          <!-- Edges -->
           <path id="edge-sheets-gas" d="M 152 88 L 190 88" fill="none" stroke="var(--border)" stroke-width="2" />
           <text x="171" y="79" text-anchor="middle" font-size="10" font-weight="700" fill="var(--muted)">onEdit</text>
 
@@ -276,7 +274,6 @@
           <path id="edge-gas-mail" d="M 261 146 L 261 178 L 160 178" fill="none" stroke="var(--border)" stroke-width="2" />
           <text x="216" y="196" text-anchor="middle" font-size="10" font-weight="700" fill="var(--muted)">MailApp Notifikasi</text>
 
-          <!-- Node 1: Google Sheets -->
           <g class="node-group" data-node="sheets" transform="translate(12, 36)">
             <rect class="node-box" width="140" height="108" rx="13" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
             <rect width="140" height="6" rx="3" fill="var(--success)" />
@@ -287,13 +284,11 @@
             <text x="14" y="96" font-size="10.5" fill="var(--muted)">• LOG AKTIVITAS</text>
           </g>
 
-          <!-- Email Node -->
           <g class="node-group" data-node="email" transform="translate(12, 160)">
             <rect class="node-box" width="148" height="36" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
             <text x="74" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text)">Email Pengelola</text>
           </g>
 
-          <!-- Node 2: Apps Script -->
           <g class="node-group" data-node="gas" transform="translate(190, 36)">
             <rect class="node-box" width="142" height="108" rx="13" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
             <rect width="142" height="6" rx="3" fill="var(--warning)" />
@@ -304,7 +299,6 @@
             <text x="14" y="96" font-size="10.5" fill="var(--muted)">• Key: sb_secret_...</text>
           </g>
 
-          <!-- Node 3: Supabase -->
           <g class="node-group" data-node="supabase" transform="translate(356, 36)">
             <rect class="node-box" width="148" height="108" rx="13" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
             <rect width="148" height="6" rx="3" fill="var(--primary)" />
@@ -315,7 +309,6 @@
             <text x="14" y="96" font-size="10.5" fill="var(--muted)">• ratings (terkunci)</text>
           </g>
 
-          <!-- Node 4: GitHub Pages -->
           <g class="node-group" data-node="github" transform="translate(534, 36)">
             <rect class="node-box" width="144" height="108" rx="13" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
             <rect width="144" height="6" rx="3" fill="var(--blue)" />
@@ -326,7 +319,6 @@
             <text x="14" y="96" font-size="10.5" fill="var(--muted)">• Key: sb_publishable</text>
           </g>
 
-          <!-- Node 5: Mahasiswa -->
           <g class="node-group" data-node="user" transform="translate(708, 36)">
             <rect class="node-box" width="140" height="108" rx="13" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
             <rect width="140" height="6" rx="3" fill="var(--purple)" />
@@ -337,7 +329,6 @@
             <text x="14" y="96" font-size="10.5" fill="var(--muted)">• Favorit &amp; Rating</text>
           </g>
 
-          <!-- Summary Banner -->
           <g transform="translate(356, 160)">
             <rect width="492" height="36" rx="10" fill="var(--surface-soft)" stroke="var(--border)" stroke-width="1" />
             <text id="flow-summary-banner" x="246" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text)"></text>
@@ -349,8 +340,7 @@
     </main>
   </div>
 
-  <script>
-    const FLOWS = {
+  <script>    const FLOWS = {
       overview: {
         tab: '1. Alur Utuh',
         banner: 'Arsitektur Hybrid: Admin tetap pakai Sheets, Pengunjung dilayani Supabase + CDN (< 0,5 dtk)',
@@ -587,7 +577,6 @@
       });
     });
 
-    // Sinkron dengan preferensi dark mode Career Hub
     try {
       if (localStorage.getItem('theme') === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
@@ -606,6 +595,6 @@
     });
 
     render();
-  </script>
+</script>
 </body>
 </html>

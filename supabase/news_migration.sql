@@ -1,8 +1,3 @@
--- ============================================================================
--- MIGRASI TABEL BERITA & PENGUMUMAN (OPSIONAL — JIKA INGIN EDIT BERITA DARI GOOGLE SHEETS)
--- Jalankan isi file ini sekali di Supabase -> SQL Editor -> New Query -> Run
--- ============================================================================
-
 CREATE TABLE IF NOT EXISTS public.news (
   id BIGSERIAL PRIMARY KEY,
   row_order INTEGER NOT NULL DEFAULT 0,

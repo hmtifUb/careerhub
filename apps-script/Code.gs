@@ -1,19 +1,3 @@
-// ============================================================================
-// HMTIF CAREER HUB — GOOGLE APPS SCRIPT (ARSITEKTUR HYBRID)
-// Peran Google Sheets: CMS Pengurus + Log Aktivitas + Arsip + Notifikasi Email
-// Peran Supabase     : Database Eksternal Super Ringan untuk Web Publik
-//
-// SETUP SEKALI:
-// 1. Di Apps Script -> Project Settings (ikon gerigi) -> Script Properties, isi:
-//      - SUPABASE_URL        : https://<project-ref>.supabase.co
-//      - SUPABASE_SECRET_KEY : sb_secret_... (atau Legacy service_role key)
-//      - PUBLIC_WEB_URL      : https://<domain-web-kamu> (opsional)
-// 2. Jalankan fungsi pancingEmail() sekali untuk memberi izin MailApp.
-// 3. Jalankan fungsi setupCareerHubHybrid() sekali sebagai PEMILIK Spreadsheet.
-// 4. Jalankan fungsi migrateExistingStatsToSupabase() SEKALI untuk memindahkan
-//    data kunjungan & rating lama ke Supabase.
-// ============================================================================
-
 const CAREER_HUB_SHEETS = ['KARIER', 'PENGEMBANGAN', 'OPPORTUNITIES'];
 const CAREER_HUB_NEWS_SHEET = 'BERITA';
 const CAREER_HUB_TZ = 'Asia/Jakarta';
@@ -26,14 +10,11 @@ const CAREER_HUB_AUDIT_HEADERS = [
   'Jenis Aktivitas', 'Nilai Sebelum', 'Nilai Sesudah', 'Jumlah Sel'
 ];
 
-// ============================================================================
-// MENU GOOGLE SHEETS (1-klik sync langsung dari spreadsheet)
-// ============================================================================
-
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('HMTIF Career Hub')
     .addItem('Sync Semua Data ke Supabase Sekarang', 'syncAllToSupabaseMenu')
+    .addItem('Buat Teks Broadcast WA', 'openWaBroadcastDialog')
     .addItem('Cek Feedback Baru & Kirim Email', 'pullNewFeedbackMenu')
     .addItem('Arsipkan Program Berakhir & Sync', 'archiveCareerHubExpiredMenu')
     .addSeparator()
@@ -118,10 +99,6 @@ function checkCareerHubConnectionMenu() {
   ui.alert('Status Koneksi HMTIF Career Hub', JSON.stringify(res, null, 2), ui.ButtonSet.OK);
 }
 
-// ============================================================================
-// KONFIGURASI & CLIENT HTTP SUPABASE
-// ============================================================================
-
 function cleanSheetName_(name) {
   return String(name || '').trim().toUpperCase();
 }
@@ -158,7 +135,7 @@ function supabaseHeaders_(secretKey, extraHeaders) {
   const headers = {
     apikey: secretKey
   };
-  // Legacy JWT key (eyJ...) memakai Bearer; sb_secret_... cukup lewat header apikey.
+
   if (secretKey.indexOf('eyJ') === 0) {
     headers.Authorization = 'Bearer ' + secretKey;
   }
@@ -198,10 +175,6 @@ function supabaseRequest_(path, method, payload, extraHeaders) {
 function markSupabaseSyncNeeded_() {
   PropertiesService.getScriptProperties().setProperty('SUPABASE_SYNC_DIRTY', 'true');
 }
-
-// ============================================================================
-// PEMBACAAN DATA SHEET & SINKRONISASI KE SUPABASE
-// ============================================================================
 
 function careerHubDateKey_(raw, display) {
   if (raw instanceof Date && !isNaN(raw.getTime())) {
@@ -433,10 +406,6 @@ function setupCareerHubNewsSheet() {
   return 'Tab BERITA berhasil dibuat dengan contoh 1 berita. Kamu bisa menambahkan berita kampus/HMTIF di tab tersebut.';
 }
 
-/**
- * Sinkronisasi seluruh program aktif & arsip (plus tab BERITA jika ada) dari Google Sheets ke Supabase
- * dalam 1 transaksi atomik (RPC replace_career_hub_programs).
- */
 function syncAllToSupabase(allowEmpty) {
   const lock = LockService.getScriptLock();
   lock.waitLock(25000);
@@ -492,10 +461,6 @@ function syncAllToSupabase(allowEmpty) {
     lock.releaseLock();
   }
 }
-
-// ============================================================================
-// TARIK FEEDBACK BARU DARI SUPABASE -> SIMPAN KE TAB RATING & KIRIM EMAIL
-// ============================================================================
 
 function pullNewFeedbackFromSupabase() {
   const lock = LockService.getScriptLock();
@@ -576,7 +541,6 @@ function pullNewFeedbackFromSupabase() {
   }
 }
 
-/** Sinkronkan balik angka total kunjungan terbaru dari Supabase ke HOME!M7 (best-effort, tidak pernah menurunkan angka historis). */
 function syncVisitTotalBackToHome_() {
   try {
     const stats = supabaseRequest_('/rest/v1/rpc/get_visit_stats', 'post', { p_days: 7 });
@@ -604,15 +568,11 @@ function syncVisitTotalBackToHome_() {
   }
 }
 
-// ============================================================================
-// TRIGGER OTOMATIS SETIAP 5 MENIT
-// ============================================================================
-
 function scheduledCareerHubSync() {
   const props = PropertiesService.getScriptProperties();
   const dirty = props.getProperty('SUPABASE_SYNC_DIRTY') === 'true';
   const lastSyncAt = Number(props.getProperty('SUPABASE_LAST_SYNC_AT')) || 0;
-  const stale = (Date.now() - lastSyncAt) > (60 * 60 * 1000); // refresh pengaman tiap 1 jam
+  const stale = (Date.now() - lastSyncAt) > (60 * 60 * 1000);
 
   if (dirty || stale) {
     try {
@@ -631,18 +591,12 @@ function scheduledCareerHubSync() {
   syncVisitTotalBackToHome_();
 }
 
-// ============================================================================
-// MIGRASI SEKALI DATA LAMA (STAT_KUNJUNGAN, HOME!M7, RATING) KE SUPABASE
-// ============================================================================
-
 function migrateExistingStatsToSupabase(forceRatings) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   if (!ss) throw new Error('Spreadsheet tidak ditemukan.');
 
-  // 1. Sync seluruh program aktif & arsip
   const progRes = syncAllToSupabase();
 
-  // 2. Migrasi STAT_KUNJUNGAN -> daily_visits
   const log = ss.getSheetByName(CAREER_HUB_TRAFFIC_SHEET);
   const dailyMap = {};
   if (log && log.getLastRow() > 1) {
@@ -672,7 +626,6 @@ function migrateExistingStatsToSupabase(forceRatings) {
     );
   }
 
-  // Hitung selisih historis agar total kunjungan tidak berkurang
   const sumDaily = dailyRows.reduce((acc, r) => acc + r.count, 0);
   const propsTotal = Number(PropertiesService.getScriptProperties().getProperty('KUNJUNGAN')) || 0;
   const home = ss.getSheetByName('HOME');
@@ -692,7 +645,6 @@ function migrateExistingStatsToSupabase(forceRatings) {
     { Prefer: 'resolution=merge-duplicates' }
   );
 
-  // 3. Migrasi RATING lama (hanya jika tabel ratings Supabase masih kosong, atau forceRatings=true)
   let ratingsMigrated = 0;
   const existingRatings = supabaseRequest_('/rest/v1/ratings?select=id&limit=1', 'get');
   const ratingSheet = ss.getSheetByName('RATING');
@@ -727,10 +679,6 @@ function migrateExistingStatsToSupabase(forceRatings) {
     ratingsMigrated: ratingsMigrated
   };
 }
-
-// ============================================================================
-// ARSIP OTOMATIS HARIAN DI GOOGLE SHEETS (TETAP DIPERTAHANKAN + AUTO SYNC)
-// ============================================================================
 
 function archiveCareerHubExpired() {
   const lock = LockService.getScriptLock();
@@ -777,7 +725,6 @@ function archiveCareerHubExpired() {
     lock.releaseLock();
   }
 
-  // Dorong hasil terbaru ke Supabase setelah arsip selesai
   try {
     syncAllToSupabase();
   } catch (err) {
@@ -812,10 +759,6 @@ function setupCareerHubSyncTrigger() {
     .create();
   return 'Pemicu sinkronisasi Supabase setiap 5 menit berhasil dibuat.';
 }
-
-// ============================================================================
-// UPDATE WAKTU & LOG AKTIVITAS EDITOR (TETAP DIPERTAHANKAN)
-// ============================================================================
 
 function updateLastUpdated(e) {
   if (!e || !e.range) return;
@@ -998,10 +941,6 @@ function setupCareerHubAudit() {
   return 'LOG AKTIVITAS siap. Trigger edit & perubahan struktur dipasang; log dilindungi.';
 }
 
-// ============================================================================
-// SETUP UTAMA (JALANKAN SEKALI DARI EDITOR APPS SCRIPT SEBAGAI PEMILIK)
-// ============================================================================
-
 function setupCareerHubHybrid() {
   const auditMsg = setupCareerHubAudit();
   const archiveMsg = setupCareerHubArchive();
@@ -1044,7 +983,6 @@ function checkCareerHubConnection() {
   };
 }
 
-/** Halaman pengalihan ringan jika masih ada pengguna membuka URL lama /exec Apps Script. */
 function doGet() {
   const publicUrl = String(PropertiesService.getScriptProperties().getProperty('PUBLIC_WEB_URL') || '').trim();
   const safeUrl = /^https?:\/\//i.test(publicUrl) ? publicUrl : '';
@@ -1062,4 +1000,272 @@ function doGet() {
   return HtmlService.createHtmlOutput(html)
     .setTitle('HMTIF Career Hub')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+function careerHubProgramSlug_(category, nama, penyelenggara) {
+  const norm = s => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const key = [norm(category), norm(nama), norm(penyelenggara)].join('|');
+  let h = 0x811c9dc5;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  const hash = (h >>> 0).toString(36).padStart(6, '0').slice(-6);
+  const words = norm(nama)
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 4)
+    .join('-')
+    .slice(0, 32);
+  return (words ? words + '-' : 'program-') + hash;
+}
+
+function getCareerHubBaseUrl_() {
+  const raw = String(PropertiesService.getScriptProperties().getProperty('PUBLIC_WEB_URL') || '').trim();
+  const base = /^https?:\/\//i.test(raw) ? raw : 'https://hmtifub.github.io/careerhub/';
+  return base.replace(/\?.*$/, '').replace(/#.*$/, '');
+}
+
+function careerHubDaysLeftWib_(isoDate) {
+  if (!isoDate || !/^\d{4}-\d{2}-\d{2}$/.test(isoDate)) return null;
+  const todayIso = Utilities.formatDate(new Date(), CAREER_HUB_TZ, 'yyyy-MM-dd');
+  const d1 = new Date(todayIso + 'T00:00:00Z').getTime();
+  const d2 = new Date(isoDate + 'T00:00:00Z').getTime();
+  return Math.round((d2 - d1) / 86400000);
+}
+
+function getWaBroadcastPayload() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) throw new Error('Spreadsheet tidak ditemukan.');
+
+  const baseUrl = getCareerHubBaseUrl_();
+  const sep = baseUrl.indexOf('?') === -1 ? '?' : '&';
+  const grouped = {};
+
+  CAREER_HUB_SHEETS.forEach(category => {
+    const sheet = findSheetCaseInsensitive_(ss, category);
+    const items = careerHubCollectSheetPrograms_(sheet, category, false, 1)
+      .filter(it => !it.is_archived)
+      .map(it => {
+        const slug = careerHubProgramSlug_(category, it.nama, it.penyelenggara);
+        const daysLeft = careerHubDaysLeftWib_(it.deadline_date);
+        return {
+          category: category,
+          nama: it.nama,
+          penyelenggara: it.penyelenggara,
+          jenis: it.jenis,
+          deadline: it.deadline_text,
+          deadline_date: it.deadline_date,
+          daysLeft: daysLeft,
+          deepLink: baseUrl + sep + 'cat=' + encodeURIComponent(category) + '&p=' + encodeURIComponent(slug)
+        };
+      });
+
+    items.sort((a, b) => {
+      if (a.daysLeft === null && b.daysLeft === null) return 0;
+      if (a.daysLeft === null) return 1;
+      if (b.daysLeft === null) return -1;
+      return a.daysLeft - b.daysLeft;
+    });
+    grouped[category] = items;
+  });
+
+  return {
+    baseUrl: baseUrl,
+    dateText: Utilities.formatDate(new Date(), CAREER_HUB_TZ, 'dd MMMM yyyy'),
+    grouped: grouped
+  };
+}
+
+function formatWaBroadcastFromPayload_(payload, mode, includeItemLinks, includeDeadline) {
+  mode = mode || 'top5';
+  const metaMap = {
+    KARIER: { emoji: '💼', label: 'KARIER (Lowongan • Magang • Freelance)' },
+    PENGEMBANGAN: { emoji: '🎓', label: 'PENGEMBANGAN (Pelatihan • Webinar • Workshop)' },
+    OPPORTUNITIES: { emoji: '🏆', label: 'OPPORTUNITIES (Lomba • Beasiswa • Program)' }
+  };
+
+  const titleByMode = {
+    all: '*UPDATE PELUANG AKTIF — HMTIF CAREER HUB* 🚀',
+    urgent: '*DEADLINE SEGERA BERAKHIR (≤ 7 HARI) — HMTIF CAREER HUB* ⏰',
+    top5: '*RINGKASAN PELUANG TERBARU — HMTIF CAREER HUB* 🚀'
+  };
+
+  const lines = [
+    titleByMode[mode] || titleByMode.top5,
+    '_Diperbarui: ' + payload.dateText + ' WIB_',
+    '',
+    'Halo Mahasiswa/i Teknik Informatika! 👋',
+    mode === 'urgent'
+      ? 'Jangan sampai terlewat! Berikut daftar peluang yang deadline-nya kurang dari 7 hari lagi:'
+      : 'Berikut rangkuman peluang aktif minggu ini di *HMTIF Career Hub*:'
+  ];
+
+  let totalIncluded = 0;
+  CAREER_HUB_SHEETS.forEach(cat => {
+    let list = (payload.grouped[cat] || []).slice();
+    if (mode === 'urgent') {
+      list = list.filter(it => it.daysLeft !== null && it.daysLeft >= 0 && it.daysLeft <= 7);
+    } else if (mode === 'top5') {
+      list = list.slice(0, 5);
+    }
+    if (!list.length) return;
+
+    const info = metaMap[cat];
+    lines.push('');
+    lines.push(info.emoji + ' *' + info.label + '* (' + list.length + ')');
+    list.forEach((it, idx) => {
+      totalIncluded++;
+      const org = it.penyelenggara ? ' — _' + it.penyelenggara + '_' : '';
+      const jenisTag = it.jenis ? ' [' + it.jenis + ']' : '';
+      lines.push((idx + 1) + '. *' + it.nama + '*' + org + jenisTag);
+      if (includeDeadline && it.deadline) {
+        const urgentNote = (it.daysLeft !== null && it.daysLeft >= 0 && it.daysLeft <= 7)
+          ? ' (' + (it.daysLeft === 0 ? 'Hari ini!' : it.daysLeft + ' hari lagi') + ')'
+          : '';
+        lines.push('   📅 Deadline: ' + it.deadline + urgentNote);
+      }
+      if (includeItemLinks && it.deepLink) {
+        lines.push('   🔗 ' + it.deepLink);
+      }
+    });
+  });
+
+  if (totalIncluded === 0) {
+    lines.push('');
+    lines.push('_(Tidak ada peluang yang cocok untuk filter mode ini.)_');
+  }
+
+  lines.push('');
+  lines.push('🌐 *Lihat seluruh peluang & detail lengkap:*');
+  lines.push(payload.baseUrl);
+  lines.push('');
+  lines.push('_#HMTIFCareerHub #SatuVisiBanyakAksi #TeknikInformatika_');
+
+  return { text: lines.join('\n'), count: totalIncluded };
+}
+
+function generateWaBroadcastText(mode, includeItemLinks) {
+  const payload = getWaBroadcastPayload();
+  return formatWaBroadcastFromPayload_(
+    payload,
+    mode || 'top5',
+    includeItemLinks !== false,
+    true
+  ).text;
+}
+
+function openWaBroadcastDialog() {
+  const payload = getWaBroadcastPayload();
+  const safeJson = JSON.stringify(payload).replace(/</g, '\\u003c');
+
+  const html = [
+    '<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">',
+    '<style>',
+    '*{box-sizing:border-box}body{margin:0;padding:16px;font-family:"Segoe UI",Roboto,sans-serif;background:#f8f6f6;color:#241d20}',
+    '.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}',
+    '.head h3{margin:0;font-size:16px;color:#8e1430}.meta{font-size:12px;color:#6e6268}',
+    '.modes{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}',
+    '.mode-btn{border:1px solid #dfd6d9;background:#fff;color:#4a3e43;padding:7px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer}',
+    '.mode-btn.active{background:linear-gradient(125deg,#a61932,#d52b49);color:#fff;border-color:transparent}',
+    '.opts{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:12px;font-weight:600;color:#4a3e43}',
+    '.opts label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}',
+    'textarea{width:100%;height:330px;padding:12px;border-radius:10px;border:1px solid #d9ced2;background:#fff;color:#221c1f;font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.5;resize:vertical}',
+    '.foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;flex-wrap:wrap}',
+    '.actions{display:flex;gap:8px}',
+    '.btn{border:0;border-radius:9px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}',
+    '.btn-copy{background:#16a34a;color:#fff}.btn-copy:hover{background:#15803d}',
+    '.btn-wa{background:#a61932;color:#fff}.btn-wa:hover{background:#8e1430}',
+    '.status{font-size:12px;font-weight:700;color:#15803d}',
+    '</style></head><body>',
+    '<div class="head"><h3>Generator Broadcast WA — HMTIF Career Hub</h3><span class="meta" id="stats"></span></div>',
+    '<div class="modes">',
+    '  <button type="button" class="mode-btn active" data-mode="top5">Ringkas (5 / Kategori)</button>',
+    '  <button type="button" class="mode-btn" data-mode="urgent">Mendesak (&le; 7 Hari)</button>',
+    '  <button type="button" class="mode-btn" data-mode="all">Semua Peluang Aktif</button>',
+    '</div>',
+    '<div class="opts">',
+    '  <label><input type="checkbox" id="opt-links" checked> Sertakan Deep-Link per Program</label>',
+    '  <label><input type="checkbox" id="opt-deadline" checked> Sertakan Deadline</label>',
+    '</div>',
+    '<textarea id="out" spellcheck="false"></textarea>',
+    '<div class="foot">',
+    '  <span class="status" id="copy-status"></span>',
+    '  <div class="actions">',
+    '    <button type="button" class="btn btn-copy" id="btn-copy">Salin Teks Broadcast</button>',
+    '    <a class="btn btn-wa" id="btn-wa-open" target="_blank" rel="noopener noreferrer">Buka di WhatsApp</a>',
+    '  </div>',
+    '</div>',
+    '<script>',
+    'const PAYLOAD = ' + safeJson + ';',
+    'const CATS = ["KARIER","PENGEMBANGAN","OPPORTUNITIES"];',
+    'const META = {',
+    '  KARIER: { emoji: "💼", label: "KARIER (Lowongan • Magang • Freelance)" },',
+    '  PENGEMBANGAN: { emoji: "🎓", label: "PENGEMBANGAN (Pelatihan • Webinar • Workshop)" },',
+    '  OPPORTUNITIES: { emoji: "🏆", label: "OPPORTUNITIES (Lomba • Beasiswa • Program)" }',
+    '};',
+    'let currentMode = "top5";',
+    'function buildText() {',
+    '  const incLinks = document.getElementById("opt-links").checked;',
+    '  const incDl = document.getElementById("opt-deadline").checked;',
+    '  const titles = {',
+    '    all: "*UPDATE PELUANG AKTIF — HMTIF CAREER HUB* 🚀",',
+    '    urgent: "*DEADLINE SEGERA BERAKHIR (≤ 7 HARI) — HMTIF CAREER HUB* ⏰",',
+    '    top5: "*RINGKASAN PELUANG TERBARU — HMTIF CAREER HUB* 🚀"',
+    '  };',
+    '  const lines = [titles[currentMode], "_Diperbarui: " + PAYLOAD.dateText + " WIB_", "", "Halo Mahasiswa/i Teknik Informatika! 👋",',
+    '    currentMode === "urgent" ? "Jangan sampai terlewat! Berikut daftar peluang yang deadline-nya kurang dari 7 hari lagi:" : "Berikut rangkuman peluang aktif minggu ini di *HMTIF Career Hub*:"];',
+    '  let total = 0;',
+    '  CATS.forEach(cat => {',
+    '    let list = (PAYLOAD.grouped[cat] || []).slice();',
+    '    if (currentMode === "urgent") list = list.filter(it => it.daysLeft !== null && it.daysLeft >= 0 && it.daysLeft <= 7);',
+    '    else if (currentMode === "top5") list = list.slice(0, 5);',
+    '    if (!list.length) return;',
+    '    lines.push("", META[cat].emoji + " *" + META[cat].label + "* (" + list.length + ")");',
+    '    list.forEach((it, idx) => {',
+    '      total++;',
+    '      const org = it.penyelenggara ? " — _" + it.penyelenggara + "_" : "";',
+    '      const tag = it.jenis ? " [" + it.jenis + "]" : "";',
+    '      lines.push((idx + 1) + ". *" + it.nama + "*" + org + tag);',
+    '      if (incDl && it.deadline) {',
+    '        const note = (it.daysLeft !== null && it.daysLeft >= 0 && it.daysLeft <= 7) ? " (" + (it.daysLeft === 0 ? "Hari ini!" : it.daysLeft + " hari lagi") + ")" : "";',
+    '        lines.push("   📅 Deadline: " + it.deadline + note);',
+    '      }',
+    '      if (incLinks && it.deepLink) lines.push("   🔗 " + it.deepLink);',
+    '    });',
+    '  });',
+    '  if (!total) lines.push("", "_(Tidak ada peluang yang cocok untuk filter mode ini.)_");',
+    '  lines.push("", "🌐 *Lihat seluruh peluang & detail lengkap:*", PAYLOAD.baseUrl, "", "_#HMTIFCareerHub #SatuVisiBanyakAksi #TeknikInformatika_");',
+    '  const txt = lines.join("\\n");',
+    '  document.getElementById("out").value = txt;',
+    '  document.getElementById("stats").textContent = total + " program • " + txt.length + " karakter";',
+    '  document.getElementById("btn-wa-open").href = "https://wa.me/?text=" + encodeURIComponent(txt);',
+    '}',
+    'document.querySelectorAll(".mode-btn").forEach(b => b.addEventListener("click", () => {',
+    '  currentMode = b.dataset.mode;',
+    '  document.querySelectorAll(".mode-btn").forEach(x => x.classList.toggle("active", x === b));',
+    '  buildText();',
+    '}));',
+    'document.getElementById("opt-links").addEventListener("change", buildText);',
+    'document.getElementById("opt-deadline").addEventListener("change", buildText);',
+    'document.getElementById("out").addEventListener("input", e => {',
+    '  const v = e.target.value;',
+    '  document.getElementById("btn-wa-open").href = "https://wa.me/?text=" + encodeURIComponent(v);',
+    '});',
+    'document.getElementById("btn-copy").addEventListener("click", async () => {',
+    '  const ta = document.getElementById("out");',
+    '  ta.select();',
+    '  try { await navigator.clipboard.writeText(ta.value); } catch (_) { document.execCommand("copy"); }',
+    '  const st = document.getElementById("copy-status");',
+    '  st.textContent = "Tersalin! Siap paste ke Saluran WA.";',
+    '  setTimeout(() => { st.textContent = ""; }, 3000);',
+    '});',
+    'buildText();',
+    '<\/script></body></html>'
+  ].join('\n');
+
+  const output = HtmlService.createHtmlOutput(html).setWidth(640).setHeight(540);
+  SpreadsheetApp.getUi().showModalDialog(output, 'Generator Teks Broadcast WhatsApp');
 }

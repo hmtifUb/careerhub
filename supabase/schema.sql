@@ -1,13 +1,3 @@
--- ============================================================================
--- HMTIF CAREER HUB — SKEMA DATABASE SUPABASE (PostgreSQL)
--- Arsitektur Hybrid: Google Sheets (CMS Pengurus) -> Supabase -> Web Statis
---
--- Cara pakai:
--- 1. Buka Dashboard Supabase -> SQL Editor -> New Query
--- 2. Paste seluruh isi file ini -> Klik "Run"
--- ============================================================================
-
--- 1. TABEL UTAMA: PROGRAMS (KARIER, PENGEMBANGAN, OPPORTUNITIES + ARSIP)
 CREATE TABLE IF NOT EXISTS public.programs (
   id BIGSERIAL PRIMARY KEY,
   category TEXT NOT NULL CHECK (category IN ('KARIER', 'PENGEMBANGAN', 'OPPORTUNITIES')),
@@ -31,7 +21,6 @@ CREATE INDEX IF NOT EXISTS idx_programs_category_order
 CREATE INDEX IF NOT EXISTS idx_programs_archived_deadline
   ON public.programs (is_archived, deadline_date);
 
--- 2. TABEL RATING & SARAN (saran bersifat rahasia, tidak bisa dibaca langsung oleh publik)
 CREATE TABLE IF NOT EXISTS public.ratings (
   id BIGSERIAL PRIMARY KEY,
   star SMALLINT NOT NULL DEFAULT 0 CHECK (star >= 0 AND star <= 5),
@@ -45,13 +34,11 @@ CREATE INDEX IF NOT EXISTS idx_ratings_pending_sync
   ON public.ratings (id)
   WHERE (emailed = FALSE OR synced_to_sheet = FALSE);
 
--- 3. TABEL KUNJUNGAN HARIAN (atomic increment, bebas antrean LockService)
 CREATE TABLE IF NOT EXISTS public.daily_visits (
   visit_date DATE PRIMARY KEY,
   count INTEGER NOT NULL DEFAULT 0 CHECK (count >= 0)
 );
 
--- 4. TABEL METADATA PLATFORM (waktu update terakhir & offset historis kunjungan lama)
 CREATE TABLE IF NOT EXISTS public.hub_meta (
   key TEXT PRIMARY KEY,
   value TEXT NOT NULL DEFAULT '',
@@ -63,10 +50,6 @@ VALUES
   ('last_updated', '-'),
   ('historical_visits_offset', '0')
 ON CONFLICT (key) DO NOTHING;
-
--- ============================================================================
--- FUNGSI HELPER ZONA WAKTU WIB & STATUS ARSIP OTOMATIS
--- ============================================================================
 
 CREATE OR REPLACE FUNCTION public.career_hub_today_wib()
 RETURNS DATE
@@ -93,11 +76,6 @@ AS $$
     OR (p_deadline_date IS NOT NULL AND p_deadline_date < public.career_hub_today_wib());
 $$;
 
--- ============================================================================
--- RPC PUBLIK (Dipanggil langsung oleh public/index.html via Publishable/Anon Key)
--- ============================================================================
-
--- A. Ringkasan statistik dashboard
 CREATE OR REPLACE FUNCTION public.get_dashboard_stats()
 RETURNS JSONB
 LANGUAGE SQL
@@ -136,7 +114,6 @@ AS $$
   );
 $$;
 
--- B. Daftar program per kategori & tampilan (aktif / arsip)
 CREATE OR REPLACE FUNCTION public.get_programs(
   p_category TEXT,
   p_archived BOOLEAN DEFAULT FALSE
@@ -171,7 +148,6 @@ AS $$
     AND public.program_is_effectively_archived(p.is_archived, p.status, p.deadline_date) = COALESCE(p_archived, FALSE);
 $$;
 
--- C. Statistik grafik kunjungan harian (7 / 30 / 90 hari, WIB)
 CREATE OR REPLACE FUNCTION public.get_visit_stats(p_days INTEGER DEFAULT 7)
 RETURNS JSONB
 LANGUAGE plpgsql
@@ -219,7 +195,6 @@ BEGIN
 END;
 $$;
 
--- D. Catat 1 kunjungan secara atomik + langsung kembalikan statistik grafik
 CREATE OR REPLACE FUNCTION public.register_visit(p_days INTEGER DEFAULT 7)
 RETURNS JSONB
 LANGUAGE plpgsql
@@ -238,7 +213,6 @@ BEGIN
 END;
 $$;
 
--- E. Statistik distribusi rating bintang [b1, b2, b3, b4, b5] (tanpa membocorkan isi saran)
 CREATE OR REPLACE FUNCTION public.get_rating_stats()
 RETURNS JSONB
 LANGUAGE SQL
@@ -256,7 +230,6 @@ AS $$
   FROM public.ratings;
 $$;
 
--- F. Simpan rating & saran baru secara aman
 CREATE OR REPLACE FUNCTION public.submit_feedback(
   p_star INTEGER DEFAULT 0,
   p_saran TEXT DEFAULT ''
@@ -281,11 +254,6 @@ BEGIN
 END;
 $$;
 
--- ============================================================================
--- RPC ADMIN (HANYA untuk Apps Script menggunakan Secret / service_role Key)
--- ============================================================================
-
--- Sinkronisasi penuh seluruh program dalam 1 transaksi atomik (tidak pernah kosong setengah jalan)
 CREATE OR REPLACE FUNCTION public.replace_career_hub_programs(
   p_programs JSONB,
   p_last_updated TEXT DEFAULT NULL,
@@ -366,16 +334,11 @@ BEGIN
 END;
 $$;
 
--- ============================================================================
--- KEAMANAN: ROW LEVEL SECURITY (RLS) & HAK EKSEKUSI FUNGSI
--- ============================================================================
-
 ALTER TABLE public.programs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.ratings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.daily_visits ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.hub_meta ENABLE ROW LEVEL SECURITY;
 
--- Publik hanya boleh membaca programs & hub_meta (tidak bisa mengubah/menghapus)
 DROP POLICY IF EXISTS "Public read programs" ON public.programs;
 CREATE POLICY "Public read programs"
   ON public.programs FOR SELECT
@@ -388,19 +351,12 @@ CREATE POLICY "Public read hub_meta"
   TO anon, authenticated
   USING (TRUE);
 
--- Tabel ratings & daily_visits sengaja TIDAK diberi policy untuk anon/authenticated.
--- Publik hanya berinteraksi lewat RPC SECURITY DEFINER agar:
---   1. Saran pengguna tetap rahasia (tidak bisa di-SELECT dari browser).
---   2. Angka kunjungan tidak bisa dimanipulasi/dihapus dari luar.
-
--- Hak akses tabel untuk service_role (dipakai Apps Script saat migrasi & tarik feedback)
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.programs TO service_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.ratings TO service_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.daily_visits TO service_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.hub_meta TO service_role;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO service_role;
 
--- Hak eksekusi fungsi publik
 REVOKE ALL ON FUNCTION public.get_dashboard_stats() FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION public.get_dashboard_stats() TO anon, authenticated, service_role;
 
@@ -419,14 +375,9 @@ GRANT EXECUTE ON FUNCTION public.get_rating_stats() TO anon, authenticated, serv
 REVOKE ALL ON FUNCTION public.submit_feedback(INTEGER, TEXT) FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION public.submit_feedback(INTEGER, TEXT) TO anon, authenticated, service_role;
 
--- Hak eksekusi fungsi admin: EKSKLUSIF untuk service_role (Apps Script)
 REVOKE ALL ON FUNCTION public.replace_career_hub_programs(JSONB, TEXT, BOOLEAN) FROM PUBLIC;
 REVOKE EXECUTE ON FUNCTION public.replace_career_hub_programs(JSONB, TEXT, BOOLEAN) FROM anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.replace_career_hub_programs(JSONB, TEXT, BOOLEAN) TO service_role;
-
--- ============================================================================
--- 5. TABEL BERITA & PENGUMUMAN (Disinkronkan dari tab BERITA di Google Sheets)
--- ============================================================================
 
 CREATE TABLE IF NOT EXISTS public.news (
   id BIGSERIAL PRIMARY KEY,

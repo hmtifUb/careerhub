@@ -5,26 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#a61932">
   <meta name="description" content="HMTIF Career Hub — pusat informasi karier, pelatihan, dan kompetisi mahasiswa Teknik Informatika.">
-  <link rel="icon" type="image/png" href="https://e.top4top.io/p_38813coj21.png">
-  <link rel="apple-touch-icon" href="https://e.top4top.io/p_38813coj21.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Career Hub">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" href="./assets/icon-192.png">
+  <link rel="apple-touch-icon" href="./assets/icon-192.png">
   <meta property="og:type" content="website">
   <meta property="og:title" content="HMTIF Career Hub">
   <meta property="og:description" content="Pusat informasi karier, pelatihan, kompetisi, dan peluang pengembangan diri mahasiswa Teknik Informatika.">
   <meta property="og:url" content="https://hmtifub.github.io/careerhub/">
-  <meta property="og:image" content="https://e.top4top.io/p_38813coj21.png">
+  <meta property="og:image" content="https://hmtifub.github.io/careerhub/assets/icon-512.png">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="HMTIF Career Hub">
   <meta name="twitter:description" content="Pusat informasi karier, pelatihan, kompetisi, dan peluang pengembangan diri mahasiswa Teknik Informatika.">
-  <meta name="twitter:image" content="https://e.top4top.io/p_38813coj21.png">
+  <meta name="twitter:image" content="https://hmtifub.github.io/careerhub/assets/icon-512.png">
   <title>HMTIF Career Hub</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>try { if(localStorage.getItem('theme')==='dark') document.documentElement.setAttribute('data-theme','dark'); } catch(e) {}</script>
-  <!-- ======================== DESAIN / CSS ======================== -->
+
   <style>
-/* Base components from existing HMTIF Career Hub. */
+
 :root {
       --bg-color: #f4f7f6;
       --text-color: #1a1a1a;
@@ -304,7 +308,6 @@
       transform: none !important;
     }
 
-    /* ===== Career Hub UI v2 ===== */
     :root {
       --gradient-primary: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
       --gradient-secondary: linear-gradient(135deg, #614385 0%, #516395 100%);
@@ -487,7 +490,6 @@
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
     }
 
-    /* ===== Career Hub v3: Personal, Arsip dan Grafik ===== */
     :root { --hub-accent: #159b83; }
     .hello-banner { max-width: 660px; margin: 0 auto 25px; padding: 12px 16px; border: 1px solid rgba(255,255,255,.22); border-radius: 18px; background: rgba(255,255,255,.11); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; }
     .hello-title { font-size: .94rem; font-weight: 800; }
@@ -532,7 +534,6 @@
       .insight-card { padding: 11px 12px; }
     }
 
-/* HMTIF logo-inspired visual identity. */
 :root {
   --hub-burgundy:#a61932; --hub-wine:#680d23; --hub-bright:#d52b49;
   --hub-black:#171719; --hub-blue:#2453c0; --hub-yellow:#f0b72f;
@@ -610,7 +611,6 @@ html {scroll-padding-top:26px;} .hub-app {display:flex;min-height:100vh;width:10
 @media(max-width:650px){.hub-main {padding:12px 15px 0;}.hub-topbar {margin-bottom:15px;}.hub-breadcrumb {font-size:.67rem;}.hub-breadcrumb span {padding:0 3px;}.hub-hero.hub-hero {padding:27px 23px;border-radius:18px;min-height:290px;}.hub-hero h1 {font-size:2.15rem;}.hub-hero p {font-size:.77rem;line-height:1.65;}.hub-hero-identity {display:none;}.hub-hero-btn {padding:0 14px;min-height:41px;font-size:.72rem;}.hub-greeting.hello-banner {padding:12px;gap:10px;}.hub-greeting .hello-title {font-size:.76rem;}.hub-greeting .hello-sub {font-size:.66rem;}.hub-greeting .hello-edit {padding:9px;font-size:.7rem;}.hub-stats-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}.hub-stats-grid .stat-card {min-height:101px;padding:16px 13px 12px;}.hub-stats-grid .stat-number {font-size:1.5rem;}.hub-stats-grid .small {font-size:.67rem;}.hub-stats-section {margin-bottom:33px;}.hub-stats-heading p {font-size:.63rem;}.hub-main .category-btn {min-height:104px;padding:15px;font-size:.85rem;}.hub-main .category-btn i {font-size:3.2rem;}.hub-main .category-btn small {margin-top:3px;}.hub-board-listing .data-card {padding:17px!important;}.hub-community-banner {padding:24px 19px;flex-direction:column;align-items:stretch;}.hub-community-cta {align-self:flex-start;}.hub-main .container {max-width:100%;}.hub-board-insight .insights-panel {padding:18px;}.hub-footer {margin-top:38px;}.hub-breadcrumb {display:none;}}
 @media(prefers-reduced-motion:reduce){.hub-nav-link,.hub-sidebar,.hub-hero-btn {transition:none!important;}}
 
-/* === V4: Layout and navigation stability fixes === */
 html { scroll-behavior: smooth; scroll-padding-top: 18px; }
 html, body { max-width: 100%; }
 body { overflow-x: hidden; }
@@ -654,10 +654,9 @@ body { overflow-x: hidden; }
 .hub-system-retry { background:linear-gradient(120deg,#92152a,#c72b48); border:0; color:#fff;
   font-weight:700; border-radius:9px; padding:9px 14px; }
 
-/* === V5: Scroll Progress, Radial Sidebar, Stats Alignment, Roll Feed & Bakrie-Style Berita === */
 html { scroll-padding-top: 84px; }
 #hub-catalog, #traffic-heading, #hub-news-section, #hub-rating-section { scroll-margin-top: 84px; }
-/* 1. Top Scroll Progress Bar */
+
 .hub-scroll-bar {
   position: fixed;
   top: 0;
@@ -671,7 +670,6 @@ html { scroll-padding-top: 84px; }
   transition: width .08s linear;
 }
 
-/* Sticky subtle glass topbar + scroll percentage badge */
 .hub-topbar {
   position: sticky;
   top: 0;
@@ -699,7 +697,6 @@ html { scroll-padding-top: 84px; }
 .hub-scroll-pill strong { color: #b71e3b; }
 [data-theme="dark"] .hub-scroll-pill strong { color: #f57792; }
 
-/* 2. Sidebar Radial Scroll Progress & Vertical Progress Rail */
 .hub-side-radial {
   display: flex;
   align-items: center;
@@ -801,7 +798,6 @@ html { scroll-padding-top: 84px; }
   box-shadow: 0 0 0 4px rgba(240, 183, 47, .24);
 }
 
-/* 3. Floating Radial Quick-Nav Wheel + Scroll Progress Ring */
 .hub-radial-dock {
   position: fixed;
   right: 22px;
@@ -904,7 +900,6 @@ html { scroll-padding-top: 84px; }
 .hub-radial-orb:hover .hub-radial-orb-label,
 .hub-radial-orb:focus-visible .hub-radial-orb-label { opacity: 1; }
 
-/* 4. Stat Cards: Semua teks rapi tepat di tengah kolom (termasuk Total Kunjungan) */
 .hub-stats-grid .stat-card {
   display: flex;
   flex-direction: column;
@@ -980,7 +975,6 @@ html { scroll-padding-top: 84px; }
   .hub-scroll-pill { display: none; }
 }
 
-/* Efek Elevator / Scroll-Reveal Bertahap saat Halaman Di-Scroll */
 .hub-elevator {
   opacity: 0;
   transform: translateY(34px);
@@ -1017,7 +1011,6 @@ html { scroll-padding-top: 84px; }
   }
 }
 
-/* Rapi center untuk kartu kategori, insight mini-card, dan struktur PPP */
 .hub-main .category-btn {
   display: flex;
   flex-direction: column;
@@ -1034,7 +1027,6 @@ html { scroll-padding-top: 84px; }
   padding: 12px 8px;
 }
 
-/* 5. Sistem Roll / Bergulir Bergantian (sejajar dengan kolom kanan) */
 .hub-roll-bar {
   position: relative;
   overflow: hidden;
@@ -1172,7 +1164,6 @@ html { scroll-padding-top: 84px; }
   animation: hubRollIn .34s cubic-bezier(.16, 1, .3, 1) both;
 }
 
-/* 6. Panel Berita & Pengumuman Ala Portal Universitas Bakrie (Kolom Kanan) */
 .hub-board-insight {
   display: flex;
   flex-direction: column;
@@ -1372,28 +1363,106 @@ html { scroll-padding-top: 84px; }
 }
 [data-theme="dark"] .hub-news-btn-more:hover { color: #ff9ab0; border-color: #ff9ab0; }
 
-/* News detail modal */
 .news-modal-body { white-space: pre-wrap; line-height: 1.7; font-size: .92rem; color: var(--text-color); }
-  </style>
+
+.pwa-install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 0;
+  background: linear-gradient(125deg, #a61932, #d52b49);
+  color: #fff;
+  font-size: .76rem;
+  font-weight: 800;
+  box-shadow: 0 6px 16px rgba(166, 25, 50, .26);
+  transition: transform .18s ease, filter .18s ease;
+}
+.pwa-install-btn:hover { transform: translateY(-1px); filter: brightness(1.06); }
+.pwa-install-btn[hidden] { display: none !important; }
+.pwa-side-install {
+  width: 100%;
+  margin-top: 12px;
+  padding: 9px 12px;
+  border-radius: 11px;
+  border: 1px solid rgba(240, 183, 47, .45);
+  background: rgba(240, 183, 47, .14);
+  color: #ffcf67;
+  font-size: .76rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: .18s ease;
+}
+.pwa-side-install:hover { background: #f0b72f; color: #2b1d12; }
+.pwa-side-install[hidden] { display: none !important; }
+.share-link-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--muted-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  transition: .2s ease;
+}
+.share-link-btn:hover { transform: translateY(-2px); border-color: #a61932; color: #a61932; }
+[data-theme="dark"] .share-link-btn:hover { border-color: #f57792; color: #f57792; }
+
+.hub-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 16px);
+  z-index: 250;
+  background: #171719;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: .8rem;
+  font-weight: 700;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .32);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+}
+.hub-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+@media (max-width: 575.98px) {
+  .pwa-install-btn span { display: none; }
+  .pwa-install-btn { width: 42px; padding: 0; justify-content: center; }
+  .share-link-btn { width: 40px; height: 40px; }
+}
+</style>
 </head>
 <body>
-  <!-- Top Scroll Progress Bar -->
+
   <div class="hub-scroll-bar" id="hub-scroll-bar" aria-hidden="true"></div>
 
-  <!-- ======================== HALAMAN / LAYOUT ======================== -->
 <div class="hub-app" id="hub-app">
   <aside class="hub-sidebar" id="hub-sidebar" aria-label="Navigasi HMTIF Career Hub">
     <div class="hub-sidebar-content">
       <div class="hub-side-brand">
         <div class="hub-side-logos">
-          <img src="https://j.top4top.io/p_3881u76701.png" alt="Logo Universitas Bakrie" loading="eager" referrerpolicy="no-referrer">
-          <img src="https://e.top4top.io/p_38813coj21.png" alt="Logo HMTIF Universitas Bakrie" loading="eager" referrerpolicy="no-referrer">
+          <img src="./assets/logo-ub.png" alt="Logo Universitas Bakrie" loading="eager" referrerpolicy="no-referrer">
+          <img src="./assets/logo-hmtif.png" alt="Logo HMTIF Universitas Bakrie" loading="eager" referrerpolicy="no-referrer">
         </div>
         <div><strong>HMTIF</strong><small>CAREER HUB</small></div>
       </div>
       <div class="hub-side-rule"></div>
 
-      <!-- Radial Scroll Progress Widget -->
       <div class="hub-side-radial" aria-label="Progres baca halaman">
         <div class="hub-radial-ring-box">
           <svg viewBox="0 0 44 44" aria-hidden="true">
@@ -1426,7 +1495,14 @@ html { scroll-padding-top: 84px; }
         <button class="hub-nav-link" type="button" data-hub-nav="news" onclick="hubNavigate('news')"><i class="fa-solid fa-bullhorn"></i><span>Berita &amp; Info</span></button>
         <button class="hub-nav-link" type="button" data-hub-nav="rating" onclick="hubNavigate('rating')"><i class="fa-solid fa-star"></i><span>Penilaian</span></button>
       </nav>
-      <div class="hub-side-note"><span>IDENTITAS HMTIF</span><strong>Grow your future.</strong><p>Ruang peluang, karya, dan kolaborasi mahasiswa Teknik Informatika.</p></div>
+      <div class="hub-side-note">
+        <span>IDENTITAS HMTIF</span>
+        <strong>Grow your future.</strong>
+        <p>Ruang peluang, karya, dan kolaborasi mahasiswa Teknik Informatika.</p>
+        <button type="button" id="pwa-install-side-btn" class="pwa-side-install" onclick="triggerPwaInstall()" hidden>
+          <i class="fa-solid fa-mobile-screen-button"></i> Install di HP / Desktop
+        </button>
+      </div>
       <div class="hub-side-bottom">HMTIF UNIVERSITAS BAKRIE • 2026</div>
     </div>
   </aside>
@@ -1437,12 +1513,15 @@ html { scroll-padding-top: 84px; }
       <div class="hub-topbar-left">
         <button class="hub-menu-toggle" type="button" onclick="toggleMobileSidebar(true)" aria-label="Buka menu navigasi"><i class="fa-solid fa-bars"></i></button>
         <div class="hub-mobile-brand">
-          <img src="https://j.top4top.io/p_3881u76701.png" alt="Logo Universitas Bakrie" referrerpolicy="no-referrer">
-          <img src="https://e.top4top.io/p_38813coj21.png" alt="Logo HMTIF" referrerpolicy="no-referrer">
+          <img src="./assets/logo-ub.png" alt="Logo Universitas Bakrie" referrerpolicy="no-referrer">
+          <img src="./assets/logo-hmtif.png" alt="Logo HMTIF" referrerpolicy="no-referrer">
         </div>
         <div class="hub-breadcrumb">HMTIF <span>/</span> Career Hub <span>/</span> <span id="hub-breadcrumb-active" style="padding:0;color:var(--text-color);">Beranda</span></div>
       </div>
       <div class="hub-topbar-right">
+        <button type="button" id="pwa-install-btn" class="pwa-install-btn" onclick="triggerPwaInstall()" hidden aria-label="Install aplikasi Career Hub" title="Install sebagai aplikasi">
+          <i class="fa-solid fa-download"></i><span>Install App</span>
+        </button>
         <div class="hub-scroll-pill" aria-hidden="true"><i class="fa-solid fa-compass"></i> <strong id="topbar-progress-pct">0%</strong></div>
         <button onclick="toggleTheme()" id="theme-toggle" class="hub-theme-toggle" aria-label="Ubah mode warna"><i class="fas fa-moon" id="theme-icon"></i></button>
       </div>
@@ -1465,8 +1544,8 @@ html { scroll-padding-top: 84px; }
         </div>
       </div>
       <div class="hub-hero-identity" aria-label="Identitas organisasi">
-        <img src="https://j.top4top.io/p_3881u76701.png" alt="Logo Kampus Universitas Bakrie" loading="eager" referrerpolicy="no-referrer">
-        <img src="https://e.top4top.io/p_38813coj21.png" alt="Logo Himpunan Mahasiswa Teknik Informatika" loading="eager" referrerpolicy="no-referrer">
+        <img src="./assets/logo-ub.png" alt="Logo Kampus Universitas Bakrie" loading="eager" referrerpolicy="no-referrer">
+        <img src="./assets/logo-hmtif.png" alt="Logo Himpunan Mahasiswa Teknik Informatika" loading="eager" referrerpolicy="no-referrer">
         <small>UNIVERSITAS BAKRIE × HMTIF</small>
       </div>
     </section>
@@ -1653,7 +1732,6 @@ html { scroll-padding-top: 84px; }
             </div>
           </section>
 
-          <!-- Panel Berita & Pengumuman -->
           <section id="hub-news-section" class="hub-elevator" style="--reveal-delay:140ms;" aria-labelledby="news-heading">
             <div class="hub-news-panel">
               <div class="hub-news-header">
@@ -1798,7 +1876,6 @@ html { scroll-padding-top: 84px; }
       </div>
     </footer>
 
-    <!-- Floating Radial Quick-Nav Dock + Scroll Progress Ring -->
     <div class="hub-radial-dock" id="hub-radial-dock" aria-label="Menu navigasi cepat radial">
       <button type="button" class="hub-radial-orb" style="--tx:0px;--ty:-104px" onclick="radialJump('home')" aria-label="Kembali ke atas">
         <i class="fa-solid fa-arrow-up"></i>
@@ -1876,12 +1953,11 @@ html { scroll-padding-top: 84px; }
   </form>
 </dialog>
 
-<!-- Konfigurasi Supabase publik -->
+<div id="hub-toast" class="hub-toast" role="status" aria-live="polite"></div>
+
 <script src="./config.js"></script>
 
-<!-- ======================== LOGIKA APLIKASI (SUPABASE) ======================== -->
-<script>
-const PROGRAM_CACHE_TTL_MS = 2 * 60 * 1000; // 2 menit cache lokal di browser
+<script>const PROGRAM_CACHE_TTL_MS = 2 * 60 * 1000;
 
 function getHubConfig() {
   const cfg = window.HUB_CONFIG || {};
@@ -1908,7 +1984,7 @@ function buildSupabaseHeaders(apiKey) {
     'Content-Type': 'application/json',
     'apikey': apiKey
   };
-  // Legacy JWT anon key dimulai 'eyJ...'; Publishable key baru (sb_publishable_...) cukup lewat header apikey.
+
   if (apiKey && apiKey.startsWith('eyJ')) {
     headers['Authorization'] = `Bearer ${apiKey}`;
   }
@@ -2001,7 +2077,6 @@ let trafficRequestId = 0;
 let trafficPeriod = 7;
 const programCache = new Map();
 
-// State Roll / Bergulir Bergantian (sejajar dengan kolom kanan)
 let rollPage = 0;
 let rollSize = 4;
 let autoRollEnabled = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2010,7 +2085,6 @@ let autoRollElapsedMs = 0;
 let autoRollInterval = null;
 const AUTO_ROLL_DURATION_MS = 8500;
 
-// State Berita & Pengumuman
 const DEFAULT_HUB_NEWS = [
   {
     judul: 'INFORMASI RESMI HMTIF CAREER HUB',
@@ -2075,8 +2149,267 @@ function buildDetailFields(item) {
   ];
 }
 
+let toastTimer = null;
+function showHubToast(message) {
+  const el = document.getElementById('hub-toast');
+  if (!el) return;
+  el.textContent = message;
+  el.classList.add('is-visible');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('is-visible'), 2800);
+}
+
+function makeProgramSlug(category, nama, penyelenggara) {
+  const norm = s => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const key = [norm(category), norm(nama), norm(penyelenggara)].join('|');
+  let h = 0x811c9dc5;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  const hash = (h >>> 0).toString(36).padStart(6, '0').slice(-6);
+  const words = norm(nama)
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 4)
+    .join('-')
+    .slice(0, 32);
+  return (words ? words + '-' : 'program-') + hash;
+}
+
+function buildProgramShareUrl(item, sheetName = currentSheet, viewMode = hubView) {
+  const base = getShareUrl();
+  if (!/^https?:\/\//i.test(base)) return base;
+  try {
+    const u = new URL(base);
+    u.search = '';
+    u.hash = '';
+    u.searchParams.set('cat', sheetName);
+    if (viewMode === 'archive' || item.is_archived) u.searchParams.set('view', 'archive');
+    u.searchParams.set('p', makeProgramSlug(sheetName, item.nama, item.penyelenggara));
+    return u.toString();
+  } catch (_) {
+    return base;
+  }
+}
+
+function buildProgramWaUrl(item, sheetName = currentSheet, viewMode = hubView) {
+  const deepLink = buildProgramShareUrl(item, sheetName, viewMode);
+  const waText = encodeURIComponent(
+    `Hai! Ada info ${item.jenis || 'program'} "${item.nama}" dari ${item.penyelenggara || 'HMTIF Career Hub'} nih. Cek detailnya langsung di sini:\n${deepLink}`
+  );
+  return `https://wa.me/?text=${waText}`;
+}
+
+async function copyProgramLink(url) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(url);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = url;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    showHubToast('Link detail program tersalin!');
+  } catch (_) {
+    showHubToast('Gagal menyalin link otomatis.');
+  }
+}
+
+function updateAddressBarForItem(item) {
+  if (!window.history || !/^https?:$/i.test(window.location.protocol)) return;
+  try {
+    const u = new URL(window.location.href);
+    u.searchParams.set('cat', currentSheet);
+    if (hubView === 'archive' || item.is_archived) u.searchParams.set('view', 'archive');
+    else u.searchParams.delete('view');
+    u.searchParams.set('p', makeProgramSlug(currentSheet, item.nama, item.penyelenggara));
+    u.searchParams.delete('id');
+    u.searchParams.delete('kategori');
+    window.history.replaceState(null, '', u.pathname + u.search + u.hash);
+  } catch (_) {}
+}
+
+function clearDeepLinkUrl() {
+  if (!window.history || !/^https?:$/i.test(window.location.protocol)) return;
+  try {
+    const u = new URL(window.location.href);
+    if (!u.searchParams.has('p') && !u.searchParams.has('id') && !u.searchParams.has('cat') && !u.searchParams.has('kategori')) return;
+    u.searchParams.delete('p');
+    u.searchParams.delete('slug');
+    u.searchParams.delete('id');
+    u.searchParams.delete('cat');
+    u.searchParams.delete('kategori');
+    u.searchParams.delete('view');
+    window.history.replaceState(null, '', u.pathname + (u.search || '') + u.hash);
+  } catch (_) {}
+}
+
+function parseDeepLinkParams() {
+  try {
+    const sp = new URLSearchParams(window.location.search);
+    const slug = (sp.get('p') || sp.get('slug') || '').trim().toLowerCase();
+    const numId = (sp.get('id') || '').trim();
+    const rawCat = (sp.get('cat') || sp.get('kategori') || '').trim().toUpperCase();
+    const cat = ['KARIER', 'PENGEMBANGAN', 'OPPORTUNITIES'].includes(rawCat) ? rawCat : '';
+    const view = (sp.get('view') || '').trim().toLowerCase() === 'archive' ? 'archive' : 'active';
+    if (!slug && !numId) return null;
+    return { slug, numId, cat, view, triedKeys: new Set() };
+  } catch (_) {
+    return null;
+  }
+}
+
+let pendingDeepLink = parseDeepLinkParams();
+
+function findDeepLinkMatch(items, sheetName, target) {
+  if (!Array.isArray(items) || !target) return null;
+  if (target.slug) {
+    const bySlug = items.find(it => makeProgramSlug(sheetName, it.nama, it.penyelenggara) === target.slug);
+    if (bySlug) return bySlug;
+  }
+  if (target.numId) {
+    const byId = items.find(it => String(it.id) === String(target.numId));
+    if (byId) return byId;
+  }
+  return null;
+}
+
+async function resolvePendingDeepLink() {
+  if (!pendingDeepLink) return;
+  const target = pendingDeepLink;
+  const currentKey = `${hubView}:${currentSheet}`;
+  target.triedKeys.add(currentKey);
+
+  const match = findDeepLinkMatch(allItems, currentSheet, target);
+  if (match) {
+    pendingDeepLink = null;
+    document.getElementById('hub-catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    openDetailByItem(match);
+    return;
+  }
+
+  const categories = target.cat ? [target.cat] : ['KARIER', 'PENGEMBANGAN', 'OPPORTUNITIES'];
+  const views = target.view === 'archive' ? ['archive', 'active'] : ['active', 'archive'];
+  const candidates = [];
+  views.forEach(v => categories.forEach(c => {
+    const k = `${v}:${c}`;
+    if (!target.triedKeys.has(k)) candidates.push({ view: v, category: c });
+  }));
+
+  for (const cand of candidates) {
+    target.triedKeys.add(`${cand.view}:${cand.category}`);
+    try {
+      const items = await supabaseRpc('get_programs', {
+        p_category: cand.category,
+        p_archived: cand.view === 'archive'
+      });
+      const list = Array.isArray(items) ? items : [];
+      programCache.set(`${cand.view}:${cand.category}`, { items: list, savedAt: Date.now() });
+      const found = findDeepLinkMatch(list, cand.category, target);
+      if (found) {
+        pendingDeepLink = null;
+        hubView = cand.view;
+        hubStore.setItem('careerHubView', hubView);
+        syncHubViewControls();
+        document.getElementById('sort-select').value = hubView === 'archive' ? 'deadline-desc' : 'deadline-asc';
+        currentSheet = cand.category;
+        currentSubtitle = hubCategorySubtitle(cand.category);
+        renderData(list, cand.category);
+        document.getElementById('section-title').innerText = hubView === 'archive' ? `ARSIP ${cand.category}` : cand.category;
+        document.getElementById('section-subtitle').innerText = hubView === 'archive'
+          ? `Riwayat program ${currentSubtitle.toLowerCase()} yang telah berakhir.` : currentSubtitle;
+        document.getElementById('hub-catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        openDetailByItem(found);
+        return;
+      }
+    } catch (_) {}
+  }
+
+  pendingDeepLink = null;
+  clearDeepLinkUrl();
+  showHubToast('Program yang dibagikan sudah tidak tersedia atau telah dihapus.');
+}
+
+let deferredInstallPrompt = null;
+
+function isRunningStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+function isIosSafari() {
+  const ua = navigator.userAgent || '';
+  return /iphone|ipad|ipod/i.test(ua) && /safari/i.test(ua) && !/crios|fxios|edgios/i.test(ua);
+}
+
+function setInstallButtonsVisible(visible) {
+  ['pwa-install-btn', 'pwa-install-side-btn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.hidden = !visible;
+  });
+}
+
+async function triggerPwaInstall() {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    try {
+      const choice = await deferredInstallPrompt.userChoice;
+      if (choice && choice.outcome === 'accepted') {
+        showHubToast('HMTIF Career Hub sedang di-install...');
+        setInstallButtonsVisible(false);
+      }
+    } catch (_) {}
+    deferredInstallPrompt = null;
+    return;
+  }
+  if (isIosSafari()) {
+    showHubToast('Di Safari iOS: ketuk ikon Bagikan (↑) lalu pilih "Tambah ke Layar Utama".');
+  } else {
+    showHubToast('Buka menu browser (⋮) lalu pilih "Install app" / "Tambahkan ke layar utama".');
+  }
+}
+
+function initPwaSupport() {
+  if (isRunningStandalone()) {
+    setInstallButtonsVisible(false);
+  } else if (isIosSafari()) {
+    setInstallButtonsVisible(true);
+  }
+
+  window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    if (!isRunningStandalone()) setInstallButtonsVisible(true);
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    setInstallButtonsVisible(false);
+    showHubToast('HMTIF Career Hub berhasil dipasang di perangkatmu!');
+  });
+
+  if ('serviceWorker' in navigator && /^https?:$/i.test(window.location.protocol)) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(err => {
+        console.info('Service Worker dilewati:', hubErrorText(err));
+      });
+    });
+  }
+}
+
 function openDetail(index) {
   const item = currentItems[index];
+  if (item) openDetailByItem(item);
+}
+
+function openDetailByItem(item) {
   if (!item) return;
   const dialog = document.getElementById('detail-dialog');
   const fields = document.getElementById('detail-fields');
@@ -2113,6 +2446,23 @@ function openDetail(index) {
     visit.innerHTML = '<i class="fas fa-arrow-up-right-from-square me-2"></i>Buka Link Info';
     actions.appendChild(visit);
   }
+
+  const deepLinkUrl = buildProgramShareUrl(item);
+  const waBtn = document.createElement('a');
+  waBtn.href = buildProgramWaUrl(item);
+  waBtn.target = '_blank';
+  waBtn.rel = 'noopener noreferrer';
+  waBtn.className = 'btn btn-whatsapp rounded-pill px-3 fw-semibold';
+  waBtn.innerHTML = '<i class="fab fa-whatsapp me-2"></i>Bagikan WA';
+  actions.appendChild(waBtn);
+
+  const copyBtn = document.createElement('button');
+  copyBtn.type = 'button';
+  copyBtn.className = 'btn btn-outline-secondary rounded-pill px-3 fw-semibold';
+  copyBtn.innerHTML = '<i class="fas fa-link me-2"></i>Salin Link';
+  copyBtn.addEventListener('click', () => copyProgramLink(deepLinkUrl));
+  actions.appendChild(copyBtn);
+
   const close = document.createElement('button');
   close.type = 'button';
   close.className = 'btn btn-gradient-secondary rounded-pill px-4 fw-semibold';
@@ -2120,13 +2470,16 @@ function openDetail(index) {
   close.addEventListener('click', closeDetail);
   actions.appendChild(close);
 
+  updateAddressBarForItem(item);
   previousFocus = document.activeElement;
-  dialog.showModal();
+  if (!dialog.open) dialog.showModal();
   document.getElementById('detail-close').focus();
 }
 
 function closeDetail() {
-  document.getElementById('detail-dialog').close();
+  const dialog = document.getElementById('detail-dialog');
+  if (dialog.open) dialog.close();
+  clearDeepLinkUrl();
 }
 
 async function loadDashboardStats() {
@@ -2151,13 +2504,25 @@ async function loadRatingStats() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  initPwaSupport();
+
   document.getElementById('data-container').addEventListener('click', event => {
     const button = event.target.closest('[data-detail-index]');
-    if (button) openDetail(Number(button.dataset.detailIndex));
+    if (button) {
+      openDetail(Number(button.dataset.detailIndex));
+      return;
+    }
+    const copyBtn = event.target.closest('[data-copy-link]');
+    if (copyBtn) {
+      copyProgramLink(copyBtn.dataset.copyLink);
+    }
   });
   const dialog = document.getElementById('detail-dialog');
   dialog.addEventListener('click', event => { if (event.target === dialog) closeDetail(); });
-  dialog.addEventListener('close', () => { if (previousFocus && previousFocus.isConnected) previousFocus.focus(); });
+  dialog.addEventListener('close', () => {
+    clearDeepLinkUrl();
+    if (previousFocus && previousFocus.isConnected) previousFocus.focus();
+  });
 
   const newsDialog = document.getElementById('news-dialog');
   newsDialog.addEventListener('click', event => { if (event.target === newsDialog) closeNewsModal(); });
@@ -2170,8 +2535,13 @@ document.addEventListener('DOMContentLoaded', () => {
     listingEl.addEventListener('focusout', () => { autoRollHoverPaused = false; });
   }
 
-  const initialSheet = ['KARIER', 'PENGEMBANGAN', 'OPPORTUNITIES'].includes(hubStore.getItem('careerHubCategory'))
-    ? hubStore.getItem('careerHubCategory') : 'KARIER';
+  if (pendingDeepLink) {
+    hubView = pendingDeepLink.view;
+  }
+  const initialSheet = (pendingDeepLink && pendingDeepLink.cat)
+    ? pendingDeepLink.cat
+    : (['KARIER', 'PENGEMBANGAN', 'OPPORTUNITIES'].includes(hubStore.getItem('careerHubCategory'))
+      ? hubStore.getItem('careerHubCategory') : 'KARIER');
   syncHubViewControls();
   document.getElementById('sort-select').value = hubView === 'archive' ? 'deadline-desc' : 'deadline-asc';
   updatePersonalGreeting();
@@ -2180,7 +2550,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!hubConfigReady()) {
     showHubSystemError('Konfigurasi Supabase belum diisi. Buka file config.js lalu masukkan SUPABASE_URL dan SUPABASE_ANON_KEY.');
   } else {
-    // Jalan paralel ke Supabase (super cepat, tanpa antrean)
+
     loadDashboardStats();
     loadData(initialSheet, hubCategorySubtitle(initialSheet));
     registerVisitAndLoadTraffic();
@@ -2287,7 +2657,6 @@ function updateScrollProgressAndSpy() {
   const dockPct = document.getElementById('hub-dock-pct');
   if (dockPct) dockPct.textContent = pct + '%';
 
-  // Live Scroll-Spy untuk label aktif di sidebar & breadcrumb
   const sections = [
     { id: 'hub-rating-section', nav: 'rating', label: 'Penilaian' },
     { id: 'hub-news-section', nav: 'news', label: 'Berita & Info' },
@@ -2364,7 +2733,6 @@ function toggleTheme() {
   if (hasRated) setupExtraFeedbackUI();
   else resetStars();
 
-  // Render ulang chart lokal tanpa memanggil server ulang
   renderChart(lastRatingStats);
   if (trafficResponse) renderTraffic(trafficResponse);
 }
@@ -3031,7 +3399,6 @@ function renderCards(items, totalFiltered = items.length, rangeStart = 1, rangeE
   }
 
   const fragment = document.createDocumentFragment();
-  const linkToShare = getShareUrl();
 
   items.forEach((item, rowIndex) => {
     const detailIndex = currentItems.push(item) - 1;
@@ -3039,8 +3406,8 @@ function renderCards(items, totalFiltered = items.length, rangeStart = 1, rangeE
     const favId = rowFavoriteId(item);
     const isFavorite = favorites.has(favId);
     const dInfo = deadlineInfo(item);
-    const waText = encodeURIComponent(`Hai! Ada info ${item.jenis || 'program'} "${item.nama}" dari ${item.penyelenggara || 'HMTIF Career Hub'} nih. Cek detailnya di HMTIF Career Hub: ${linkToShare}`);
-    const waUrl = `https://wa.me/?text=${waText}`;
+    const deepLink = buildProgramShareUrl(item, currentSheet, hubView);
+    const waUrl = buildProgramWaUrl(item, currentSheet, hubView);
 
     const wrapper = document.createElement('div');
     wrapper.className = 'col-12 col-md-6 col-xl-4 hub-roll-card';
@@ -3067,7 +3434,10 @@ function renderCards(items, totalFiltered = items.length, rangeStart = 1, rangeE
             <button type="button" class="favorite-btn ${isFavorite ? 'is-favorite' : ''}" data-favorite-id="${escapeHtml(favId)}" title="${isFavorite ? 'Hapus dari favorit' : 'Simpan ke favorit'}" aria-label="Favorit">
               <i class="${isFavorite ? 'fas' : 'far'} fa-star"></i>
             </button>
-            <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px;" title="Bagikan ke WhatsApp" aria-label="Bagikan ke WhatsApp">
+            <button type="button" class="share-link-btn" data-copy-link="${escapeHtml(deepLink)}" title="Salin link langsung program ini" aria-label="Salin link program">
+              <i class="fas fa-link"></i>
+            </button>
+            <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px;" title="Bagikan langsung ke WhatsApp" aria-label="Bagikan ke WhatsApp">
               <i class="fab fa-whatsapp"></i>
             </a>
           </div>
@@ -3082,10 +3452,6 @@ function renderCards(items, totalFiltered = items.length, rangeStart = 1, rangeE
   });
 }
 
-// ============================================================================
-// BERITA & PENGUMUMAN (ALA PORTAL UNIVERSITAS BAKRIE)
-// ============================================================================
-
 async function loadNews() {
   try {
     const data = await supabaseRpc('get_news');
@@ -3095,7 +3461,7 @@ async function loadNews() {
       renderNews();
     }
   } catch (err) {
-    // Jika tabel news belum dijalankan di Supabase, tetap tampilkan berita default dengan rapi.
+
     console.info('Info berita memakai konten default:', hubErrorText(err));
   }
 }
@@ -3220,6 +3586,7 @@ function renderData(items, sheetName) {
   currentSheet = sheetName;
   allItems = Array.isArray(items) ? items : [];
   applyFilters();
+  if (pendingDeepLink) resolvePendingDeepLink();
 }
 
 function hubCategorySubtitle(category) {
