@@ -1,31 +1,32 @@
 # HMTIF Career Hub — Universitas Bakrie
 
-Arsitektur **Hybrid (Google Sheets → Supabase → GitHub Pages)** yang membuat **HMTIF Career Hub** jauh lebih ringan dan cepat untuk pengunjung, sementara pengurus HMTIF (PPP) tetap nyaman mengelola data melalui Google Sheets lengkap dengan `LOG AKTIVITAS`, arsip otomatis, dan notifikasi email feedback.
+Arsitektur **Hybrid (Google Sheets → Supabase → GitHub Pages)** yang membuat **HMTIF Career Hub** jauh lebih ringan, dapat di-install seperti aplikasi (**PWA**), mendukung **deep-link per program**, serta tetap nyaman dikelola pengurus HMTIF (PPP) lewat Google Sheets lengkap dengan **Generator Teks Broadcast WA**, `LOG AKTIVITAS`, arsip otomatis, dan notifikasi email feedback.
 
 ## Struktur Repository
 
 ```text
-career-hub/
-├── index.html            # Frontend utama (disajikan langsung oleh GitHub Pages)
+careerhub/
+├── index.html            # Frontend utama (PWA + Deep-Link + Roll Feed + Berita)
 ├── config.js             # Konfigurasi publik Supabase (URL + Publishable Key)
-├── .nojekyll             # Menonaktifkan build Jekyll agar deploy GitHub Pages lebih cepat
+├── manifest.json         # Manifest PWA (installable di Android/iOS/Desktop)
+├── sw.js                 # Service Worker ringan (Network-First shell, live Supabase)
+├── arsitektur.html       # Diagram interaktif arsitektur sistem Hybrid
+├── assets/               # Logo lokal & icon PWA (192x192 & 512x512)
+├── .nojekyll             # Menonaktifkan build Jekyll di GitHub Pages
 ├── supabase/
-│   └── schema.sql        # Skema tabel, RPC publik/admin, dan keamanan RLS PostgreSQL
+│   ├── schema.sql        # Skema tabel, RPC publik/admin, dan keamanan RLS PostgreSQL
+│   └── news_migration.sql# Migrasi khusus tabel Berita & Pengumuman
 ├── apps-script/
-│   └── Code.gs           # Mesin sync Google Sheets -> Supabase, audit log, arsip & email
+│   └── Code.gs           # Mesin sync, Generator Broadcast WA, audit log, arsip & email
 └── README.md
 ```
 
-## Alur Kerja Data
-1. Pengurus menambah atau mengedit program di Google Sheets (`KARIER`, `PENGEMBANGAN`, `OPPORTUNITIES`).
-2. Apps Script otomatis menyinkronkan data ke Supabase dalam **maksimal 5 menit** (atau instan via menu Google Sheets: **HMTIF Career Hub → Sync Semua Data ke Supabase Sekarang**).
-3. Web statis di GitHub Pages membaca langsung dari Supabase (tanpa *cold start* Apps Script dan tanpa antrean `LockService`).
-4. Feedback & saran baru dari pengguna tersimpan aman di Supabase (terlindungi RLS), lalu otomatis ditarik ke tab `RATING` dan dikirim via email ke pengelola oleh Apps Script.
+## Fitur Utama
+- **Mode PWA:** Dapat dipasang ke layar utama HP/Desktop via tombol **Install App** (dengan icon lokal HMTIF).
+- **Deep-Link per Program (`?cat=...&p=...`):** Membagikan link spesifik program ke WhatsApp — saat diklik langsung membuka modal detail program (termasuk fallback otomatis ke Arsip).
+- **Generator Teks Broadcast WA:** Tersedia di menu Google Sheets **HMTIF Career Hub → Buat Teks Broadcast WA** (preset Ringkas, Mendesak ≤ 7 Hari, Semua Aktif + deep-link siap copy-paste).
+- **Live Sync & Keamanan RLS:** Auto-sync tiap 5 menit (atau 1-klik), saran pengguna rahasia di database, dan pencatatan kunjungan atomik bebas antrean.
 
-## Mengaktifkan GitHub Pages
-1. Buka **Settings → Pages** pada repository ini.
-2. Pada **Build and deployment**, pilih:
-   - **Source**: `Deploy from a branch`
-   - **Branch**: `main` — folder `/(root)` → klik **Save**.
-3. Web akan aktif di `https://hmtifub.github.io/careerhub/`.
-4. Masukkan URL tersebut ke **Properti Skrip** Apps Script (`PUBLIC_WEB_URL`) agar link `/exec` lama otomatis mengarah ke web baru.
+## Alamat Live
+- Web Utama: https://hmtifub.github.io/careerhub/
+- Diagram Arsitektur: https://hmtifub.github.io/careerhub/arsitektur.html
